@@ -1,0 +1,196 @@
+\documentclass[draft]{scrartcl}
+\title{Simplicial Homology}
+\author{Jan Zwank}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{hyperref,microtype,lmodern,csquotes}
+\usepackage[english]{babel}
+\usepackage{tikz}
+\usetikzlibrary{3d,calc,decorations}
+\usepackage{pst-solides3d}
+\usepackage{caption}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{korollar}[theorem]{Korollar}
+\newtheorem{satz}[theorem]{Satz}
+\newtheorem{hilfssatz}[theorem]{Hilfssatz}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\theoremstyle{definition}
+\newtheorem	{definition}[theorem]{Definition}
+\newtheorem{beispiel}[theorem]{Beispiel}
+\newtheorem{beispiele}[theorem]{Beispiele}
+\newtheorem{konvention}[theorem]{Konvention}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{axiom}[theorem]{Axiom}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{examples}[theorem]{Examples}
+
+\theoremstyle{remark}
+\newtheorem*{bemerkung}{Bemerkung}
+\newtheorem*{bemerkungen}{Bemerkungen}
+\newtheorem*{frage}{Frage}
+
+\usetikzlibrary{decorations.markings,intersections}
+\tikzset{->-/.style={decoration={
+			markings,
+			mark=at position #1 with {\arrow[line width=3pt]{stealth}}},postaction={decorate}}}
+
+\newcommand{\SH}{Simplicial Homology}
+\newcommand{\sh}{simplicial homology}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\qandq}{\quad \text{and} \quad}
+\newcommand{\qqandqq}{\qquad \text{and} \qquad}
+\newcommand{\scs}{simplicial complexes}
+\usepackage%[style=authoryear]
+	{biblatex}
+\bibliography{bibliography}
+\begin{document}
+	\maketitle
+	
+	\begin{abstract}
+		%TODO 
+		Abstract goes here
+	\end{abstract}
+\tableofcontents
+
+\clearpage
+
+\section{Motivation}
+One of the main goals when studying (topological) spaces (or in this case \scs) is to determine whether two spaces are homotopic
+%TODO homeomorphic?
+ or not. The first method that is often applied is to check if both spaces are simply connected. A more advanced approach checks not only simply connectedness but also if the fundamental groups $\pi_1$ coincide\footnote{If $X$ is a simply connected space then $\pi_1(X)=0$. Furthermore, the fundamental group is homotopy invariant (up to isomorphism 
+	), so homotopic spaces have isomorphic fundamental groups. A more precise formulation of this statement can be found in Hatchers book \parencite[Prop. 1.18, p. 37]{ha}:
+\begin{quotation}
+	\begin{quote}
+		If $\phi: X\to Y$ is a homotopy equivalence, then the induces homomorphism $\phi_*:\pi_1(X,x_0)\to\pi_1(Y,\phi(x_0))$ is an isomorphism for all $x_0\in X$.
+	\end{quote}
+\end{quotation} }.
+
+It turns out that this is a valuable tool for one and two dimensional \scs. But this method fails for complexes with cells in higher dimensions. It can be shown that the fundamental group actually only depends on the 2-skeleton of the complex \cite[vgl.][p. 173]{ar}. 
+
+Even though this method can be generalized to the study of higher homotopy groups $\pi_n$, this is often more difficult than necessary since the computation of those groups is far from trivial.
+
+In the following we will explore the concept of \sh{} groups and how it can be used to classify spaces. We will see that they allow us to tackle the problem of deciding whether two \textbf{polyhedra}\footnote{A polyhedron is the polytope of a simplicial complex.} are homeomorphic, since simplicial homology is only defined on such spaces. However, the concept of \sh{} can be generalized to singular homology, which can be applied to a broader category of spaces and coincides with \sh{} if both are defined.
+
+However, singular homology groups will not be covered here. The interested reader might refer to the book of Munkres \cite{mu} or Hatcher \cite{ha} to learn more about singular homology groups.
+
+\section{The First \SH{} Group with Integer Coefficients}\label{first-hom}
+
+%TODO find introductory sentence, -> simplicial structure of underlying complex
+While we considered all possible paths when we were talking about the fundamental group we will now only consider those that aren't the boundary of a portion of the surface. A great motivation for this approach is given by Armstrong \cite[p. 173f]{ar}:
+
+Any closed path on the 2-sphere divides the surface into two regions as shown in \autoref{divided-sphere}\footnote{For a more precise statement see \url{https://en.wikipedia.org/wiki/Jordan_curve_theorem}}.
+
+\begin{figure}[h]
+	
+\parbox{\linewidth}{\parbox[t]{.5\linewidth}{\centering
+	\begin{tikzpicture}[scale=1.7]
+		%\draw (-1,0) arc (180:360:1cm and 0.5cm);
+		%\draw[dashed] (-1,0) arc (180:0:1cm and 0.5cm);
+		\filldraw[blue!10] (0,1)  arc (90:270:1cm) arc (-90:90:0.5cm and 1cm);
+		\draw (0,1) arc (90:270:0.5cm and 1cm);
+		\draw[dashed] (0,1) arc (90:-90:0.5cm and 1cm);
+		\draw (0,0) circle (1cm);
+		%\shade[ball color=blue!10!white,opacity=0.20] (0,0) circle (1cm);
+	\end{tikzpicture}}%
+\parbox[t]{.5\linewidth}{\centering
+	\begin{tikzpicture}[scale=0.7]
+	\draw (-3.5,0) .. controls (-3.5,2) and (-1.5,2.5) .. (0,2.5);
+	\draw[xscale=-1] (-3.5,0) .. controls (-3.5,2) and (-1.5,2.5) .. (0,2.5);
+	\draw[rotate=180] (-3.5,0) .. controls (-3.5,2) and (-1.5,2.5) .. (0,2.5);
+	\draw[yscale=-1] (-3.5,0) .. controls (-3.5,2) and (-1.5,2.5) .. (0,2.5);
+	
+	\draw (-2,.2) .. controls (-1.5,-0.3) and (-1,-0.5) .. (0,-.5) .. controls (1,-0.5) and (1.5,-0.3) .. (2,0.2);
+	
+	\draw (-1.75,0) .. controls (-1.5,0.3) and (-1,0.5) .. (0,.5) .. controls (1,0.5) and (1.5,0.3) .. (1.75,0);
+	
+	\draw (0,-0.5) to [out=180, in=180](0,-2.5);
+	\draw[dashed] (0,-2.5) to [out=0, in=0](0,-0.5);
+	\draw (-1,-1.5) node{A};
+	\draw[fill=blue!10!white] (2,-1) circle (0.5);
+	\draw (3,-.7) node{B};
+	\end{tikzpicture}
+%\begin{pspicture}(-6,-4)(6,4)
+%\psset{viewpoint=30 0 15 rtp2xyz,Decran=30,lightsrc=viewpoint}
+%\psSolid[object=tore,r1=2.5,r0=.7,ngrid=36 72,fillcolor=blue!10!white,grid=false]%
+%\end{pspicture}
+}}
+\parbox[t]{.5\linewidth}{\captionsetup{width=.9\linewidth}
+\caption{Any closed path on the sphere divides the surface into two regions.\label{divided-sphere} }}%
+\parbox[t]{.5\linewidth}{\captionsetup{width=.9\linewidth}
+\caption{There are closed paths on the torus that do not divide the surface into two regions.\label{path-on-torus}}}
+
+\end{figure}
+
+We will use the following definitions by Munkres \cite[p. 26]{mu} and Armstrong \cite[p. 174]{ar}:
+\begin{definition}
+	For a simplex $\sigma$ we say that two orderings of its vertex set are equivalent if they differ by an even permutation. For a simplex with nonzero dimension, the orderings of the vertices fall into two equivalence classes, called the \textbf{orientations} of $\sigma$. For independent points $v_0,\dots,v_p$ we denote the oriented simplex they span with
+	\[
+	[v_0,\dots,v_p].
+	\]
+	A change in orientation will be denoted by a minus sign. So, for example
+	\[
+	[v_1,v_2,v_3]=[v_2,v_3,v_1]=[v_3,v_1,v_2]=-[v_1,v_3,v_2]=-[v_2,v_1,v_3]=-[v_3,v_2,v_1]
+	\]
+\end{definition}
+
+\begin{definition}
+	The boundary operator of the oriented edge $[v_0,v_1]$ is defined to be the formal linear combination of points
+	\[
+	\partial[v_0,v_1]=v_1-v_0
+	\]
+	and the boundary of the oriented triangle $[v_0,v_1,v_2]$ is defined to be the formal linear combination of edges
+	\[
+	\partial[v_0,v_1,v_2]=[v_1,v_2]-[v_0,v_2]+[v_0,v_1]
+	\]
+\end{definition}
+
+We see that for the closed curve $B$ from \autoref{path-on-torus} with a triangularization as depicted in \autoref{closed-curve} has vanishing boundary, since
+\[
+\partial(a+b+c)=\partial[v_0,v_1]+\partial[v_1,v_2]+\partial[v_2,v_0]=(v_1-v_0)+(v_2-v_1)+(v_0-v_2)=0
+\]
+
+Further, we see that $B$ is indeed the boundary of the interior region, since
+\[
+\partial[v_0,v_1,v_2]=[v_1,v_2]-[v_0,v_2]+[v_0,v_1]=a+b+c
+\]
+
+\begin{figure}\centering
+	\begin{tikzpicture}[scale=2]
+		\draw[fill=blue!10](0,0)--(1,1)--(2,0)--(0,0);
+		\draw node[left]{$v_0$};
+		\draw[->] (0,0)--(0.5,0.5) node[left]{$a$};
+		\draw(0.5,0.5)--(1,1)node[above]{$v_1$};
+		\draw[->](1,1)--(1.5,0.5) node[right]{$b$};
+		\draw (1.5,0.5)--(2,0) node[right]{$v_2$};
+		\draw[->] (2,0)--(1,0) node[below]{$c$};
+		\draw (2,0)--(0,0) node[left]{$v_0$};
+	\end{tikzpicture}
+	\caption{A closed curve triangulated as $[v_0,v_1,v_2]$.\label{closed-curve}}
+\end{figure}
+
+We will now construct the abelian group $Z_1(K)$ by considering all those formal linear combinations of edges with integer coefficients (for now) that satisfy the condition of a vanishing boundary. We  call $Z_1(K)$ the group of 1-cycles.
+
+Similarly, we say that a 1-cycle is a bounding cycle if we can find a linear combination of triangles whose boundary  is the given cycle. The group of such bounding cycles shall be denoted by $B_1(K)$.
+
+Thinking back to the motivational part of this section, we are only \glqq interested \grqq{} in the 1-cycles that aren't also bounding cycles. Obviously, $B_1(K)$ is a subgroup of $Z_1(K)$, so we can form the quotient group
+\[
+H_1(K)=Z_1(K)/B_1(K).
+\]
+This is called the first homology group of $K$.%TODO I never stated what K is.
+
+\section{Higher \SH{} Groups with Integer Coefficients}
+Nowhere in \autoref{first-hom} where we restricted to two dimensions. Actually, the computation of higher simplicial homology groups is very similar to that in 2-dimensions.
+
+We begin with the following definition from Munkres \cite{mu}
+
+\section{\SH{} Groups with $\mathbb{Z}/2\mathbb{Z}$ Coefficients}
+
+\section{Homotopy Invariance of \SH}
+
+\printbibliography
+\end{document}
