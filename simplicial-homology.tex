@@ -6,7 +6,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{hyperref,microtype,lmodern,csquotes}
 \usepackage[english]{babel}
-\usepackage{tikz}
+\usepackage{tikz, tikz-cd}
 \usetikzlibrary{3d,calc,decorations}
 \usepackage{pst-solides3d}
 \usepackage{caption}
@@ -42,6 +42,7 @@
 \newcommand{\SH}{Simplicial Homology}
 \newcommand{\sh}{simplicial homology}
 \newcommand{\Z}{\mathbb{Z}}
+\newcommand{\im}{\mathrm{Im}\,}
 \newcommand{\qandq}{\quad \text{and} \quad}
 \newcommand{\qqandqq}{\qquad \text{and} \qquad}
 \newcommand{\scs}{simplicial complexes}
@@ -159,17 +160,17 @@ A choice of orientation is usually depicted with arrows as can be seen in \autor
 	\draw (1,0.5)-- (2,1) node[right]{$v_1$};
 	\draw (1,-1) node{$(v_0,v_1)$};
 	%
-	\draw[] (3,0) node[below]{$v_0$}--(5,0)node[below]{$v_1$};
-	\draw[] (5,0) -- (4,2) node[above]{$v_2$};
-	\draw[] (4,2)--(3,0);
-	\draw (4,-1) node{$(v_0,v_1,v_2)$};	
-	\draw[->] (4.3,0.7)arc[start angle=0, end angle=300,radius=0.3cm];
+	\draw[] (4,0) node[below]{$v_0$}--(6,0)node[below]{$v_1$};
+	\draw[] (6,0) -- (5,2) node[above]{$v_2$};
+	\draw[] (5,2)--(4,0);
+	\draw (5,-1) node{$(v_0,v_1,v_2)$};	
+	\draw[->] (5.3,0.7)arc[start angle=0, end angle=300,radius=0.3cm];
 	%
-	\draw (6,0) node[below]{$v_0$}--(8,0)node[below]{$v_1$}--(6.75,2)node[above]{$v_3$}--cycle;
-	\draw (8,0)--(8,1)node[right]{$v_2$}--(6.75,2);
-	\draw[dashed] (6,0)--(8,1);
-	\draw (7,-1) node{$(v_0,v_1,v_2,v_3)$};
-	\draw[->] (9,0.5) arc[start angle=-90, end angle=90, radius=0.3cm] arc [start angle=90, end angle=270,radius=0.1] arc[start angle=-90, end angle=90, radius=0.3];
+	\draw (8,0) node[below]{$v_0$}--(10,0)node[below]{$v_1$}--(8.75,2)node[above]{$v_3$}--cycle;
+	\draw (10,0)--(10,1)node[right]{$v_2$}--(8.75,2);
+	\draw[dashed] (8,0)--(10,1);
+	\draw (9,-1) node{$(v_0,v_1,v_2,v_3)$};
+	\draw[->] (11,0.5) arc[start angle=-90, end angle=90, radius=0.3cm] arc [start angle=90, end angle=270,radius=0.1] arc[start angle=-90, end angle=90, radius=0.3];
 \end{tikzpicture}
 \caption{Indicating orientation with arrows \cite[see][p.27]{mu}\label{orientation-arrows}}
 \end{figure}
@@ -231,14 +232,14 @@ To define simplicial homology groups in any meaningful way, we need a few defini
 	Let $K$ be a simlicial complex. A \textbf{$p$-chain} on $K$ is a function $c$ from the set of oriented $p$-simplices of $K$ to the integers such that:
 	\begin{enumerate}
 		\item $c(\sigma)=-c(\sigma^\prime)$ if $\sigma$ and $\sigma^\prime$ are opposite orientations of the same simplex.
-		\item $c(\sigma)=0$ for all but finately many oriented $p$-simplices $\sigma$.
+		\item $c(\sigma)=0$ for all but finitely many oriented $p$-simplices $\sigma$.
 	\end{enumerate}
 We add $p$-chains by adding their values; the resulting group is denoted $C_p(K)$ and is called the group of (oriented) $p$-chains of $K$. If $p<0$ or $p>\dim K$, we let $C_p(K)$ denote the trivial group.
 
-If $\sigma$ is an oriented simplex, the elementary chain $c$ corresponding to $\sigma$ is the function defined as follows:
-\begin{align*}c(\sigma)=&1,\\
- c(\sigma^\prime)=&-1&&\text{ if $\sigma^\prime$ is the opposite orientation of $\sigma$}\\
- c(\tau)=&0 &&\text{ for all other oriented simplices $\tau$.} 
+If $\sigma$ is an oriented simplex, the elementary chain $c_\sigma$ corresponding to $\sigma$ is the function defined as follows:
+\begin{align*}c_\sigma(\sigma)=&1,\\
+ c_\sigma(\sigma^\prime)=&-1&&\text{ if $\sigma^\prime$ is the opposite orientation of $\sigma$}\\
+ c_\sigma(\tau)=&0 &&\text{ for all other oriented simplices $\tau$.} 
  \end{align*}
 \end{definition}
 
@@ -248,7 +249,147 @@ We are now able to formulate the our first result as can be found in Munkres boo
 \begin{lemma}
 	$C_p(K)$ is free abelian; a basis for $C_p(K)$ can be obtained by orienting each $p$-simplex and using the corresponding elementary chains as a basis.
 \end{lemma}
-%TODO proof the Lemma
+
+\begin{proof}
+	It is easy to see that each chain $c$ in $C_p(K)$ can be expressed uniquely as a linear combination of the elementary chains $c_{\sigma_i}$ of the simplices of $K$, i.e.
+	\[
+	c=\sum_{i}n_i c_{\sigma_i}.
+	\]
+	Here, the the chain $c$ assigns the value $n_i$ to each simplex $\sigma_i$, $-n_i$ for the simplex $\sigma_i$ with reversed orientation and $0$ to every simplex that does not appear in the summation.\footnote{Recall that by definition of the elementary chains we have \[c_{\sigma_i}(\tau)=\begin{cases}
+		1 &\text{if }\sigma_i=\tau\\
+		-1&\text{if }\tau \text{ is the opposite orientation of }\sigma_i\\
+		0&\text{else}
+		\end{cases}
+		\]}
+\end{proof}
+
+\begin{definition}
+	We define the boundary operator 
+	\[
+	\partial_p:\quad C_p(K)\to C_{p-1}(K)
+	\]
+	to be the homomorphism via its action on an oriented simplex $\sigma=(v_0,\dots,v_p)$:
+	\[
+	\partial_p\sigma=\partial_p(v_0,\dots,v_p)=\sum_{i=0}^{p}(-1)^i(v_0,\dots,\hat{v}_i,\dots,v_p)
+	\]
+	where the symbol $\hat{v}_i$ means that the vertex $v_i$ is to be deleted from the array.
+\end{definition}
+
+As the name suggests, the result of this homomorphism indeed refers to the (topological) boundary of the simplex once we interpret the sum of two elementary chains as the union of the corresponding simplices as we will see in the several examples, but first we have to check well-definedness. For that, it is necessary to show that
+\[\partial_p(-\sigma)=-\partial_p(\sigma) 
+\]
+Since the orientation fo a simplex only depends on the \emph{sign} of the permutation, it is sufficient to check for the simple case of exchanging $v_0$ and $v_1$:
+
+\begin{align*}
+	&\partial_p(v_0,\dots,v_p)+\partial_p(v_1,v_0,v_2,\dots,v_p)\\
+	=&(v_1,\dots,v_p)-(v_0,v_2,\dots,v_p)+\sum_{i=2}^{p}(-1)^i(v_0,\dots,\hat{v}_i,\dots,v_p)\\
+	+&(v_0,v_2,\dots,v_p)-(v_1,v_2,\dots,v_p)+\sum_{i=2}^p(-1)^i\underset{=-(v_0,v_1,v_2,\dots,\hat{v}_i,\dots,v_p)}{\underbrace{\ensuremath{(v_1,v_0,v_2,\dots,\hat{v}_i,\dots,v_p)}}}=0
+\end{align*}
+
+\begin{examples}\mbox{}
+	\begin{enumerate}
+		\item \parbox[c]{.5\linewidth}{$\partial_1(v_0,v_1)=v_1-v_0$}%
+		\parbox[c]{.5\linewidth}{
+		\begin{tikzpicture}
+		\draw[->] (0,0) node[below]{$v_0$}->(1,0.5);
+		\draw (1,0.5)-- (2,1) node[right]{$v_1$};
+		%
+		\draw[fill=black](4,.5)circle (1pt) node[below]{$v_1$};
+		\draw[fill=black](5,.5)circle (1pt) node[below]{$v_0$};
+		\draw (4.5,.5) node{$-$};
+		\end{tikzpicture}}
+	\item 
+	\parbox[c]{.5\linewidth}{$\partial_2(v_0,v_1,v_2)=(v_1,v_2)-(v_0,v_2)+(v_0,v_1)$}%
+	\parbox[c]{.5\linewidth}{
+		\begin{tikzpicture}
+			\draw[] (4,0) node[below]{$v_0$}--(6,0)node[below]{$v_1$};
+			\draw[] (6,0) -- (5,2) node[above]{$v_2$};
+			\draw[] (5,2)--(4,0);
+			%\draw (5,-1) node{$(v_0,v_1,v_2)$};	
+			\draw[->] (5.3,0.7)arc[start angle=0, end angle=300,radius=0.3cm];
+			%
+			\draw[] (8,0) node[below]{$v_0$}--(10,0)node[below]{$v_1$};
+			\draw[] (10,0) -- (9,2) node[above]{$v_2$};
+			\draw[] (9,2)--(8,0);
+			\draw[->](8,0)--(9,0);
+			\draw[->](10,0)--(9.5,1);
+			\draw[->](9,2)--(8.5,1);
+		\end{tikzpicture}
+	}
+	\item 
+	\parbox[c]{.5\linewidth}{\begin{align*}\partial_3(v_0,v_1,v_2,v_3)&=(v_1,v_2,v_3)-(v_0,v_2,v_3)\\
+	&+(v_0,v_1,v_3)-(v_0,v_1,v_2)
+	\end{align*}}%
+\parbox[c]{.5\linewidth}{ 
+	\begin{tikzpicture}
+		\draw (0,0) node[below]{$v_0$}--(2,0)node[below]{$v_1$}--(0.75,2)node[above]{$v_3$}--cycle;
+		\draw (2,0)--(2,1)node[right]{$v_2$}--(0.75,2);
+		\draw[dashed] (0,0)--(2,1);
+		\draw[->] (3,0.5) arc[start angle=-90, end angle=90, radius=0.3cm] arc [start angle=90, end angle=270,radius=0.1] arc[start angle=-90, end angle=90, radius=0.3];
+		%
+		\draw (4,0) node[below]{$v_0$}--(6,0)node[below]{$v_1$}--(4.75,2)node[above]{$v_3$}--cycle;
+		\draw (6,0)--(6,1)node[right]{$v_2$}--(4.75,2);
+		\draw[dashed] (4,0)--(6,1);
+		%
+		\draw[->,>=stealth](5.55,1.2)arc[start angle=0,end angle=270,radius=3pt];
+		\draw[->,>=stealth,dotted](4.9,1.2)arc[start angle=0,end angle=-270,radius=4pt];
+		\draw[->,>=stealth](5,.8)arc[start angle=0,end angle=270,radius=4pt];
+		\draw[->,>=stealth,dotted](5.5,.2)arc[start angle=0,end angle=-270,radius=4pt];
+	\end{tikzpicture}
+	}
+
+	\end{enumerate}
+	
+\end{examples}
+
+We will now consider the following diagram. (For the sake of readability, we deleted the dimension subscripts from the boundary operator)
+\begin{center}
+\begin{tikzcd}
+	C_\bullet:&\cdots \arrow[r, "\partial"] & C_{p+1}\arrow[r,"\partial"]&C_p\arrow[r,"\partial"]&C_{p-1}\arrow[r,"\partial"]&\cdots \\
+\end{tikzcd}
+
+\end{center}
+
+\begin{lemma}
+	$C_\bullet$ is a chain complex.
+\end{lemma}
+
+\begin{proof}
+	We need to show that $\partial_{p-1}\circ\partial_p\equiv 0$. It is not hard to prove this, it just requires a lot of bookkeeping:
+	
+	Let $\sigma=(v_0,\dots,v_p)$ be an arbitrary $p$-chain, then
+	\begin{align*}
+		\partial_{p-1}\circ\partial_p(\sigma)&=\partial_{p-1}\left(\sum_{i=0}^{p}(-1)^i(v_0,\dots,\hat{v}_i,\dots,v_p)\right)=\sum_{i=0}^{p}(-1)^i\partial_{p-1}(v_0,\dots,\hat{v}_i,\dots,v_p)\\
+		&=\sum_{i=0}^{p}(-1)^i\sum_{\parbox{.8cm}{\centering\scriptsize
+				$j=0$\\$j\neq i$}}^{p}(-1)^j(v_0,\dots,\hat{v}_j,\dots,\hat{v}_i,\dots,v_p)
+	\end{align*}
+	Each of these term shows up twice with different signs. Thus, everything cancels.
+
+\end{proof}
+
+A common question for chain complexes is exactness. As we will see later in this chapter, they will only be exact for special cases. 
+
+Before we define the simplicial homology groups, we will introduce one more definition:
+
+\begin{definition}
+	\begin{enumerate}
+		\item The kernel of $\partial_p: C_p(K)\to C_{p-1}(K)$ is called the group of $p$-cycles and denoted by $Z_p(K)$.
+		\item The immage of $\partial_{p+1}: C_{p+1}(K)\to C_{p}(K)$ is called the group of $p$-boundaries and is denoted $B_p(K)$.
+	\end{enumerate}
+	
+\end{definition}
+The previous lemma states that $B_p(K)\subset Z_p(K)$.
+
+Let us remind ourselves of what we wanted to do in \autoref{motivation}. We wanted to consider those curves (\emph{cycles}) that were not the \emph{boundary} of some part of the surface. With this in mind, we can now state the definition of simplical homology groups
+
+\begin{definition}
+	We define \[
+	H_p(K):=Z_p(K)/B_p(K)=\ker \partial_p/\im \partial_{p+1}
+	\]
+	and call it the \textbf{$\mathbf{p}$-th simplicial homology goup of $\mathbf{K}$}.
+\end{definition}
+%TODO Examples
+
 \section{\SH{} Groups with $\mathbb{Z}/2\mathbb{Z}$ Coefficients}
 \section{Functoriality Property}
 \section{Homotopy Invariance of \SH}
