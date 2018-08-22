@@ -42,6 +42,7 @@
 \newcommand{\SH}{Simplicial Homology}
 \newcommand{\sh}{simplicial homology}
 \newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Sp}{\mathbb{S}}
 \newcommand{\im}{\mathrm{Im}\,}
 \newcommand{\qandq}{\quad \text{and} \quad}
 \newcommand{\qqandqq}{\qquad \text{and} \qquad}
@@ -371,7 +372,7 @@ A common question for chain complexes is exactness. As we will see later in this
 
 Before we define the simplicial homology groups, we will introduce one more definition:
 
-\begin{definition}
+\begin{definition}\mbox{}
 	\begin{enumerate}
 		\item The kernel of $\partial_p: C_p(K)\to C_{p-1}(K)$ is called the group of $p$-cycles and denoted by $Z_p(K)$.
 		\item The immage of $\partial_{p+1}: C_{p+1}(K)\to C_{p}(K)$ is called the group of $p$-boundaries and is denoted $B_p(K)$.
@@ -389,6 +390,92 @@ Let us remind ourselves of what we wanted to do in \autoref{motivation}. We want
 	and call it the \textbf{$\mathbf{p}$-th simplicial homology goup of $\mathbf{K}$}.
 \end{definition}
 %TODO Examples
+
+\begin{examples}\mbox{}
+	\begin{enumerate}
+		\item Lets start with a simple triangulation\footnote{A triangulation of a space $T$ is a simplicial complex $X$ whose geometric realization $|X|$ is homeomorphic to $T$.}
+		 of $\Sp^2$ like the hollow tetrahedron (depicted in \autoref{hollow-tetrahedron}) \[X=\langle v_0v_1v_2,v_0v_1v_3,v_0v_2v_3,v_1v_2v_3 \rangle. \]
+			 	
+		 	\begin{figure}\centering
+		 		\begin{tikzpicture}
+		 		\draw (4,0) node[below]{$v_0$}--(6,0)node[below]{$v_1$}--(4.75,2)node[above]{$v_3$}--cycle;
+		 		\draw (6,0)--(6,1)node[right]{$v_2$}--(4.75,2);
+		 		\draw[dashed] (4,0)--(6,1);
+		 			\draw[->,>=stealth](5.55,1.2)arc[start angle=0,end angle=270,radius=3pt];
+		 			\draw[->,>=stealth,dotted](4.9,1.2)arc[start angle=0,end angle=-270,radius=4pt];
+		 			\draw[->,>=stealth](5,.8)arc[start angle=0,end angle=270,radius=4pt];
+		 			\draw[->,>=stealth,dotted](5.5,.2)arc[start angle=0,end angle=-270,radius=4pt];
+		 		\end{tikzpicture}
+		 		\caption{geometric realization of the hollow tetrahedron.\label{hollow-tetrahedron}}
+		 	\end{figure}
+	 It consists of 4 faces ($f_1=v_0v_1v_2, f_2=v_0v_1v_3$, $f_3=v_0v_2v_3, f_4=v_1v_2v_3$), 6 edges ($e_1=v_0v_1, e_2=v_0v_2, e_3=v_0v_3,$ $ e_4=v_1v_2, $ $e_5=v_1v_3, $ $e_6=v_2v_3$) and 4 vertices ($v_0,v_1,v_2,v_3$). Therefore, we find the simplicial chain complex to be
+	 \begin{tikzcd}
+	 	\Z\langle f_1,f_2,f_3f_4\rangle\arrow[r,"\partial_2"]&\Z\langle e_1,e_2,e_3,e_4,e_5,e_6\rangle\arrow[r,"\partial_1"]&\Z\langle v_0,v_1,v_2,v_3\rangle\arrow[r,"\partial_0"]&0
+	 \end{tikzcd}
+ 
+ Computing the boundaries and writing the results in a more user friendly fashion gives
+ 
+ \parbox[c]{.6\linewidth}{
+ \begin{align*}
+ 	\partial f_1=v_1v_2-v_0v_2+v_0v_1=e_1-e_2+e_4\\
+ 	\partial f_2=v_1v_3-v_0v_3+v_0v_1=e_1-e_3+e_5\\
+ 	\partial f_3=v_2v_3-v_0v_3+v_0v_2=e_2-e_3+e_6\\
+ 	\partial f_4=v_2v_3-v_1v_3+v_1v_2=e_4-e_5+e_6
+ \end{align*}}%
+\parbox[c]{.4\linewidth}{
+	$\partial_2=\begin{matrix}
+		 	&\begin{matrix}f_1	&f_2	&f_3	&f_4\end{matrix}\\
+		\begin{matrix}
+		e_1	\\
+		e_2	\\
+		e_3	\\
+		e_4	\\
+		e_5	\\
+		e_6	
+		\end{matrix}&
+		\begin{bmatrix}
+		1		&1		&0		&0\\
+		-1		&0		&1		&0\\
+		0		&-1		&-1		&0\\
+		1		&0		&0		&1\\
+		0		&1		&0		&-1\\
+		0		&0		&1		&1
+		\end{bmatrix}
+	\end{matrix}$	
+}
+
+\parbox[c]{.5\linewidth}{
+\begin{align*}
+	\partial e_1&=v_1-v_0,&&\partial e_2=v_2-v_0,&&\partial e_3=v_3-v_0,\\
+	\partial e_4&=v_2-v_1,&&\partial e_5=v_3-v_1,&&\partial e_6=v_3-v_1
+\end{align*}}%
+\parbox[c]{.5\linewidth}{$
+\quad\begin{matrix}
+	&\begin{matrix}e_1&e_2&e_3&e_4&e_5&e_6	\end{matrix}\\
+	\begin{matrix}v_0\\v_1\\v_2\\v_3\end{matrix}&
+	\begin{bmatrix}
+	-1	&-1	&-1	&0	&0	&0\\
+	1	&0	&0	&-1	&-1	&0\\
+	0	&1	&0	&1	&0	&-1\\
+	0	&0	&1	&0	&1	&1
+	\end{bmatrix}
+\end{matrix}$
+}
+We then find
+\begin{align*}
+\ker \partial_2&=\Z\langle f_1-f_2+f_3-f_4\rangle\\
+\ker \partial_1&=\Z\langle e_1-e_2+e_4,e_1-e_3+e_5, e_2-e_3+e_6 \rangle
+\end{align*}
+Then we have
+\begin{align*}
+	H_2(\Sp^2)&=\ker \partial_2/\im \partial_3=\ker \partial_2=\Z\langle f_1-f_2+f_3-f_4\rangle\simeq\Z\\
+	H_1(\Sp^2)&=\ker \partial_1/\im \partial_2\simeq\Z^3/\Z^3\simeq 0\\
+	H_0(\Sp^2)&=\ker\partial_0/\im \partial_1\simeq \Z^4/\Z^4\simeq 0\\
+	H_n(\Sp^2)&=0\quad \text{for $n>2$}
+\end{align*}
+	\end{enumerate}
+\end{examples}
+
 
 \section{\SH{} Groups with $\mathbb{Z}/2\mathbb{Z}$ Coefficients}
 \section{Functoriality Property}
