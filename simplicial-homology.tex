@@ -229,7 +229,7 @@ A choice of orientation is usually depicted with arrows as can be seen in \autor
 To define simplicial homology groups in any meaningful way, we need a few definitions that allow us to formulate our ideas form \autoref{motivation} more precise. There are several ways to go about this with various amounts of rigor. In this paper, we will follow the path of Munkres \cite[p. 27f]{mu}.
 
 %TODO This is a direct citation. Do I need to state that any further?
-\begin{definition}
+\begin{definition}\label{def-chain}
 	Let $K$ be a simlicial complex. A \textbf{$p$-chain} on $K$ is a function $c$ from the set of oriented $p$-simplices of $K$ to the integers such that:
 	\begin{enumerate}
 		\item $c(\sigma)=-c(\sigma^\prime)$ if $\sigma$ and $\sigma^\prime$ are opposite orientations of the same simplex.
@@ -470,14 +470,141 @@ Then we have
 \begin{align*}
 	H_2(\Sp^2)&=\ker \partial_2/\im \partial_3=\ker \partial_2=\Z\langle f_1-f_2+f_3-f_4\rangle\simeq\Z\\
 	H_1(\Sp^2)&=\ker \partial_1/\im \partial_2\simeq\Z^3/\Z^3\simeq 0\\
-	H_0(\Sp^2)&=\ker\partial_0/\im \partial_1\simeq \Z^4/\Z^4\simeq 0\\
+	H_0(\Sp^2)&=\ker\partial_0/\im \partial_1\simeq \Z^4/\Z^3\simeq \Z\\
 	H_n(\Sp^2)&=0\quad \text{for $n>2$}
 \end{align*}
+
+
+\item The Torus (see \autoref{torus}) is a little more difficult. Unfortunately, the simplest (simplicial) triangulation is depicted in \autoref{triangulation-torus}. This triangulation would lead to boundary operators in the form of  $27\times 18$  and  $8\times 27$ matrices respectively.  The resulting homology groups are:
+\[
+H_0=\Z,\quad H_1=\Z^2,\quad H_2=\Z,\quad H_{n>2}=0
+\]
+Even tough these aren't hard to compute, it is very tedious and therefore wont be presented here.
+\footnote{By introducing the concept of cellular homology, this can be simplified to $3\times 2$ and $1\times 3$ matrices via the \glqq(non-simplicial)  triangulation\grqq:	
+	
+\begin{tikzpicture}[scale=0.5]
+	\draw[->] (-5,0) node[below]{$v_0$}--(-4,0) node[below]{b};
+	\draw[->] (-5,2) node[above]{$v_0$}--(-4,2) node[above]{b};
+	\draw[->] (-5,0)--(-5,1) node[left]{a};
+	\draw[->] (-3,0) node[below]{$v_0$}--(-3,1) node[right]{a};
+	\draw[->] (-5,0)--(-4,1) node[above]{$c$};
+	\draw[->] (-4,1)--(-3,2);
+	\draw (-5,0)--(-3,0)--(-3,2) node[above]{$v_0$}--(-5,2)--cycle;
+\end{tikzpicture}
+
+	 Cellular and simplicial homology actually coincide. However we currently lack the framework for cellular homology}.
+
+\begin{figure}
+	
+\parbox[c]{.5\linewidth}{\centering
+\begin{tikzpicture}
+	\draw[->] (-5,0) node[below]{$v_0$}--(-4,0) node[below]{b};
+	\draw[->] (-5,2) node[above]{$v_0$}--(-4,2) node[above]{b};
+	\draw[->] (-5,0)--(-5,1) node[left]{a};
+	\draw[->] (-3,0) node[below]{$v_0$}--(-3,1) node[right]{a};
+	\draw (-5,0)--(-3,0)--(-3,2) node[above]{$v_0$}--(-5,2)--cycle;
+\end{tikzpicture}}%
+\parbox[c]{.5\linewidth}{\centering
+\begin{tikzpicture}
+	\draw (0,0)--(6,0)--(6,6)--(0,6)--cycle;
+	\draw (2,0)--(2,6);
+	\draw (4,0)--(4,6);
+	\draw (0,2)--(6,2);
+	\draw (0,4)--(6,4);
+	\draw (0,4)--(2,6);
+	\draw (0,2)--(4,6);
+	\draw (0,0)--(6,6);
+	\draw (2,0)--(6,4);
+	\draw (4,0)--(6,2);
+\end{tikzpicture}	
+}
+\parbox[t]{.5\linewidth}{\captionsetup{width=.9\linewidth}
+\caption{The fundamental polygon of the torus.\label{torus}}}%
+\parbox[t]{.5\linewidth}{\captionsetup{width=.9\linewidth}\caption{A simplicial triangulation of the torus.\label{triangulation-torus}}}
+\end{figure}
+
+We see that the homology groups for the Sphere and the Torus do not agree in every dimension. Since homotopy equivalent spaces %TODO am i showing this for homotopy or homeomotphic
+have isomorphic homology groups (we will show that later), we find that the sphere cannot be homotopy equivalent to the torus.
+
+\item We will now consider the circle. This can be triangulated as an empty triangle, i.e.
+\begin{center}
+	
+\begin{tikzpicture}
+	\draw[->] (0,0)--(1,0) node[below]{$e_0$};
+	\draw[->] (2,0)--(1.5,1)node[right]{$e_1$};
+	\draw[->] (1,2)--(0.5,1)node[left]{$e_2$};
+	\draw (0,0) node[below]{$v_0$}--(2,0) node[below]{$v_1$}--(1,2) node[above]{$v_2$}--cycle;
+\end{tikzpicture}
+\end{center}
+
+We easily find 
+\[
+\partial_1=\begin{bmatrix}
+-1&0&1\\1&-1&0\\0&1&-1
+\end{bmatrix},\quad \partial_0\equiv 0
+\]
+Therefore,
+\[H_1(\Sp^1)\simeq\Z/0\simeq\Z,\quad H_0(\Sp)\simeq\Z^3/\Z^2\simeq\Z
+\]
+\item 
+Now that we have considered the circle, we might also be interested in the $2$-ball $B^2$. The triangulation is very easy this time. It is just one 2-dimensional simplex:
+\begin{center}
+\begin{tikzpicture}
+\draw[] (4,0) node[below]{$v_0$}--(6,0)node[below]{$v_1$};
+\draw[] (6,0) -- (5,2) node[above]{$v_2$};
+\draw[] (5,2)--(4,0);
+%\draw (5,-1) node{$(v_0,v_1,v_2)$};	
+\draw[->] (5.3,0.7)arc[start angle=0, end angle=300,radius=0.3cm];
+\end{tikzpicture}
+
+We find that $\partial_1$ and $\partial_0$ are the same as before and $\partial_2$ can be expressed as
+\[
+\partial_2=\begin{bmatrix}
+1\\1\\1
+\end{bmatrix}
+\]
+We then find
+\[
+H_2(B^2)=0,\quad H_1(B^2)=0,\quad H_0(B^2)=\Z
+\]
+
+\end{center}
 	\end{enumerate}
 \end{examples}
 
 
 \section{\SH{} Groups with $\mathbb{Z}/2\mathbb{Z}$ Coefficients}
+
+Let us remind ourselves of the definition for $p$-chains (Definition \ref{def-chain}):
+\begin{quotation}
+	Let $K$ be a simlicial complex. A \textbf{$p$-chain} on $K$ is a function $c$ from the set of oriented $p$-simplices of $K$ to the integers such that:
+	\begin{enumerate}
+		\item $c(\sigma)=-c(\sigma^\prime)$ if $\sigma$ and $\sigma^\prime$ are opposite orientations of the same simplex.
+		\item $c(\sigma)=0$ for all but finitely many oriented $p$-simplices $\sigma$.
+	\end{enumerate}
+\end{quotation}
+
+There is actually no reason (other than our familiarity with it) to restrict ourselves to the integers here. In fact, the same statements hold true for any abelian group $G$ and it can be helpful to consider other groups than the integers. To denote the change of our underlying group, we use the notation
+\[
+C_n(K;G)\qandq H_n(K;G)
+\]
+for the group of chains and the homology group of $K$ with coefficients in $G$.
+
+Since the group of chains with integer coefficients $C_n(K;\Z)=C_n(K)$ merely consists of linear combinations of elementary chains with integer coefficients, there is a neat way to derive $C_n(K;G)$ if $C_n(K;\Z)$ is already known. We find that
+\[
+C_n(K;G)\simeq C_n(K;\Z)\otimes_\Z G,
+\]
+which leads to many interesting phenomena. The same holds for homology groups.
+
+
+
+This might be a good time to remember the fundamental theorem of finitely generated abelian groups (such as the homology groups) as it can be found in Munkres' book \cite[see ][Theorem 4.3, p. 24]{mu}:
+\begin{theorem}[The fundamental theorem of finitely generated abelian groups]
+	Let $G$ be a finitely generated abelian group. Let $T$ be its torsion subgroup.Then there exists a free abelian subgroup $H$ of $G$ having finite rank such that $G=H\oplus T$. 
+\end{theorem}
+
+Since there is no possibility of torsion after taking the tensor product with a field of characteristic 0, we find that for any such field $\mathbb{K}$ the homology group with coefficients in $\mathbb{K}$ is a $\mathbb{K}$-vectorspace.
+
 \section{Functoriality Property}
 \section{Homotopy Invariance of \SH}
 
