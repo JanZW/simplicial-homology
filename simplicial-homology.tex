@@ -1,5 +1,5 @@
 \documentclass[draft]{scrartcl}
-\title{Simplicial Homology}
+\title{Simplicial Homology[draft]}
 \author{Jan Zwank}
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage[utf8]{inputenc}
@@ -594,7 +594,7 @@ Since the group of chains with integer coefficients $C_n(K;\Z)=C_n(K)$ merely co
 \[
 C_n(K;G)\simeq C_n(K;\Z)\otimes_\Z G,
 \]
-which leads to many interesting phenomena. The same holds for homology groups.
+which leads to many interesting phenomena. The same holds for homology groups if the coefficient ring is a field.%TODO No it doesn't. Need Universal coefficient theorem, but over a field Ext is zero so it holds for fields.
 
 
 
@@ -605,7 +605,95 @@ This might be a good time to remember the fundamental theorem of finitely genera
 
 Since there is no possibility of torsion after taking the tensor product with a field of characteristic 0, we find that for any such field $\mathbb{K}$ the homology group with coefficients in $\mathbb{K}$ is a $\mathbb{K}$-vectorspace.
 
+
+A special case is the coefficient ring $\Z/2\Z$, since here $-1=1$. Hence, we no longer have to worry about orientation. Therefore, this ring is often used if the considered manifolds might or might not be orientable.
+
+%TODO Examples: RP^2, klein bottle
+
+\begin{examples}
+	Inhalt...
+\end{examples}
+
 \section{Functoriality Property}
+We will now explore how homotopy behaves under continuous functions. We will begin with the following definition and lemma from Munkres' book \cite[lemma 12.1, p. 52]{mu}:
+
+\begin{definition}
+	Let $f: K\to L$ be a simplicial map. If $v_0\dots v_p$ is a simplex of $K$, then the points $f(v_0)\dots f(v_p)$ span a simplex of $L$. we define a homomorphism $f_\sharp: C_p(K)\to C_p(L)$ by defining it on oriented simplices as follows:
+	\[
+	f_\sharp([v_0,\dots,v_p])=\begin{cases}
+	[f(v_0),\dots, f(v_p)],& \text{if } f(v_0),\dots, f(v_p) \text{ are distinct}\\
+	0,&\text{otherwise}
+	\end{cases}
+	\]
+	
+	The family $\{f_\sharp\}$ is called the chain map induced by the simplicial map $f$.
+\end{definition}
+
+It might be helpful to consider the following diagram:
+
+\begin{center}
+	
+\begin{tikzcd}
+	\cdots\arrow[r,"\partial"]&C_p(K)\arrow[r,"\partial"]\arrow[d,"f_\sharp"]&C_{p-1}(K)\arrow[r,"\partial"]\arrow[d,"f_\sharp"]&C_{p-2}(K)\arrow[r,"\partial"]\arrow[d,"f_\sharp"]&\cdots
+	\\
+	\cdots\arrow[r,"\partial"]&C_p(L)\arrow[r,"\partial"]&C_{p-1}(L)\arrow[r,"\partial"]&C_{p-2}(L)\arrow[r,"\partial"]&\cdots
+\end{tikzcd}
+\end{center}
+
+This of course raises the question whether this diagram commutes or not. 
+\begin{lemma}
+	The homomorphism $f_\sharp$ commutes with $\partial$; therefore $f_\sharp$ iduces a homomorphism $f_\ast:H_p(K)\to H_p(L)$
+\end{lemma}
+
+\begin{proof}
+
+	Let $\tau$ denote the simplex of $L$ that is spanned by $f(v_0),\dots,f(v_p)$. We need to check 
+	\begin{equation}\label{comm}
+		\partial f_\sharp([v_0,\dots,v_p])=f_\sharp(\partial[v_0,\dots,v_p])
+	\end{equation}
+	\begin{description}
+		\item[Case 1 $\dim\tau=p$:] Clearly, this requires $f(v_0),\dots,f(v_p)$ to be distinct. Therefore the statement follows directly from the definitions. %TODO check closely
+		\item[Case 2 $\dim\tau\leq p-2$:] Here, the left side of \eqref{comm} vanishes because $f(v_0),\dots,f(v_p)$ are not distinct. The right side also vanishes, since for every $i$, at least two of the points $f(v_0),\dots,\hat{f}(v_i),\dots,f(v_p)$ are the same.%TODO this is too close to the source-> reformulate
+		\item[Case 3 $\dim\tau=p-1$:] We will assume the following ordering of vertices:
+		\begin{equation}\label{cond}
+		f(v_0)=f(v_1), \qqandqq f(v_1),\dots,f(v_p) \text{ are distinct.}
+		\end{equation}
+		Similarly, to the previous case, the left side of \eqref{comm} vanishes and the right side reads
+		\[
+		[f(v_1)f(v_2),\dots,f(v_p)]-[f(v_0),f(v_2),...,f(v_p)].
+		\]
+		By \eqref{cond} this also vanishes. 
+	\end{description}
+
+To show the second part of the lemma, we need to understand how $f_\sharp$ acts on boundaries and cycles. Let $c$ be an arbitrary cycle of $K$, i.e. $\partial c=0$. Then by \eqref{comm}, we find $\partial f_\sharp (c)=f_\sharp (\partial c)=f_\sharp(0)=0$.
+
+Now, let $b$ be an arbitrary boundary, i.e. there exists some $d$ with $b=\partial d$. Then, $f_\sharp(b)=f_\sharp(\partial d)=\partial f_\sharp(d)$. 
+
+We have thereby shown that $f_\sharp$ maps boundaries (cycles) of $K$ to boundaries (cycles) of $L$. 
+\end{proof}
+
+With this in mind we can now state the functional properties of these homomorphisms. We do this by following Munkres' book \cite[Theorem 12.2, p. 53]{mu} once more.
+
+\begin{theorem}[functorial properties]\mbox{}
+	\begin{enumerate}
+		\item Let $id: K\to K$ be the identity simplicial map. Then $id_\ast: H_p(K)\to H_p(K)$ is the identity homomorphism.
+		\item Let $f:K\to L$ and $g: L\to M$ be simplicial maps. Then $(g\circ f)_\ast=g_\ast\circ f_\ast$; That is, the following diagram commutes:
+		
+		\begin{center}
+			
+		\begin{tikzcd}
+			H_p(K)\arrow[rd,"f_\ast"]\arrow[rr,"(g\circ f)_\ast"]
+			&&H_p(M)\\
+			&H_p(L)\arrow[ru,"g_\ast"]&
+		\end{tikzcd}
+	\end{center}
+	\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+	Inhalt...
+\end{proof}
+
 \section{Homotopy Invariance of \SH}
 
 \printbibliography
