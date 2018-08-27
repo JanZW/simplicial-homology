@@ -479,8 +479,7 @@ Then we have
 \[
 H_0=\Z,\quad H_1=\Z^2,\quad H_2=\Z,\quad H_{n>2}=0
 \]
-Even tough these aren't hard to compute, it is very tedious and therefore wont be presented here.
-\footnote{By introducing the concept of cellular homology, this can be simplified to $3\times 2$ and $1\times 3$ matrices via the \glqq(non-simplicial)  triangulation\grqq:	
+Even tough these aren't hard to compute, it is very tedious and therefore wont be presented here.\footnote{By introducing the concept of cellular homology, this can be simplified to $3\times 2$ and $1\times 3$ matrices via the \glqq(non-simplicial)  triangulation\grqq:	
 	
 \begin{tikzpicture}[scale=0.5]
 	\draw[->] (-5,0) node[below]{$v_0$}--(-4,0) node[below]{b};
@@ -492,7 +491,7 @@ Even tough these aren't hard to compute, it is very tedious and therefore wont b
 	\draw (-5,0)--(-3,0)--(-3,2) node[above]{$v_0$}--(-5,2)--cycle;
 \end{tikzpicture}
 
-	 Cellular and simplicial homology actually coincide. However we currently lack the framework for cellular homology}.
+	 Cellular and simplicial homology actually coincide. However we currently lack the framework for cellular homology}
 
 \begin{figure}
 	
@@ -690,11 +689,71 @@ With this in mind we can now state the functional properties of these homomorphi
 	\end{enumerate}
 \end{theorem}
 
+
+
 \begin{proof}
-	Inhalt...
+	The first part of the Theorem is pretty obvious. The second part follows immediately form $(g_\sharp\circ f_\sharp)=(g\circ f)_\sharp$. To see this, we shall consider vertices $v_0,\dots,v_p$ that span a simplex in $K$.
+	Then by definition 
+	\[
+	f_\sharp([v_0,\dots,v_p])=\begin{cases}
+	[f(v_0),\dots,f(v_p)],& \text{if }f(v_0),\dots,f(v_p) \text{ are distinct},\\
+	0,& \text{otherwise}
+	\end{cases}
+	\]
+	Thus,
+	\begin{align*}
+	g_\sharp\circ f_\sharp([v_0,\dots,v_p])=&\begin{cases}
+	[g\circ f(v_0),\dots,g\circ f(v_p)],& \text{if }g\circ f(v_0),\dots,g\circ f(v_p) \text{ are distinct},\\
+	0,& \text{if }g\circ f(v_0),\dots,g\circ f(v_p) \text{ aren't distinct}\\
+	0,& \text{if }f_\sharp([v_0,\dots,v_p])=0
+	\end{cases}\\
+	=&\begin{cases}
+	[g\circ f(v_0),\dots,g\circ f(v_p)],& \text{if }g\circ f(v_0),\dots,g\circ f(v_p) \text{ are distinct},\\
+		0,& \text{otherwise}
+	\end{cases}\\
+	&=(g\circ f)_\sharp([v_0,\dots,v_p])
+	\end{align*}
 \end{proof}
 
+It follows immediately that
+\begin{corollary}\label{baby-case}
+	Let $f: K\to L$ be a bijective simplicial map such that its inverse is also a simplicial map. Then \[
+	\forall p\geq 0:\quad H_p(K)=H_p(L)
+	\]
+\end{corollary}\qed
+
+This already gives the main Idea for the next chapter.
+
 \section{Homotopy Invariance of \SH}
+We have arrived at what is probably the most important chapter of this paper. In \autoref{motivation} we already mentioned that we can use (simplicial) homology groups to show that two spaces are not homotopic (or homeomorphic). However, so far we never explained why non-isomorphic homology groups imply that. We need to show that homology groups are topological invariants, i.e. that homotopic spaces have isomorphic homology groups.
+
+We already saw a very special case in Corollary \ref{baby-case}. As we will see shortly, the main idea is essentially the same for the general case.
+
+Let us remind ourselves of the general simplicial approximation theorem, as it can be found in Munkres' book \cite[Thm. 16.5, p. 85]{mu}:
+
+\begin{theorem}[The general simplicial approximation theorem]
+	Let $K$ and $L$ be complexes; let $h: |K|\to |L|$ be a continuous map. There exists a subdivision $K^\prime$ of $K$ such that $h$ has a simplicial approximation $f:K^\prime \to L$.
+\end{theorem}
+
+We will further need the following definition again for Munkres' book \cite[p. 100]{mu}:
+\begin{definition}
+	Let $K$ and $L$ be simplicial complexes; let $h:|K|\to |L|$ be a continuous map. Choose a subdivision $K^\prime$ of $K$ such that $h$ has a simplicial approximation $f:K^\prime\to L$ (such exists by virtue of the previous theorem). Let $\lambda:C_\bullet(K)\to C_\bullet(K^\prime)$ be the subdivision operator. We define the homomorphism induced by $h$ 
+	\[
+	h_\ast: H_p(K)\to H_p(L)
+	\]
+	via
+	\[
+	h_\ast=f_\ast\circ \lambda_\ast.
+	\]
+\end{definition}
+
+%TODO well definedness
+
+%TODO homotopic maps induce the same homomorphism
+
+%TODO functorial properties
+
+%TODO homotopy invariance
 
 \printbibliography
 \end{document}
