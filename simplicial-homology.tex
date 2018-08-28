@@ -10,6 +10,7 @@
 \usetikzlibrary{3d,calc,decorations}
 \usepackage{pst-solides3d}
 \usepackage{caption}
+\usepackage{array}
 
 \theoremstyle{plain}
 \newtheorem{theorem}{Theorem}[section]
@@ -39,6 +40,8 @@
 			markings,
 			mark=at position #1 with {\arrow[line width=3pt]{stealth}}},postaction={decorate}}}
 
+\newcommand{\pprime}{{\prime\prime}}
+\newcommand{\ppprime}{{\pprime\prime}}
 \newcommand{\SH}{Simplicial Homology}
 \newcommand{\sh}{simplicial homology}
 \newcommand{\Z}{\mathbb{Z}}
@@ -673,7 +676,7 @@ We have thereby shown that $f_\sharp$ maps boundaries (cycles) of $K$ to boundar
 
 With this in mind we can now state the functional properties of these homomorphisms. We do this by following Munkres' book \cite[Theorem 12.2, p. 53]{mu} once more.
 
-\begin{theorem}[functorial properties]\mbox{}
+\begin{theorem}[functorial properties I]\label{func-prop1}\mbox{}
 	\begin{enumerate}
 		\item Let $id: K\to K$ be the identity simplicial map. Then $id_\ast: H_p(K)\to H_p(K)$ is the identity homomorphism.
 		\item Let $f:K\to L$ and $g: L\to M$ be simplicial maps. Then $(g\circ f)_\ast=g_\ast\circ f_\ast$; That is, the following diagram commutes:
@@ -722,12 +725,94 @@ It follows immediately that
 	\]
 \end{corollary}\qed
 
-This already gives the main Idea for the next chapter.
+This already gives the main Idea for the next section.
 
-\section{Homotopy Invariance of \SH}
-We have arrived at what is probably the most important chapter of this paper. In \autoref{motivation} we already mentioned that we can use (simplicial) homology groups to show that two spaces are not homotopic (or homeomorphic). However, so far we never explained why non-isomorphic homology groups imply that. We need to show that homology groups are topological invariants, i.e. that homotopic spaces have isomorphic homology groups.
+%TODO old frontier
+Before we can get started with that we need some preliminary definitions and results:
 
-We already saw a very special case in Corollary \ref{baby-case}. As we will see shortly, the main idea is essentially the same for the general case.
+%TODO reference
+\begin{definition}%p.57
+	Given two simplicial maps $f,g: K\to L$, these maps are said to be contiguos if for each simplex $v_0\dots v_p$ of $K$, the points \[
+		f(v_0),\dots,f(v_p),g(v_0),\dots,g(v_p)
+		\] span a simplex of $L$.
+\end{definition}
+
+\begin{definition}
+	Let $f,g:K\to L$ be simplicial maps. Suppose that for each $p$, one has a homomorphism \[
+	D: C_p(K)\to C_{p+1}(L)
+	\] satisfying the equation
+	\[
+	\partial D+D\partial=g_\sharp-f_\sharp.
+	\]
+	Then $D$ is said to be a chain homotopy between $f_\sharp$ and $g_\sharp$. Note that the diagramm
+	\begin{center}
+		
+	\begin{tikzcd}
+		&C_{p+1}(L)\arrow[d,"\partial"]\\
+		C_p(K)\arrow[ur,"D_p"]\arrow[d,"\partial"]\arrow[r,shift right,"(f_\sharp)_p" below]\arrow[r,shift left,"(g_\sharp)_p"]&C_p(L)\\
+		C_{p-1}(K)\arrow[ur,"D_{p-1}"' near start]
+	\end{tikzcd}
+\end{center}
+is not commutative.
+\end{definition}
+
+\begin{theorem}\label{chain_hom->invariant}%Thm 12.4
+	If there is a chain homotopy between $f_\sharp$ and $g_\sharp$ then the induced homomorphisms $f_\sharp$ and $g_\sharp$ are equal.
+\end{theorem}
+
+\begin{proof}
+	Let $c$ be a p-cycle of $K$. Then
+	\[
+	g_\sharp(c)-f_\sharp(c)=\partial Dz+D\partial z=\partial Dz+0.
+	\]
+	That means that $f_\sharp$ and $g_\sharp$ differ only by a boundary. Therefore they are in the same homology class, i.e. $f_\ast(c)=g_\ast(c)$.
+\end{proof}
+
+\begin{theorem}\label{contiguous->chain_hom}%Thm 12.5
+	If $f,g: K\to L$ are contiguous simplicial maps, then there is a chain homotopy between $f_\sharp$ and $g_\sharp$.
+\end{theorem}%TODO change up proof (currently cited directly from source)
+
+\begin{proof}
+	Let $\sigma=(v_0,\dots, v_p)\subset K$ and $L(\sigma)=(f(v_0),\dots,f(v_p),g(v_0),\dots,g(v_p))\subset L$. Then
+	\begin{enumerate}
+		\item $L(\sigma)$ is a nonempty, and $\tilde{H}_n(L(\sigma))=0 $ for $n\geq 0$. %TODO define reduced homology
+		\item If $s$ is a face of $\sigma$, then $L(s)\subset L(\sigma)$.
+		\item For each oriented simplex $\sigma$, the chains $f_\sharp(\sigma)$ and $g_\sharp(\sigma)$ are zero on every simplex not in $L(\sigma)$.
+	\end{enumerate}
+
+We will now construct the chain homotopy $D: C_p(K)\to C_{p+1}(L)$ by induction on $p$. For each $\sigma$, the chain $D\sigma$ will vanish on any simplex not contained in $L(\sigma)$.
+
+Let $p=0$; let $v$ be a vertex of $K$. Because $f_\sharp$ and $g_\sharp$ preserve augmentation, \[
+\epsilon(g_\sharp(v)-f_\sharp(v))=1-1=0.
+\]
+Thus $g_\sharp(v)-f_\sharp(v)$ represents an element of the reduced homology group $\tilde{H}_0(L(v))$. %TODO WTF???
+Because this group vanishes, we can choose a 1-chain $Dv$ of $L$ carried by the subcomplex $L(v)$ such that
+\[
+\partial(Dv)=g_\sharp(v)-f_\sharp(v)
+\]
+Then $\partial Dv+D\partial v=\partial Dv+0=g_\sharp(v)-f_\sharp(v)$, as desired. Define $D$ in this way for each vertex of $K$.
+
+Now suppose $D$ is defined in dimensions less than $p$, such that for each oriented simplex $s$ of dimension less than $p$, the chain $Ds$ is carried by $L(s)$, and such that 
+\[
+\partial Ds+D\partial s=g_\sharp(s)-f_\sharp(s)
+\]
+Let $\sigma$ be an oriented simplex of dimension $p$. We wish to define $D\sigma$ so that $\partial (D\sigma)$ equals the chain
+\[
+c=g_\sharp(\sigma)-f_\sharp(\sigma)-D\partial\sigma
+\]
+Note that $c$ is a well-defined chain; $D\partial\sigma$ is defined because $\partial \sigma$ has dimension $p-1$. Furthermore, c is a cycle, for we compute
+\begin{align*}
+	\partial c&=\partial g_\sharp(\sigma)-\partial f_\sharp(\sigma)-\partial D(\partial \sigma)\\
+	&=\partial g_\sharp(\sigma)-\partial f_\sharp(\sigma)-[g_\sharp(\partial\sigma)-f_\sharp(\partial\sigma)-D\partial(\partial\sigma)]
+\end{align*}
+applying the induction hypothesis to the $p-1$ chain $\partial\sigma$. Using the fact that $\partial\circ \partial=0$, we see that $\partial c=0$.
+
+Finally, we note that $c$ is carried by $L(\sigma)$, and since $\tilde{H}_p(L(\sigma))=0$, we can choose a $p+1$ chain $D\sigma$ carried by $L(\sigma)$ such that 
+\[
+\partial D\sigma=c=g_\sharp(\sigma)-f_\sharp(\sigma)-D\partial\sigma
+\]
+We then define $D(-\sigma)=-D(\sigma)$. We repeat this process for each $p$-simplex $\sigma$ of $K$; then we have the required chain homotopy $D$ in dimension $p$. The theorem follows.
+\end{proof}
 
 Let us remind ourselves of the general simplicial approximation theorem, as it can be found in Munkres' book \cite[Thm. 16.5, p. 85]{mu}:
 
@@ -749,9 +834,98 @@ We will further need the following definition again for Munkres' book \cite[p. 1
 
 %TODO well definedness
 
-%TODO homotopic maps induce the same homomorphism
+Since this definition involves several choices, we need to make sure, that the resulting homomorphism isn't dependent on these choices. We do this in two steps. Firstly, notice that for some choice of a subdivision $K^\prime$ two simplicial approximations, then these are contiguous and therefore induce the same homomorphism $f_\ast\equiv g_\ast$ (see Theorems \ref{chain_hom->invariant} and \ref{contiguous->chain_hom}).
+
+Let $\iota: K^\prime\to K $ be a simplicial approximation to the identity map of $K$, then $\lambda_\ast=(g_\ast)^{-1}$, hence
+\[
+h_\ast=f_\ast\circ(g_\ast)^{-1}
+\]
+
+Secondly, we will now use this to show that $h_\ast$ doesn't depend on the choice of subdivision $K^\prime$ either. Let $K^\pprime$ be another subdivision of $K$ such that $h$ has a simplicial approximation mapping $K\pprime$ to $L$. We will see that the induced homomorphism $h_\ast$ does not change if we use substitute $K$ with $K^\pprime$ in its definition.
+
+We will first explore the special case that $|K|$ has a simplicial approximation $k: K^\pprime\to K^\prime$
+
+\begin{center}
+	
+\begin{tikzcd}
+	&&K\\
+	K^\pprime\arrow[r,"k"]&K^\prime\arrow[ru,"g"]\arrow[rd,"f"]\\
+	&&L	
+\end{tikzcd}
+\end{center}
+
+Let $h\ast^\prime$ be the induced homomorphism defined via $K^\pprime$. We can then write
+\[
+h_\ast^\prime(f\circ k)_\ast\circ(g\circ k)_\ast^{-1}=(f_\ast\circ k_\ast)\circ(g_\ast\circ k_\ast)^{-1}=f\circ g_\ast^{-1}=g_\ast\circ\lambda_\ast=h_\ast
+\]
+
+We generalize this method by considering a subdivision $K\ppprime$ of $K$ such that the identity map has simplicial approximations
+\[
+k_1: K^\ppprime\to K^\prime\qandq k_2: K^\ppprime\to K^\pprime.
+\]
+
+We can now use this subdivision to construct a homomorphism $h_\ast^\pprime$. By our previous work, we already know that 
+\[
+h_\ast^\prime=h_\ast^\pprime=h_\ast
+\]
 
 %TODO functorial properties
+We are now able to generalize \autoref{func-prop1}
+\begin{theorem}[functorial properties II]\label{func-prop2}
+	The identity map $id: |K|\to |K|$ induces the identity homomorphism $i_\ast: H_p(K)\to H_p(K)$. If $h:|K|\to|L|$ and $k:|L|\to |M|$ are continuous maps, then $(k\circ h)_\ast=k_\ast\circ h_\ast$.
+\end{theorem}
+\begin{proof}
+	The first part is elementary. For the second part, choose simplicial approximations as follows:
+	
+	\begin{tabular}{c|>{simplicial approximation to }l}
+		$f_0: L^\prime\to M$&  $k$\\
+		$g_0: L^\prime\to L$& the identity on $|L|$\\
+		$f_1: K^\prime\to L^\prime$& $h$\\
+		$g_1: K^\prime\to K$& the identity on $|K|$
+	\end{tabular}
+
+\begin{center}
+	
+	\begin{tikzcd}
+		\left|K\right|\arrow[r,"h"]&\left|L\right|\arrow[r,"k"]&\left|M\right|\\
+		K&L&M\\
+		&L^\prime\arrow[u,"g_0"]\arrow[ur,"f_0"]\\
+		K^\prime\arrow[uu,"g_1"]\arrow[ur,"f_1"]
+	\end{tikzcd}
+\end{center}
+With these choices, $f_0\circ f_1$ is a simplicial approximation to $k\circ h$, hence
+\[
+(k\circ h)_\ast=(f_0\circ f_1)_\ast\circ(g_1)_\ast^{-1}
+\]
+
+Since $g_0\circ f_1$ is a simplicial approximation to $h$, have
+\[
+h_\ast=(g_0\circ f_1)_\ast\circ(g_1)_\ast^{-1}\qandq k_\ast=(f_0)_\ast\circ(g_0)_\ast^{-1}
+\]
+
+Combining these results and applying \autoref{func-prop1}
+we obtain 
+\[
+(k\circ h)_\ast=k_\ast\circ h_\ast
+\]
+as desired.
+
+
+\end{proof}
+
+\section{Homotopy Invariance of \SH}
+%TODO change text; changed section ending
+We have arrived at what is probably the most important chapter of this paper. In \autoref{motivation} we already mentioned that we can use (simplicial) homology groups to show that two spaces are not homotopic (or homeomorphic). However, so far we never explained why non-isomorphic homology groups imply that. We need to show that homology groups are topological invariants, i.e. that homotopic spaces have isomorphic homology groups.
+
+We already saw a very special case in Corollary \ref{baby-case}. As we will see shortly, the main idea is essentially the same for a more general statement
+
+\begin{corollary}
+	Let $f: |K|\to |L| $ be a homeomorphism, then $f_\ast: H_n(K)\to H_n(L)$ is an isomorphism.
+\end{corollary}
+
+
+
+%TODO homotopic maps induce the same homomorphism
 
 %TODO homotopy invariance
 
