@@ -1,5 +1,5 @@
 \documentclass[draft,toc=bib]{scrartcl}
-\title{Simplicial Homology[draft]}
+\title{Simplicial Homology}
 \author{Jan Zwank}
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage[utf8]{inputenc}
@@ -60,36 +60,38 @@
 	\maketitle
 	
 	\begin{abstract}
-		%TODO 
-		Abstract goes here
+		\textsc{Abstract.}\textit{
+		Simplicial homology is a valuable tool for distinguishing polyhedra. We achieve that by assigning an abelian groups $H_n(X;G)$ to the underlying simplicial complex of the polyhedron $|X|$. We call these groups the Homology groups of $X$ with coefficients in $G$, where $G$ is an abelian Group. As we will see, simplicial homology is in fact a functor from the category of simplicial complexes to the category of abelian groups. In addition, we will see that Homology groups only depend on the homotopy type, i.e. two spaces that are homotopy equivalent have isomorphic Homology groups.
+		}
 	\end{abstract}
+\clearpage
 \tableofcontents
 
 \clearpage
 
 \section{Motivation}\label{motivation}
-One of the main goals when studying (topological) spaces (or in this case \scs) is to determine whether two spaces are homotopic
-%TODO homeomorphic?
- or not. The first method that is often applied is to check if both spaces are simply connected. A more advanced approach checks not only simply connectedness but also if the fundamental groups $\pi_1$ coincide\footnote{If $X$ is a simply connected space then $\pi_1(X)=0$. Furthermore, the fundamental group is homotopy invariant (up to isomorphism), so homotopic spaces have isomorphic fundamental groups. A more precise formulation of this statement can be found in Hatchers book \parencite[Prop. 1.18, p. 37]{ha}:
+One of the main goals when studying (topological) spaces (or in this case \scs) is to determine whether two spaces are homeomorphic or at least homotopy equivalent (see Definition \ref{def:hom-eq}) 
+or not. The first approach would be to check if both spaces are simply connected. A more advanced method checks if the fundamental groups $\pi_1$ coincide\footnote{The fundamental group $\pi_1(X)$ is the group of all closed paths with the group action being concatenation. If $X$ is a simply connected space then $\pi_1(X)=0$. Furthermore, the fundamental group is homotopy invariant (up to isomorphism), so homotopic spaces have isomorphic fundamental groups. A more precise formulation of this statement can be found in Hatchers book \parencite[Prop. 1.18, p. 37]{ha}:
 \begin{quotation}
 	\begin{quote}
 		If $\phi: X\to Y$ is a homotopy equivalence, then the induces homomorphism $\phi_*:\pi_1(X,x_0)\to\pi_1(Y,\phi(x_0))$ is an isomorphism for all $x_0\in X$.
 	\end{quote}
 \end{quotation} }.
 
-It turns out that this is a valuable tool for one and two dimensional \scs. But this method fails for complexes with cells in higher dimensions. It can be shown that the fundamental group actually only depends on the 2-skeleton of the complex \cite[vgl.][p. 173]{ar}. 
+It turns out that this is a valuable tool for one and two dimensional \scs. But this method fails for complexes with higher dimensional simplices. For example $\pi_1(\mathbb{S}^n)=0$ for all $n\geq 2$. It is therefore impossible to show that two spheres of dimension greater or equal 2 are only then homeomorphic if they are of the same dimension. It can be shown that the fundamental group actually only depends on the 2-skeleton of the complex \cite[vgl.][p. 173]{ar}. 
 
 Even though this method can be generalized to the study of higher homotopy groups $\pi_n$, this is often more difficult than necessary since the computation of those groups is far from trivial.
 
-In the following we will explore the concept of \sh{} groups and how it can be used to classify spaces. We will see that they allow us to tackle the problem of deciding whether two \textbf{polyhedra}\footnote{A polyhedron is the polytope of a simplicial complex.} are homeomorphic, since simplicial homology is only defined on such spaces. However, the concept of \sh{} can be generalized to singular homology, which can be applied to a broader category of spaces and coincides with \sh{} if both are defined.
+In the following we will explore the concept of \sh{} groups and how it can be used to classify spaces. We will see that they allow us to tackle the problem of deciding whether two \textbf{polyhedra}\footnote{A polyhedron is the polytope of a simplicial complex.} are homeomorphic. Note that isomorphic Homology classes do not automatically mean that the spaces are homeomorphic. In fact the torus $T$ and $\mathbb{S}^1\wedge\mathbb{S}^1$ have the same homology groups in every dimension but they are not homeomorphic ($\pi_1(T)=\Z\oplus\Z$ whereas $\pi_1(\mathbb{S}^1\wedge\mathbb{S}^1)=\Z\ast\Z$) .
 
-However, singular homology groups will not be covered here. The interested reader might refer to the book of Munkres \cite{mu} or Hatcher \cite{ha} to learn more about singular homology groups.
+It is possible to extend the concept of Homology to more general spaces than polyhedra using singular homology, however those will not be covered here. The interested reader might refer to the book of Munkres \cite{mu} or Hatcher \cite{ha} to learn more about singular homology groups.
 
-When we concern ourselfes with the question how closed paths on the torus are different from those on the sphere, we can notice the following:
+While we considered all possible paths when we were talking about the fundamental group we will now only consider those that aren't the boundary of a portion of the surface. A great motivation for this approach is given by Armstrong \cite[p. 173f]{ar}:
 
-Any Jordan curve (i.e. nonselfintersecting, closed path) on a sphere divides the surface into two \glqq regions\grqq{} as depicted in \autoref{divided-sphere}\footnote{For a more precise statement see \url{https://en.wikipedia.org/wiki/Jordan_curve_theorem}}. The same is not true for the torus. In \autoref{path-on-torus} we see that even tough there are Jordan curves on a torus that bound a \glqq region\grqq of the surface, not all Jordan curves have that property \cite[p. 173f][see]{ar}.
+When we concern ourselves with the question how closed paths on the torus are different from those on the sphere, we can notice the following:
+Any Jordan curve (i.e. nonselfintersecting, closed path) on a sphere divides the surface into two \glqq regions\grqq{} as depicted in \autoref{divided-sphere}\footnote{For a more precise statement see \url{https://en.wikipedia.org/wiki/Jordan_curve_theorem}}. The same is not true for the torus. In \autoref{path-on-torus} we see that even tough there are Jordan curves on a torus that bound a \glqq region\grqq of the surface, not all Jordan curves have that property \cite[see][p. 173f]{ar}.
 
-%While we considered all possible paths when we were talking about the fundamental group we will now only consider those that aren't the boundary of a portion of the surface. A great motivation for this approach is given by Armstrong \cite[p. 173f]{ar}:
+
 
 %Any closed path on the 2-sphere divides the surface into two regions as shown in \autoref{divided-sphere}\footnote{For a more precise statement see \url{https://en.wikipedia.org/wiki/Jordan_curve_theorem}}.
 
@@ -136,7 +138,7 @@ Any Jordan curve (i.e. nonselfintersecting, closed path) on a sphere divides the
 
 \section{\SH{} Groups with Integer Coefficients}\label{first-hom}
 
-We will use the following definition by Munkres \cite[p. 26]{mu} %and Armstrong \cite[p. 174]{ar}:
+Before we get started, let us remind ourselves of some definitions and notations as can be found in Munkres' book \cite[p. 26f.]{mu}
 \begin{definition}
 	For a simplex $\sigma$ we say that two orderings of its vertex set are equivalent if they differ by an even permutation. For a simplex with nonzero dimension, the orderings of the vertices fall into two equivalence classes, called the \textbf{orientations} of $\sigma$. An \textbf{oriented simplex} is a simplex together with an orientation.
 \end{definition}
@@ -232,7 +234,7 @@ A choice of orientation is usually depicted with arrows as can be seen in \autor
 %
 %We begin with the following definition from Munkres \cite{mu}
 
-To define simplicial homology groups in any meaningful way, we need a few definitions that allow us to formulate our ideas form \autoref{motivation} more precise. There are several ways to go about this with various amounts of rigor. In this paper, we will follow the path of Munkres \cite[p. 27f]{mu}.
+To define simplicial homology groups in any meaningful way, we need a few definitions that allow us to formulate our ideas form \autoref{motivation} more precise. There are several ways to go about this. We will follow the path of Munkres \cite[p. 27]{mu} here.
 
 %TODO This is a direct citation. Do I need to state that any further?
 \begin{definition}\label{def-chain}
@@ -250,14 +252,15 @@ If $\sigma$ is an oriented simplex, the elementary chain $c_\sigma$ correspondin
  \end{align*}
 \end{definition}
 
-It is common practice to to abuse the notation here. If clear by context we use the symbol $\sigma$ not only to denote the (oriented) simplex, but also the corresponding elementary chain.
+It is common practice to to abuse the notation here in the following way: If clear by context we use the symbol $\sigma$ not only to denote the (oriented) simplex, but also the corresponding elementary chain.
 
 We are now able to formulate the our first result as can be found in Munkres book \cite[Lemma 5.1, p. 28]{mu}:
 \begin{lemma}
-	$C_p(K)$ is free abelian; a basis for $C_p(K)$ can be obtained by orienting each $p$-simplex and using the corresponding elementary chains as a basis.
+	$C_p(K)$ is free abelian. 
 \end{lemma}
 
 \begin{proof}
+	A basis for $C_p(K)$ can be obtained by orienting each $p$-simplex and using the corresponding elementary chains as a basis.
 	It is easy to see that each chain $c$ in $C_p(K)$ can be expressed uniquely as a linear combination of the elementary chains $c_{\sigma_i}$ of the simplices of $K$, i.e.
 	\[
 	c=\sum_{i}n_i c_{\sigma_i}.
@@ -270,19 +273,21 @@ We are now able to formulate the our first result as can be found in Munkres boo
 		\]}
 \end{proof}
 
+Some authors such as Armstrong \parencite[p.176f]{ar} or Ferrario \parencite[p.60]{fe} prefer to introduce chains as formal linear combinations of simplices. By virtue of the lemma above, it is clear that the definitions are analog.
+
 \begin{definition}
 	We define the boundary operator 
 	\[
 	\partial_p:\quad C_p(K)\to C_{p-1}(K)
 	\]
-	to be the homomorphism via its action on an oriented simplex $\sigma=(v_0,\dots,v_p)$:
+	to be the homomorphism via its action on an elementary chain corresponding to an oriented simplex $\sigma=(v_0,\dots,v_p)$:
 	\[
 	\partial_p\sigma=\partial_p(v_0,\dots,v_p)=\sum_{i=0}^{p}(-1)^i(v_0,\dots,\hat{v}_i,\dots,v_p)
 	\]
 	where the symbol $\hat{v}_i$ means that the vertex $v_i$ is to be deleted from the array.
 \end{definition}
 
-As the name suggests, the result of this homomorphism indeed refers to the (topological) boundary of the simplex once we interpret the sum of two elementary chains as the union of the corresponding simplices as we will see in the several examples, but first we have to check well-definedness. For that, it is necessary to show that
+As the name suggests, the result of this homomorphism indeed refers to the (topological) boundary of the simplex once we interpret the sum of two elementary chains as the union of the corresponding simplices as we will see in several examples \ref{ex:boundary}. But first we have to check well-definedness. For that, it is necessary to show that
 \[\partial_p(-\sigma)=-\partial_p(\sigma) 
 \]
 Since the orientation fo a simplex only depends on the \emph{sign} of the permutation, it is sufficient to check for the simple case of exchanging $v_0$ and $v_1$:
@@ -293,7 +298,7 @@ Since the orientation fo a simplex only depends on the \emph{sign} of the permut
 	+&(v_0,v_2,\dots,v_p)-(v_1,v_2,\dots,v_p)+\sum_{i=2}^p(-1)^i\underset{=-(v_0,v_1,v_2,\dots,\hat{v}_i,\dots,v_p)}{\underbrace{\ensuremath{(v_1,v_0,v_2,\dots,\hat{v}_i,\dots,v_p)}}}=0
 \end{align*}
 
-\begin{examples}\mbox{}
+\begin{examples}\label{ex:boundary}\mbox{}
 	\begin{enumerate}
 		\item \parbox[c]{.5\linewidth}{$\partial_1(v_0,v_1)=v_1-v_0$}%
 		\parbox[c]{.5\linewidth}{
@@ -349,20 +354,25 @@ Since the orientation fo a simplex only depends on the \emph{sign} of the permut
 	
 \end{examples}
 
-We will now consider the following diagram. (For the sake of readability, we deleted the dimension subscripts from the boundary operator)
-\begin{center}
-\begin{tikzcd}
-	C_\bullet:&\cdots \arrow[r, "\partial"] & C_{p+1}\arrow[r,"\partial"]&C_p\arrow[r,"\partial"]&C_{p-1}\arrow[r,"\partial"]&\cdots \\
-\end{tikzcd}
+%We will now consider the following diagram. (For the sake of readability, we deleted the dimension subscripts from the boundary operator)
+%\begin{center}
+%\begin{tikzcd}
+%	C_\bullet:&\cdots \arrow[r, "\partial"] & C_{p+1}\arrow[r,"\partial"]&C_p\arrow[r,"\partial"]&C_{p-1}\arrow[r,"\partial"]&\cdots \\
+%\end{tikzcd}
 
-\end{center}
+%\end{center}
+
+Recall the following definition of a chain complex as can be found in Ferrario's book \parencite[p. 65]{fe}
+\begin{definition}
+	A chain complex $(\mathcal{C}_\bullet,\partial^\prime)$ is a graded abelian group $\{\mathcal{C}_n\}$ together with an endomorphism $\partial^\prime=\{\partial^\prime_n\}$ of degree\footnote{A graded abelian group G is a succession $\{G_i\mid i\in \Z\}$. For graded abelian groups $G$ and $K$, a morphism $g: G\to K$ is said to have degree $d$ if $f(G_n)\subset K_{n+d}$} $-1$ such that $(\partial^\prime)^2=0$.
+\end{definition}
 
 \begin{lemma}
-	$C_\bullet$ is a chain complex.
+	$(C_\bullet,\partial)$ is a chain complex.
 \end{lemma}
 
 \begin{proof}
-	We need to show that $\partial_{p-1}\circ\partial_p\equiv 0$. It is not hard to prove this, it just requires a lot of bookkeeping:
+	We need to show that $\partial_{p-1}\circ\partial_p\equiv 0$. It is not hard to prove this, it just requires some bookkeeping:
 	
 	Let $\sigma=(v_0,\dots,v_p)$ be an arbitrary $p$-chain, then
 	\begin{align*}
@@ -374,7 +384,7 @@ We will now consider the following diagram. (For the sake of readability, we del
 
 \end{proof}
 
-A common question for chain complexes is exactness. As we will see later in this chapter, they will only be exact for special cases. 
+A common question for chain complexes is exactness. As we will see later in this chapter, $(C_\bullet,\partial)$ will only be exact for very special cases. 
 
 Before we define the simplicial homology groups, we will introduce one more definition:
 
@@ -387,7 +397,7 @@ Before we define the simplicial homology groups, we will introduce one more defi
 \end{definition}
 The previous lemma states that $B_p(K)\subset Z_p(K)$.
 
-Let us remind ourselves of what we wanted to do in \autoref{motivation}. We wanted to consider those curves (\emph{cycles}) that were not the \emph{boundary} of some part of the surface. With this in mind, we can now state the definition of simplical homology groups
+Let us remind ourselves of what we wanted to do in \autoref{motivation}. We wanted to consider those closed curves (\emph{cycles}) that were not the \emph{boundary} of some part of the surface. With this in mind, we can now state the definition of simplical homology groups
 
 \begin{definition}
 	We define \[
@@ -414,7 +424,7 @@ Let us remind ourselves of what we wanted to do in \autoref{motivation}. We want
 		 		\end{tikzpicture}
 		 		\caption{geometric realization of the hollow tetrahedron.\label{hollow-tetrahedron}}
 		 	\end{figure}
-	 It consists of 4 faces ($f_1=v_0v_1v_2, f_2=v_0v_1v_3$, $f_3=v_0v_2v_3, f_4=v_1v_2v_3$), 6 edges ($e_1=v_0v_1, e_2=v_0v_2, e_3=v_0v_3,$ $ e_4=v_1v_2, $ $e_5=v_1v_3, $ $e_6=v_2v_3$) and 4 vertices ($v_0,v_1,v_2,v_3$). Therefore, we find the simplicial chain complex to be
+	 It consists of four faces ($f_1=v_0v_1v_2, f_2=v_0v_1v_3$, $f_3=v_0v_2v_3, f_4=v_1v_2v_3$), six edges ($e_1=v_0v_1, e_2=v_0v_2, e_3=v_0v_3,$ $ e_4=v_1v_2, $ $e_5=v_1v_3, $ $e_6=v_2v_3$) and four vertices ($v_0,v_1,v_2,v_3$). Therefore, we find the simplicial chain complex to be
 	 \begin{tikzcd}
 	 	\Z\langle f_1,f_2,f_3f_4\rangle\arrow[r,"\partial_2"]&\Z\langle e_1,e_2,e_3,e_4,e_5,e_6\rangle\arrow[r,"\partial_1"]&\Z\langle v_0,v_1,v_2,v_3\rangle\arrow[r,"\partial_0"]&0
 	 \end{tikzcd}
@@ -528,7 +538,7 @@ Even tough these aren't hard to compute, it is very tedious and therefore wont b
 \parbox[t]{.5\linewidth}{\captionsetup{width=.9\linewidth}\caption{A simplicial triangulation of the torus.\label{triangulation-torus}}}
 \end{figure}
 
-We see that the homology groups for the Sphere and the Torus do not agree in every dimension. Since homotopy equivalent spaces %TODO am i showing this for homotopy or homeomotphic
+We see that the homology groups for the Sphere and the Torus do not agree in every dimension. Since homotopy equivalent spaces 
 have isomorphic homology groups (we will show that later), we find that the sphere cannot be homotopy equivalent to the torus.
 
 \item We will now consider the circle. This can be triangulated as an empty triangle, i.e.
@@ -620,7 +630,7 @@ A special case is the coefficient ring $\Z/2\Z$, since here $-1=1$. Hence, we no
 \end{examples}
 
 \section{Functoriality Property}
-We will now explore how homotopy behaves under continuous functions. We will begin with the following definition and lemma from Munkres' book \cite[lemma 12.1, p. 52]{mu}:
+We will now explore how homotopy behaves under continuous functions. We will begin with the following definition and lemma from Munkres' book \cite[lemma 12.1, p. 62]{mu}:
 
 \begin{definition}
 	Let $f: K\to L$ be a simplicial map. If $v_0\dots v_p$ is a simplex of $K$, then the points $f(v_0)\dots f(v_p)$ span a simplex of $L$. we define a homomorphism $f_\sharp: C_p(K)\to C_p(L)$ by defining it on oriented simplices as follows:
@@ -634,7 +644,7 @@ We will now explore how homotopy behaves under continuous functions. We will beg
 	The family $\{f_\sharp\}$ is called the chain map induced by the simplicial map $f$.
 \end{definition}
 
-It might be helpful to consider the following diagram:
+This gives rise to the following diagram:
 
 \begin{center}
 	
@@ -647,7 +657,7 @@ It might be helpful to consider the following diagram:
 
 This of course raises the question whether this diagram commutes or not. 
 \begin{lemma}
-	The homomorphism $f_\sharp$ commutes with $\partial$; therefore $f_\sharp$ iduces a homomorphism $f_\ast:H_p(K)\to H_p(L)$
+	The homomorphism $f_\sharp$ commutes with $\partial$; therefore $f_\sharp$ induces a homomorphism $f_\ast:H_p(K)\to H_p(L)$
 \end{lemma}
 
 \begin{proof}
@@ -721,7 +731,7 @@ With this in mind we can now state the functional properties of these homomorphi
 	\end{align*}
 \end{proof}
 
-It follows immediately that
+
 \begin{corollary}\label{baby-case}
 	Let $f: K\to L$ be a bijective simplicial map such that its inverse is also a simplicial map. Then \[
 	\forall p\geq 0:\quad H_p(K)=H_p(L)
@@ -729,16 +739,10 @@ It follows immediately that
 \end{corollary}\qed
 
 This already gives the main Idea for the next section.
-
 %TODO old frontier
 Before we can get started with that we need some preliminary definitions and results:
 
 %TODO reference
-\begin{definition}%p.57
-	Given two simplicial maps $f,g: K\to L$, these maps are said to be contiguos if for each simplex $v_0\dots v_p$ of $K$, the points \[
-		f(v_0),\dots,f(v_p),g(v_0),\dots,g(v_p)
-		\] span a simplex of $L$.
-\end{definition}
 
 \begin{definition}
 	Let $f,g:K\to L$ be simplicial maps. Suppose that for each $p$, one has a homomorphism \[
@@ -770,6 +774,11 @@ is not commutative.
 	\]
 	That means that $f_\sharp$ and $g_\sharp$ differ only by a boundary. Therefore they are in the same homology class, i.e. $f_\ast(c)=g_\ast(c)$.
 \end{proof}
+\begin{definition}%p.57
+	Given two simplicial maps $f,g: K\to L$, these maps are said to be contiguos if for each simplex $v_0\dots v_p$ of $K$, the points \[
+	f(v_0),\dots,f(v_p),g(v_0),\dots,g(v_p)
+	\] span a simplex of $L$.
+\end{definition}
 
 \begin{theorem}\label{contiguous->chain_hom}%Thm 12.5
 	If $f,g: K\to L$ are contiguous simplicial maps, then there is a chain homotopy between $f_\sharp$ and $g_\sharp$.
@@ -1014,7 +1023,7 @@ We only need the first part of this theorem. The second part is only stated for 
 	\end{proof}
 
 
-\begin{definition}
+\begin{definition}\label{def:hom-eq}
 	Two spaces $X$ and $Y$ are said to be homotopy equivalent, or to have the same homotopy type, if there are maps\[
 	f: X\to Y\qandq g:Y\to X
 	\]
