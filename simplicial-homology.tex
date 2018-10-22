@@ -609,16 +609,17 @@ Since the group of chains with integer coefficients $C_n(K;\Z)=C_n(K)$ merely co
 \[
 C_n(K;G)\simeq C_n(K;\Z)\otimes_\Z G,
 \]
-which leads to many interesting phenomena. The same holds for homology groups if the coefficient ring is a field.%TODO No it doesn't. Need Universal coefficient theorem, but over a field Ext is zero so it holds for fields.
+which leads to many interesting phenomena. The same holds for homology groups if the coefficient ring is a field.
+%TODO No it doesn't. Need Universal coefficient theorem, but over a field Ext is zero so it holds for fields.
 
 
 
-This might be a good time to remember the fundamental theorem of finitely generated abelian groups (such as the homology groups) as it can be found in Munkres' book \cite[see ][Theorem 4.3, p. 24]{mu}:
-\begin{theorem}[The fundamental theorem of finitely generated abelian groups]
-	Let $G$ be a finitely generated abelian group. Let $T$ be its torsion subgroup.Then there exists a free abelian subgroup $H$ of $G$ having finite rank such that $G=H\oplus T$. 
-\end{theorem}
-
-Since there is no possibility of torsion after taking the tensor product with a field of characteristic 0, we find that for any such field $\mathbb{K}$ the homology group with coefficients in $\mathbb{K}$ is a $\mathbb{K}$-vectorspace.
+%This might be a good time to remember the fundamental theorem of finitely generated abelian groups (such as the homology groups) as it can be found in Munkres' book \cite[see ][Theorem 4.3, p. 24]{mu}:
+%\begin{theorem}[The fundamental theorem of finitely generated abelian groups]
+%	Let $G$ be a finitely generated abelian group. Let $T$ be its torsion subgroup.Then there exists a free abelian subgroup $H$ of $G$ having finite rank such that $G=H\oplus T$. 
+%\end{theorem}
+%
+%Since there is no possibility of torsion after taking the tensor product with a field of characteristic 0, we find that for any such field $\mathbb{K}$ the homology group with coefficients in $\mathbb{K}$ is a $\mathbb{K}$-vectorspace.
 
 
 A special case is the coefficient ring $\Z/2\Z$, since here $-1=1$. Hence, we no longer have to worry about orientation. Therefore, this ring is often used if the considered manifolds might or might not be orientable.
@@ -853,7 +854,7 @@ Let $\iota: K^\prime\to K $ be a simplicial approximation to the identity map of
 h_\ast=f_\ast\circ(g_\ast)^{-1}
 \]
 
-Secondly, we will now use this to show that $h_\ast$ doesn't depend on the choice of subdivision $K^\prime$ either. Let $K^\pprime$ be another subdivision of $K$ such that $h$ has a simplicial approximation mapping $K\pprime$ to $L$. We will see that the induced homomorphism $h_\ast$ does not change if we use substitute $K$ with $K^\pprime$ in its definition.
+Secondly, we will now use this to show that $h_\ast$ doesn't depend on the choice of subdivision $K^\prime$ either. Let $K^\pprime$ be another subdivision of $K$ such that $h$ has a simplicial approximation mapping $K^\pprime$ to $L$. We will see that the induced homomorphism $h_\ast$ does not change if we use substitute $K$ with $K^\pprime$ in its definition.
 
 We will first explore the special case that $|K|$ has a simplicial approximation $k: K^\pprime\to K^\prime$
 
@@ -935,94 +936,16 @@ We already saw a very special case in Corollary \ref{baby-case}. As we will see 
 	Let $f: |K|\to |L| $ be a homeomorphism, then $f_\ast: H_n(K)\to H_n(L)$ is an isomorphism.
 \end{corollary}\qed
 
-We have discovered the topological invariance of homology groups. However, there is an even stronger statement to be made here. As we will see in the following, homology groups are not only invariant under homeomorphisms, but only depend on the homotopy type.
+We have discovered the topological invariance of homology groups. However, there is an even stronger statement to be made here. As we will see in the following, homology groups are not only invariant under homeomorphisms, but only depend on the homotopy type. Note that we will only give a sketch of the necessary proof here. For the complete discussion the reader may refer to Munkers' book \parencite[\S 19]{mu}.
 
 Recall the definition of homotopy, taken from Munkres \cite[p. 94]{mu}:
 
 \begin{definition}
-	If $X$ and $Y$ are topological spaces, two cocntinuous maps $h, k: X\to Y$ are said to be homotopic if there is a continuous map \[
+	If $X$ and $Y$ are topological spaces, two continuous maps $h, k: X\to Y$ are said to be homotopic if there is a continuous map \[
 	F: X\times I\to Y
 	\]
 	such that $F(x,0)=h(x)$ and $F(x,1)=k(x)$ for all $x\in X$. If $h$ and $k$ are homotopic, we write $h\simeq k$. The map $F$ is called a homotopy of $h$ to $k$. 
 \end{definition}
-
-We will show that for homotopic maps $h$ and $k$, the induced homomorphisms coincide $h_\ast=k_\ast$. For that we will need the following results
-
-\begin{lemma}\label{coherent}%Thm 20.4
-	the topology of the product space $|K|\times I$ is coherent with the subspaces $\sigma\times I$, for $\sigma\in K$.
-\end{lemma}
-%TODO proof maybe as appendix?
-
-\begin{lemma}%thm 19.1
-	If $K$ is a comoplex, then $|K|\times I$ is the polytope of a complex $M$, such that each set $\sigma\times I$ is the polytope of a subcomplex of $M$, and the sets $\sigma\times 0$ and $\sigma\times 1$ are simplices of $M$, for each simplex $\sigma$ of $K$.
-\end{lemma}
-
-\begin{proof}
-	There exists a $J$ such that $|K|\subset \mathbb{E}^J$, so $|K|\times I\subset \mathbb{E}^J\times \mathbb{R}$. We will use a inductive method to subdivide $|K|\times I$ into simplices.
-	
-	For $p\geq 0$ let
-	\[
-	X_p:=(|K|\times 0)\cup (|K|\times 1)\cup(|K^{(p)}|\times I)
-	\]
-	For $p=0$ this space consists of all simplices of the form $\sigma\times 0$, $\sigma \times 1$ ($\sigma\in K$) and all $1$-simplices of the form $v\times I$ ($v$ a vertex of $K$) and the corresponding vertices. We denote the complex that arises as the union of those simplices as $M_0$. The polytope of $M_0$ is $X_0$.
-	
-	Suppose $M_{p-1}$ is a complex whose plytope is $X_{p-1}$, such that for every simplex $s$ in $K$ of dimension less than $p$ the set $s\times I$ is the polytope of a subcomplex of $M_{p-1}$. Consider a set $\sigma\times I$ with $\dim\sigma=p$ and let
-	\begin{align*}
-	\Bd(\sigma\times I)&=(\sigma\times I)\setminus(\Int \sigma\times \Int I)\\
-	&=((\Bd \sigma)\times I)\cup (\sigma\times 0)\cup (\sigma\times 1).
-	\end{align*}
-	We know that $\Bd \sigma$ is the union fo simplices $s$ of $K$ of dimension $p-1$, therefore there exists a subcomplex $M_\sigma\subset M_{p-1}$ such that $\Bd (\sigma\times I)$ is the polytope of $M_\sigma$. Since $\Bd (\sigma\times I)$ is compact, $M_\sigma$ is finite.
-	
-	Define $w_\sigma$ to be the point $(\hat{\sigma},\frac{1}{2})\in \sigma\times I$. Then the cone\footnote{Suppose that $K$ is a complex in $\mathbb{E}^J$, and $w$ is a point of $\mathbb{E}^J$ such that each ray emanating from $w$ intersects $|K|$ in at most one point. We define the cone on $K$ with vertex $w$ to be the collection of all simplices of the form $wa_0\dots a_p$, where $a_0\dots a_p$ is a simplex of $K$, along with all faces of such simplices. We denote this collection $w\ast K$.\cite[p. 44]{mu}} $w\ast M_\sigma$ is a complex whose polytope is $\sigma\times I$. The intersection of $|w_\sigma\ast M_\sigma|$ and $|M_{p-1}|$ is the polytope of a subcomplex of each of them.
-	
-	Now, let $M_p$ be the union of $M_{p-1}$ and the cones $w_\sigma\ast M_\sigma$ for all $p$-simplices of $K$ and define $M$ to be the union of the $M_p$ for all $p$.
-	
-	We already know that the polytope of $M$ is the same as $|K|\times I$ as \emph{sets}, however, we still need to show that they are the same as \emph{topological spaces}.
-	
-	Lemma \ref{coherent} already stated that the topology of $|K|\times I$ is coherent with that of $\sigma\times I$ for $\sigma\in K$. Similarly, the topology of $|M|$ is coherent with the subspaces $s$, for $s\in M$. Let $C$ be closed in $|K|\times I$, then $C\cap(\sigma\times I)$ is closed in $\sigma\times I$. If $s$ is a simplex of $M$ lying in $\sigma\times I$, then $s$ is a subpace of $\sigma\times I$. Hence $C\cap s$ is closed in $s$. It follows that $C$ is closed in $|M|$.
-	
-	Conversely, if $C$ is closed in $|M|$, then $C\cap s$ is closed in $s$ for each $s\in M$. Because $\sigma\times I$ is a finite union of simplices $s$ of $M$, the set $C\cap(\sigma\times I)$ is closed in $\sigma\times I$. Thus $\sigma$ is closed in $|K|\times I$.
-\end{proof}
-
-
-
-\begin{theorem}%thm 19.2
-	IF $h,k:|K|\to |L|$ are homotopic, then $h_\ast,k_\ast: H_p(K)\to H_p(L)$ are equal.
-\end{theorem}
-%TODO proof
-Before we can tend to the proof, we need more framework.
-\begin{definition}
-	Let $K$ and $L$ be simplicial complexes. An acyclic carrier from $K$ to $L$ is a function $\Phi$ that assigns to each simplex $\sigma$ of $K$, a subcomplex $\Phi(\sigma)$ fo $L$ such that:
-	\begin{enumerate}
-		\item $\Phi(\sigma)$ is nonempty and acyclic.
-		\item If $s$ is a face of $\sigma$, then $\Phi(s)\subset \Phi(\sigma)$
-	\end{enumerate}
-If $f: C_p(K)\to C_p(L)$ is a homomorphism, we say that $f$ is carried by $\phi$ if for each oriented $p$-simplex $\sigma$ of $K$, the chain $f(\sigma)$ is carried by the subcomplex $\Phi(\sigma)$ of $L$.
-\end{definition}
-
-\begin{theorem}[Acyclic carrier theorem, geometric version]\label{acyclic-carrier-thm}%thm 13.3
-	Let $\Phi$ be an acyclic carrier from $K$ to $L$.
-	\begin{enumerate}
-		\item If $\phi$ and $\psi$ are two augmentation-preserving chain maps from $C_\bullet(K)$ to $C_\bullet(L)$ that are carried by $\Phi$, there exists a chain homotopy $D$ of $\phi$ to $\psi$ that is also carried by $\Phi$.
-		\item There exists an augmentation-preserving chain map from $C_\bullet(K)$ to $C_\bullet(L)$ is carried by $\Phi$.
-	\end{enumerate}
-\end{theorem}
-We only need the first part of this theorem. The second part is only stated for the sake of completeness. Therefore we will only refer the reader to Munkres' book for a proof of the second part. The proof of the first part is essentially the same as for \autoref{contiguous->chain_hom}
-
-\begin{proof}
-	Let $K$ be a complex. Let $M$ be a complex whose underlying space is $|K|\times I$, such that for each $\sigma\in K$, both $\sigma\times 0$ and $\sigma\times 1$ are simplices of $M$, and $\sigma \times I$ is the polytope of a subcomplex of $M$.
-	
-	Let $F:|K|\times I\to |L|$ be the homotopy of $h$ to $k$. Let $i,j: |K|\to |K|\times I$ be the maps $i(x)=(x,0)$ and $j(x)=(x,1)$. Then $i$ and $j$ are simplicial maps of $K$ into the complex $M$; furthermore,
-	\[
-	F\circ i=h\qandq F\circ j=k.
-	\]
-	We assert that the chain maps $i_\sharp$ and $j_\sharp$ are chain homotopic. Consider the function $\Phi$ assigning, to each simpley $\sigma$ of $K$, the subcomplex of $M$ whose polytope is $\sigma \times I$. Now the space $\sigma\times I$ is acyclic because it is homoeomorphic to a closed ball. And if $s<\sigma$,then $s\times I\subset\sigma\times I$, so $\Phi(s)$ is a subcomplex of $\Phi(\sigma)$. Therefore, $\Phi$ is an acyclic carrier from $K$ to $M$. Furthermore, it carries both $i_\sharp$ and $j_\sharp$, for both $i(\sigma)=\sigma\times 0$ and $j(\sigma)=\sigma\times 1$ belong to $\Phi(\sigma)$. It follows form \autoref{acyclic-carrier-thm} that $i_\sharp$ adn $j_\sharp$ are chain homotopic. By virtue of \autoref{chain_hom->invariant} it follow that $i_\ast=j_\ast$, so 
-	\[
-	h_\ast=F_\ast\circ i_\ast=F_\ast\circ j_\ast=k_\ast
-	\]
-	\end{proof}
-
-
 \begin{definition}\label{def:hom-eq}
 	Two spaces $X$ and $Y$ are said to be homotopy equivalent, or to have the same homotopy type, if there are maps\[
 	f: X\to Y\qandq g:Y\to X
@@ -1030,11 +953,138 @@ We only need the first part of this theorem. The second part is only stated for 
 	such that $g\circ f\simeq i_X$ and $f\circ g\simeq i_Y$. The maps $f$ and $g$ are often called homotopy equivalences, and $g$ is said to be the homotopy inverse to $f$.
 \end{definition}
 
+The main task is to prove the following statement:
+\begin{theorem}\label{homotopy_invariance}
+	If $f,g:|K|\to |L|$ are homotopic maps then $f_\ast=g_\ast: H_q(K)\to H_q(L)$ for all $q$
+\end{theorem}
+
+Once we have obtained this result, the homotopy invariance follows easily \parencite[see][Theorem 8.11]{ar}:
 \begin{corollary}
-	If two spaces $X$ and $Y$ are homotopy equivalent, then their homology groups are isomorphic $H_n(X)\isom H_n(Y)$ in all dimensions.
-\end{corollary}\qed
+	If two polyhedra $K$ and $L$ are homotopy equivalent, then their homology groups are isomorphic $H_n(X)\isom H_n(Y)$ in all dimensions.
+\end{corollary}
+\begin{proof}
+	Let $f,g$ denote the maps as described in the definition of homotopy equivalence, i.e. let $g$ be the homotopy inverse of $f$. 
+	Consider the following Diagram:
+	\begin{center}
+	
+	\begin{tikzcd}
+		H_q(K)\arrow[r,"f_\ast"]&H_q(L)\arrow[r,"g_\ast"]&H_q(K)\\
+		H_q(L)\arrow[r,"g_\ast"]&H_q(K)\arrow[r,"f_\ast"]&H_q(L)
+	\end{tikzcd}\end{center}
+
+	Then 
+	\[f_\ast\circ g_\ast=(\underset{\ensuremath{\simeq i_K}}{\underbrace{f\circ g}})_\ast=(i_K)_\ast=(i_\ast)_{H_q(K)}\]
+	and
+	\[g_\ast\circ f_\ast=(\underset{\ensuremath{\simeq i_L}}{\underbrace{g\circ f}})_\ast=(i_L)_\ast=(i_\ast)_{H_q(L)}\]
+	
+	Therefore, $f_\ast$ and $g_\ast$ are isomorphisms and $f_\ast=(g_\ast)^{-1}$.
+\end{proof}
+
+With the results form the previous chapter we can conclude that for any compact triangulable space, we can choose a triangulation $t:|K|\to X$ without loss of generality (i.e. it doesn't matter which triangulation we choose up to isomorphism) and use it to define the homology groups  of $X$ as $H_q(X):=H_q(K)$.
+
+%The only thing that is left to do is to prove Theorem \ref{homotopy_invariance}. The general idea is the same as before: We already saw that the induced homomorphisms of two maps $f$ and $g$ are equal if there exists a chain homotopy $D$ such that $\partial D+D\partial=g_\sharp-f_\sharp$ (see Theorem \ref{chain_hom->invariant}). So we need to construct a chain homotopy for any two homotopic maps.
 
 
+We will state the next two results without proof:
+\begin{enumerate}
+	\item If $s,t: |K|\to |L|$ are \glqq close\grqq{} simplicial maps, in the sense that for each simplex $A$ of $K$ we can find a simiplex $B$ in $L$ such that both $s(A)$ and $t(A)$ are faces of $B$, then $s_\ast=t_\ast: H_q(K)\to H_q(L)$ for all $q$.
+	\item If $f,g:|K|\to |L|$ are homotopic maps we can find a barycentric subdivision $K^m$ and a sequence of simplicial maps $s_1,\dots,s_n:|K^m|\to|L|$ such that $s_1$ simplicially approximates $f$, $s,n$ simplicially approximates $g$, and each pair $s_i,s_{i+1}$ are close in the sense above.
+\end{enumerate}
+
+\begin{proof}[Proof of Theorem \ref{homotopy_invariance}]
+	Let $\lambda_\ast$ be the homomorphism induced by the subdivision operator. With the results above, we find
+	\[
+	f_\ast=s_{1\ast}\lambda_\ast=s_{2\ast}\lambda_\ast=\dots=s_{n\ast}\lambda_\ast=g_\ast
+	\]
+\end{proof}
+
+%\begin{lemma}\label{coherent}%Thm 20.4
+%	the topology of the product space $|K|\times I$ is coherent with the subspaces $\sigma\times I$, for $\sigma\in K$.
+%\end{lemma}
+%%TODO proof maybe as appendix?
+%
+%\begin{lemma}%thm 19.1
+%	If $K$ is a comoplex, then $|K|\times I$ is the polytope of a complex $M$, such that each set $\sigma\times I$ is the polytope of a subcomplex of $M$, and the sets $\sigma\times 0$ and $\sigma\times 1$ are simplices of $M$, for each simplex $\sigma$ of $K$.
+%\end{lemma}
+%
+%\begin{proof}
+%	There exists a $J$ such that $|K|\subset \mathbb{E}^J$, so $|K|\times I\subset \mathbb{E}^J\times \mathbb{R}$. We will use a inductive method to subdivide $|K|\times I$ into simplices.
+%	
+%	For $p\geq 0$ let
+%	\[
+%	X_p:=(|K|\times 0)\cup (|K|\times 1)\cup(|K^{(p)}|\times I)
+%	\]
+%	For $p=0$ this space consists of all simplices of the form $\sigma\times 0$, $\sigma \times 1$ ($\sigma\in K$) and all $1$-simplices of the form $v\times I$ ($v$ a vertex of $K$) and the corresponding vertices. We denote the complex that arises as the union of those simplices as $M_0$. The polytope of $M_0$ is $X_0$.
+%	
+%	Suppose $M_{p-1}$ is a complex whose plytope is $X_{p-1}$, such that for every simplex $s$ in $K$ of dimension less than $p$ the set $s\times I$ is the polytope of a subcomplex of $M_{p-1}$. Consider a set $\sigma\times I$ with $\dim\sigma=p$ and let
+%	\begin{align*}
+%	\Bd(\sigma\times I)&=(\sigma\times I)\setminus(\Int \sigma\times \Int I)\\
+%	&=((\Bd \sigma)\times I)\cup (\sigma\times 0)\cup (\sigma\times 1).
+%	\end{align*}
+%	We know that $\Bd \sigma$ is the union fo simplices $s$ of $K$ of dimension $p-1$, therefore there exists a subcomplex $M_\sigma\subset M_{p-1}$ such that $\Bd (\sigma\times I)$ is the polytope of $M_\sigma$. Since $\Bd (\sigma\times I)$ is compact, $M_\sigma$ is finite.
+%	
+%	Define $w_\sigma$ to be the point $(\hat{\sigma},\frac{1}{2})\in \sigma\times I$. Then the cone\footnote{Suppose that $K$ is a complex in $\mathbb{E}^J$, and $w$ is a point of $\mathbb{E}^J$ such that each ray emanating from $w$ intersects $|K|$ in at most one point. We define the cone on $K$ with vertex $w$ to be the collection of all simplices of the form $wa_0\dots a_p$, where $a_0\dots a_p$ is a simplex of $K$, along with all faces of such simplices. We denote this collection $w\ast K$.\cite[p. 44]{mu}} $w\ast M_\sigma$ is a complex whose polytope is $\sigma\times I$. The intersection of $|w_\sigma\ast M_\sigma|$ and $|M_{p-1}|$ is the polytope of a subcomplex of each of them.
+%	
+%	Now, let $M_p$ be the union of $M_{p-1}$ and the cones $w_\sigma\ast M_\sigma$ for all $p$-simplices of $K$ and define $M$ to be the union of the $M_p$ for all $p$.
+%	
+%	We already know that the polytope of $M$ is the same as $|K|\times I$ as \emph{sets}, however, we still need to show that they are the same as \emph{topological spaces}.
+%	
+%	Lemma \ref{coherent} already stated that the topology of $|K|\times I$ is coherent with that of $\sigma\times I$ for $\sigma\in K$. Similarly, the topology of $|M|$ is coherent with the subspaces $s$, for $s\in M$. Let $C$ be closed in $|K|\times I$, then $C\cap(\sigma\times I)$ is closed in $\sigma\times I$. If $s$ is a simplex of $M$ lying in $\sigma\times I$, then $s$ is a subpace of $\sigma\times I$. Hence $C\cap s$ is closed in $s$. It follows that $C$ is closed in $|M|$.
+%	
+%	Conversely, if $C$ is closed in $|M|$, then $C\cap s$ is closed in $s$ for each $s\in M$. Because $\sigma\times I$ is a finite union of simplices $s$ of $M$, the set $C\cap(\sigma\times I)$ is closed in $\sigma\times I$. Thus $\sigma$ is closed in $|K|\times I$.
+%\end{proof}
+%
+%
+%
+%\begin{theorem}%thm 19.2
+%	IF $h,k:|K|\to |L|$ are homotopic, then $h_\ast,k_\ast: H_p(K)\to H_p(L)$ are equal.
+%\end{theorem}
+%%TODO proof
+%Before we can tend to the proof, we need more framework.
+%\begin{definition}
+%	Let $K$ and $L$ be simplicial complexes. An acyclic carrier from $K$ to $L$ is a function $\Phi$ that assigns to each simplex $\sigma$ of $K$, a subcomplex $\Phi(\sigma)$ fo $L$ such that:
+%	\begin{enumerate}
+%		\item $\Phi(\sigma)$ is nonempty and acyclic.
+%		\item If $s$ is a face of $\sigma$, then $\Phi(s)\subset \Phi(\sigma)$
+%	\end{enumerate}
+%If $f: C_p(K)\to C_p(L)$ is a homomorphism, we say that $f$ is carried by $\phi$ if for each oriented $p$-simplex $\sigma$ of $K$, the chain $f(\sigma)$ is carried by the subcomplex $\Phi(\sigma)$ of $L$.
+%\end{definition}
+%
+%\begin{theorem}[Acyclic carrier theorem, geometric version]\label{acyclic-carrier-thm}%thm 13.3
+%	Let $\Phi$ be an acyclic carrier from $K$ to $L$.
+%	\begin{enumerate}
+%		\item If $\phi$ and $\psi$ are two augmentation-preserving chain maps from $C_\bullet(K)$ to $C_\bullet(L)$ that are carried by $\Phi$, there exists a chain homotopy $D$ of $\phi$ to $\psi$ that is also carried by $\Phi$.
+%		\item There exists an augmentation-preserving chain map from $C_\bullet(K)$ to $C_\bullet(L)$ is carried by $\Phi$.
+%	\end{enumerate}
+%\end{theorem}
+%We only need the first part of this theorem. The second part is only stated for the sake of completeness. Therefore we will only refer the reader to Munkres' book for a proof of the second part. The proof of the first part is essentially the same as for \autoref{contiguous->chain_hom}
+%
+%\begin{proof}
+%	Let $K$ be a complex. Let $M$ be a complex whose underlying space is $|K|\times I$, such that for each $\sigma\in K$, both $\sigma\times 0$ and $\sigma\times 1$ are simplices of $M$, and $\sigma \times I$ is the polytope of a subcomplex of $M$.
+%	
+%	Let $F:|K|\times I\to |L|$ be the homotopy of $h$ to $k$. Let $i,j: |K|\to |K|\times I$ be the maps $i(x)=(x,0)$ and $j(x)=(x,1)$. Then $i$ and $j$ are simplicial maps of $K$ into the complex $M$; furthermore,
+%	\[
+%	F\circ i=h\qandq F\circ j=k.
+%	\]
+%	We assert that the chain maps $i_\sharp$ and $j_\sharp$ are chain homotopic. Consider the function $\Phi$ assigning, to each simpley $\sigma$ of $K$, the subcomplex of $M$ whose polytope is $\sigma \times I$. Now the space $\sigma\times I$ is acyclic because it is homoeomorphic to a closed ball. And if $s<\sigma$,then $s\times I\subset\sigma\times I$, so $\Phi(s)$ is a subcomplex of $\Phi(\sigma)$. Therefore, $\Phi$ is an acyclic carrier from $K$ to $M$. Furthermore, it carries both $i_\sharp$ and $j_\sharp$, for both $i(\sigma)=\sigma\times 0$ and $j(\sigma)=\sigma\times 1$ belong to $\Phi(\sigma)$. It follows form \autoref{acyclic-carrier-thm} that $i_\sharp$ adn $j_\sharp$ are chain homotopic. By virtue of \autoref{chain_hom->invariant} it follow that $i_\ast=j_\ast$, so 
+%	\[
+%	h_\ast=F_\ast\circ i_\ast=F_\ast\circ j_\ast=k_\ast
+%	\]
+%	\end{proof}
+%
+%
+%\begin{definition}\label{def:hom-eq}
+%	Two spaces $X$ and $Y$ are said to be homotopy equivalent, or to have the same homotopy type, if there are maps\[
+%	f: X\to Y\qandq g:Y\to X
+%	\]
+%	such that $g\circ f\simeq i_X$ and $f\circ g\simeq i_Y$. The maps $f$ and $g$ are often called homotopy equivalences, and $g$ is said to be the homotopy inverse to $f$.
+%\end{definition}
+%
+%\begin{corollary}
+%	If two spaces $X$ and $Y$ are homotopy equivalent, then their homology groups are isomorphic $H_n(X)\isom H_n(Y)$ in all dimensions.
+%\end{corollary}\qed
+%
+%
 
 \printbibliography
 \end{document}
