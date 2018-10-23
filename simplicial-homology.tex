@@ -586,7 +586,7 @@ H_2(B^2)=0,\quad H_1(B^2)=0,\quad H_0(B^2)=\Z
 \end{center}
 	\end{enumerate}
 %\include{torus}
-\include{examples}
+\input{examples}
 \end{examples}
 
 
@@ -629,8 +629,21 @@ A special case is the coefficient ring $\Z/2\Z$, since here $-1=1$. Hence, we no
 %TODO Examples: RP^2, klein bottle
 
 \begin{examples}
-	Inhalt...
+	We shall review the examples from the previous chapter, namely the Torus and the Klein bottle. With the same argument we see that
+	\begin{align*}
+		H_1(T;\Z_2)\isom& \Z_2\otimes\Z_2\\
+		H_2(T;\Z_2)\isom& \Z_2.
+	\end{align*}
+	
+	For the Klein bottle $S$, the argument needs to be changed slightly. With $\Z_2$ coefficients, the basic 2-chain $\gamma$, which is the sum of the 2-simplices of $S$, has boundary zero. This leads to the conclusion that 
+	\begin{align*}
+		H_1(S;\Z_2)&\isom \Z_2\oplus \Z_2\\
+		H_2(S;\Z_2)&\isom \Z_2
+	\end{align*}
+
+	More generally, one can show that Homology with $\Z_2$ coefficients does not distinguish between orientable and non-orientable surfaces of genus $g$.
 \end{examples}
+
 
 \section{Functoriality Property}
 We will now explore how homotopy behaves under continuous functions. We will begin with the following definition and lemma from Munkres' book \cite[lemma 12.1, p. 62]{mu}:
