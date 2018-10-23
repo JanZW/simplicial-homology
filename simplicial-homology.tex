@@ -491,55 +491,55 @@ Then we have
 \end{align*}
 
 
-\item The Torus (see \autoref{torus}) is a little more difficult. Unfortunately, the simplest (simplicial) triangulation is depicted in \autoref{triangulation-torus}. This triangulation would lead to boundary operators in the form of  $27\times 18$  and  $8\times 27$ matrices respectively.  The resulting homology groups are:
-\[
-H_0=\Z,\quad H_1=\Z^2,\quad H_2=\Z,\quad H_{n>2}=0
-\]
-Even tough these aren't hard to compute, it is very tedious and therefore wont be presented here.\footnote{By introducing the concept of cellular homology, this can be simplified to $3\times 2$ and $1\times 3$ matrices via the \glqq(non-simplicial)  triangulation\grqq:	
-	
-\begin{tikzpicture}[scale=0.5]
-	\draw[->] (-5,0) node[below]{$v_0$}--(-4,0) node[below]{b};
-	\draw[->] (-5,2) node[above]{$v_0$}--(-4,2) node[above]{b};
-	\draw[->] (-5,0)--(-5,1) node[left]{a};
-	\draw[->] (-3,0) node[below]{$v_0$}--(-3,1) node[right]{a};
-	\draw[->] (-5,0)--(-4,1) node[above]{$c$};
-	\draw[->] (-4,1)--(-3,2);
-	\draw (-5,0)--(-3,0)--(-3,2) node[above]{$v_0$}--(-5,2)--cycle;
-\end{tikzpicture}
-
-	 Cellular and simplicial homology actually coincide. However we currently lack the framework for cellular homology}
-
-\begin{figure}
-	
-\parbox[c]{.5\linewidth}{\centering
-\begin{tikzpicture}
-	\draw[->] (-5,0) node[below]{$v_0$}--(-4,0) node[below]{b};
-	\draw[->] (-5,2) node[above]{$v_0$}--(-4,2) node[above]{b};
-	\draw[->] (-5,0)--(-5,1) node[left]{a};
-	\draw[->] (-3,0) node[below]{$v_0$}--(-3,1) node[right]{a};
-	\draw (-5,0)--(-3,0)--(-3,2) node[above]{$v_0$}--(-5,2)--cycle;
-\end{tikzpicture}}%
-\parbox[c]{.5\linewidth}{\centering
-\begin{tikzpicture}
-	\draw (0,0)--(6,0)--(6,6)--(0,6)--cycle;
-	\draw (2,0)--(2,6);
-	\draw (4,0)--(4,6);
-	\draw (0,2)--(6,2);
-	\draw (0,4)--(6,4);
-	\draw (0,4)--(2,6);
-	\draw (0,2)--(4,6);
-	\draw (0,0)--(6,6);
-	\draw (2,0)--(6,4);
-	\draw (4,0)--(6,2);
-\end{tikzpicture}	
-}
-\parbox[t]{.5\linewidth}{\captionsetup{width=.9\linewidth}
-\caption{The fundamental polygon of the torus.\label{torus}}}%
-\parbox[t]{.5\linewidth}{\captionsetup{width=.9\linewidth}\caption{A simplicial triangulation of the torus.\label{triangulation-torus}}}
-\end{figure}
-
-We see that the homology groups for the Sphere and the Torus do not agree in every dimension. Since homotopy equivalent spaces 
-have isomorphic homology groups (we will show that later), we find that the sphere cannot be homotopy equivalent to the torus.
+%\item The Torus (see \autoref{torus}) is a little more difficult. Unfortunately, the simplest (simplicial) triangulation is depicted in \autoref{triangulation-torus}. This triangulation would lead to boundary operators in the form of  $27\times 18$  and  $8\times 27$ matrices respectively.  The resulting homology groups are:
+%\[
+%H_0=\Z,\quad H_1=\Z^2,\quad H_2=\Z,\quad H_{n>2}=0
+%\]
+%Even tough these aren't hard to compute, it is very tedious and therefore wont be presented here.\footnote{By introducing the concept of cellular homology, this can be simplified to $3\times 2$ and $1\times 3$ matrices via the \glqq(non-simplicial)  triangulation\grqq:	
+%	
+%\begin{tikzpicture}[scale=0.5]
+%	\draw[->] (-5,0) node[below]{$v_0$}--(-4,0) node[below]{b};
+%	\draw[->] (-5,2) node[above]{$v_0$}--(-4,2) node[above]{b};
+%	\draw[->] (-5,0)--(-5,1) node[left]{a};
+%	\draw[->] (-3,0) node[below]{$v_0$}--(-3,1) node[right]{a};
+%	\draw[->] (-5,0)--(-4,1) node[above]{$c$};
+%	\draw[->] (-4,1)--(-3,2);
+%	\draw (-5,0)--(-3,0)--(-3,2) node[above]{$v_0$}--(-5,2)--cycle;
+%\end{tikzpicture}
+%
+%	 Cellular and simplicial homology actually coincide. However we currently lack the framework for cellular homology}
+%
+%\begin{figure}
+%	
+%\parbox[c]{.5\linewidth}{\centering
+%\begin{tikzpicture}
+%	\draw[->] (-5,0) node[below]{$v_0$}--(-4,0) node[below]{b};
+%	\draw[->] (-5,2) node[above]{$v_0$}--(-4,2) node[above]{b};
+%	\draw[->] (-5,0)--(-5,1) node[left]{a};
+%	\draw[->] (-3,0) node[below]{$v_0$}--(-3,1) node[right]{a};
+%	\draw (-5,0)--(-3,0)--(-3,2) node[above]{$v_0$}--(-5,2)--cycle;
+%\end{tikzpicture}}%
+%\parbox[c]{.5\linewidth}{\centering
+%\begin{tikzpicture}
+%	\draw (0,0)--(6,0)--(6,6)--(0,6)--cycle;
+%	\draw (2,0)--(2,6);
+%	\draw (4,0)--(4,6);
+%	\draw (0,2)--(6,2);
+%	\draw (0,4)--(6,4);
+%	\draw (0,4)--(2,6);
+%	\draw (0,2)--(4,6);
+%	\draw (0,0)--(6,6);
+%	\draw (2,0)--(6,4);
+%	\draw (4,0)--(6,2);
+%\end{tikzpicture}	
+%}
+%\parbox[t]{.5\linewidth}{\captionsetup{width=.9\linewidth}
+%\caption{The fundamental polygon of the torus.\label{torus}}}%
+%\parbox[t]{.5\linewidth}{\captionsetup{width=.9\linewidth}\caption{A simplicial triangulation of the torus.\label{triangulation-torus}}}
+%\end{figure}
+%
+%We see that the homology groups for the Sphere and the Torus do not agree in every dimension. Since homotopy equivalent spaces 
+%have isomorphic homology groups (we will show that later), we find that the sphere cannot be homotopy equivalent to the torus.
 
 \item We will now consider the circle. This can be triangulated as an empty triangle, i.e.
 \begin{center}
