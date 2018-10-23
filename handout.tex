@@ -1,0 +1,254 @@
+% Vorlage fuer Handouts
+% Seminar ``Topology vs. Combinatorics''
+% im WS 2018/19
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Allgemeine Hinweise
+% - Halten Sie den LaTeX-Code so uebersichtlich wie moeglich;
+%   (La)TeX-Fehlermeldungen sind oft kryptisch -- in einem ordentlich 
+%   strukturierten Quellcode lassen sich Fehler leichter finden und 
+%   beseitigen
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Jedes LaTeX-Dokument muss eine \documentclass-Deklaration enthalten
+%   Diese sorgt fuer das allgemeine Seiten-Layout, das Aussehen der 
+%   Ueberschriften etc.
+\documentclass[a4paper,DIV8,10pt]{scrartcl}
+  
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  % Einbinden weiterer Pakete
+  \usepackage{german}    % fuer die deutschen Trennmuster
+  % \usepackage{ngerman} % entsprechend fuer die neue Rechtschreibung
+  \usepackage[latin1]{inputenc} % falls Sie Umlaute in den Quellen verwenden wollen
+  \usepackage{amsmath}   % enthaelt nuetzliche Makros fuer Mathematik
+  \usepackage{amsthm}    % fuer Saetze, Definitionen, Beweise, etc.
+  \usepackage{amsfonts}  % spezielle AMS-Mathematik-Fonts
+  \usepackage{relsize}   % fuer \smaller 
+  \usepackage{tikz}      % fuer Graphiken
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  % Deklaration eigener Mathematik-Makros
+  \newcommand{\N}{\ensuremath{\mathbb{N}}}   % natuerliche Zahlen
+  \newcommand{\Z}{\ensuremath{\mathbb{Z}}}   % ganze Zahlen
+  \newcommand{\Q}{\ensuremath{\mathbb{Q}}}   % rationale Zahlen
+  \newcommand{\R}{\ensuremath{\mathbb{R}}}   % reelle Zahlen
+  
+  %\newcommand{\Sp}{\ensuremath{\mathbb{S}}
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  % Deklaration eigener Satz-/Definitions-/Beweisumgebungen mit amsthm
+  \newtheorem{satz}{Satz}[section]
+  \newtheorem{theorem}[satz]{Theorem}
+  \newtheorem{lemma}[satz]{Lemma}
+  \newtheorem{korollar}[satz]{Korollar}
+  \theoremstyle{definition}
+  \newtheorem{definition}[satz]{Definition}
+  \newtheorem{bemerkung}[satz]{Bemerkung}
+  \newtheorem{aufgabe}[satz]{Aufgabe}
+  \newtheorem{examples}[satz]{Examples}
+  \newenvironment{beweis}%
+    {\begin{proof}[Beweis]}
+    {\end{proof}}
+  \newtheorem{beispiel}[satz]{Beispiel}
+  
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  % Deklaration weiterer Makros
+  \renewcommand{\labelitemi}{--}             % aendert die Symbole bei unnumerierten Aufzaehlungen
+  \makeatletter                              % Fussnote ohne Symbol
+    \def\blfootnote{\xdef\@thefnmark{}\@footnotetext}
+  % Titel des Handouts
+  %   #1 Name des Vortragenden
+  %   #2 email-Adresse 
+  %   #3 Datum des Vortrags
+  %   #4 Titel des Vortrags
+  \newcommand{\handouttitle}[4]
+   {\begin{center}
+      \Large #4
+    \end{center}
+
+    \bigskip
+
+    \noindent
+    #1 (\textsf{#2})
+    \hfill
+    #3%
+    \blfootnote{Seminar \glqq Topology vs.\ Combinatorics\grqq, 
+      WS~2018/19, Universit\"at Regensburg}
+  
+    \noindent
+    \rule{\linewidth}{.5pt}
+
+    \bigskip
+
+    \@afterindentfalse\@afterheading
+   }
+  \makeatother
+  \renewcommand{\sectfont}{\normalfont}       % aendert den Font fuer Ueberschriften
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Anfang des eigentlichen Dokuments
+\begin{document}
+
+  % Titel fuer das Handout -- Sie koennen natuerlich auch selbst etwas entwerfen!
+  \handouttitle{J. Zwank}
+               {jan-philipp.zwank@stud.uni-r.de}
+               {07.11.2018}
+               {Simplicial Homology}
+
+
+  \section{Motivation}
+The main idea of simplicial homology can be summarized as follows:
+
+%\framebox[.9\linewidth]{\parbox{.85\linewidth}
+{We want to find a new homotopy invariant as a tool to distinguish topological spaces. With simplicial homology, we assign a succession of abelian Groups to simplicial complexes.}
+%}
+
+\section{Simplicial Homology Groups}
+\begin{definition}
+	Let $K$ be a simplicial complex. A $p$-chain on $K$ is a function $c$ from the set of oriented $p$-simplices of $K$ to the an abelian Group $G$ such that:
+	\begin{enumerate}
+		\item $c(\sigma)=-c(\sigma^\prime)$ if $\sigma$ and $\sigma^\prime$ are opposite orientations of the same simplex.
+		\item $c(\sigma)=0$ for all but finitely many oriented $p$-simplices $\sigma$.
+	\end{enumerate}
+We add $p$-chains by adding their values; the resulting group (which is free abelian) is denoted $C_p(K;G)$ and is called the group of (oriented) $p$-chains of $K$ with coefficients in $G$.
+\end{definition}
+\begin{definition}
+	We defnie the boundary operator\[
+	\partial_p: C_p(K;G)\to C_{p-1}(K;G)
+	\]
+	to be the homomorphism via its action on an elementary chain corresponding to an oriented simplex $\sigma=(v_0,\dots,v_p)$:
+	\[
+	\partial_p\sigma=\partial_p(v_0,\dots,v_p)=\sum_{i=0}^{p}(-1)^i(v_0,\dots,\hat{v}_i,\dots,v_p)
+	\]
+	where the symbol $\hat{v}_i$ means that the vertex $v_i$ is to be deleted from the array.
+\end{definition}
+\begin{lemma}
+	$(C_\bullet,\partial)$ is a chain complex, i.e. $\partial^2=0$
+\end{lemma}
+\begin{definition}
+	We define
+	\begin{center}
+	\framebox[.6\linewidth]{$H_p(K;G):=\mathrm{ker} \partial_p/\mathrm{Im}\partial_{p+1}$}\end{center}
+	to be the \textbf{$p$-th simplicia homology group of $K$}
+\end{definition}
+
+\begin{examples}
+	For the 2-sphere, triangulate the space, compute the boundary of all elementary chains and evaluate the resulting matrices to find:
+	\[H_0(\mathbb{S}^2)\cong\Z\quad H_1(\mathbb{S}^2)=0,\quad H_2(\mathbb{S}^2)\cong \Z, \quad H_{n>2}(\mathbb{S}^2)=0\]
+	
+	For the Torus $T$ and the Klein Bottle $S$ it is more convenient to reduce the problem to chains that are carried by the boundary of the rectangle associated with the fundamental polygon. This yields
+	\begin{align*}
+	H_0(S)&\cong\Z&H_1(S)&\cong\Z\oplus\Z_2&H_{n>1}(S)&=0\\
+	H_0(S;\Z_2)&\cong\Z_2&H_1(S;\Z_2)&\cong\Z_2\oplus\Z_2&H_{n>1}(S;\Z_2)&=0\\
+	H_0(T)&\cong\Z&H_1(T)&\cong\Z\oplus\Z&H_{n>1}(T)&=\Z\\
+	H_0(T;\Z_2)&\cong\Z_2&H_1(S;\Z_2)&\cong\Z_2\oplus\Z_2&H_{n>1}(S;\Z_2)&=0\\
+	\end{align*}
+\end{examples}
+\section{Functoriality Property}
+\begin{theorem}[functorility I]\footnote{The statement might not be verbatim from the lecture, but the statement is essentially the same.}
+	Simplicial Homology is a functor from the Category of simplicial complexes to abelian groups.
+\end{theorem}
+
+\begin{theorem}[functioriality II]
+	Simplicial Homology is a functor from the Category of polyhedra to abelian groups.
+\end{theorem}
+
+\section{Homotopy Invariance of Simplical Homology}
+
+\begin{theorem}
+	If two polyhedra $K$ and $L$ are homotopy equivalent, then their homology groups are isomorphic $H_n(X)\cong H_n(Y)$ in all dimensions.
+\end{theorem}
+  \begin{aufgabe}
+    Compute the Homology groups of $\R \mathrm{P}^2$ with coefficients in $\Z$ and $\Z_2$.
+  \end{aufgabe}
+\begin{aufgabe}
+	Prove that the only non-trivial simplicial homology groups of $\mathbb{S}^n$ are $H_0(\mathbb{S})\cong H_n(\mathbb{S})\cong \Z$.
+\end{aufgabe}
+%  \begin{beispiel}
+%    \hfil
+%    \begin{enumerate}
+%      \item Es gibt auch Beispiele, \dots
+%      \item \dots die numeriert sind.
+%    \end{enumerate}
+%  \end{beispiel}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Literaturverzeichnis
+% - Der Einfachheit halber sind hier bereits alle Quellen eingetragen, 
+%   die im Seminarprogramm auftreten
+% - Bitte entfernen Sie alle Quellen, die Sie nicht in Ihrem Handout 
+%   zitieren
+% - Umgekehrt muessen Sie natuerlich, wenn Sie weitere Literatur
+%   zitieren wollen, die entsprechenden Quellen hier einfuegen; 
+%   hierbei kann www.ams.org/mathscinet helfen, die noetigen 
+%   Informationen zu den Quellen zu sammeln
+  \begin{thebibliography}{99}
+
+   \bibitem{armstrong} M.A.~Armstrong, \emph{Basic Topology},
+      korrigierter Nachdruck des Originals von~1979, 
+      Undergraduate Texts in Mathematics, Springer, 1983.
+    
+%    \bibitem{beutelspacher} A.~Beutelspacher. \emph{Das ist o.B.d.A.\
+%        trivial!}, neunte Auf\-lage, Vie\-weg$+$Teub\-ner, 2009.
+%
+%    \bibitem{chua-leong-lim}
+%      C.K.~Chua, K.F.~Leong, C.S.~Lim.
+%      \emph{Rapid Prototyping: Principles and Applications}, 
+%      World Scientific Publishing, 2010.
+%      
+%    \bibitem{diestel} R.~Diestel. \emph{Graph theory}, dritte Auflage, 
+%      Graduate Texts in Mathematics, Band~173, Springer, 2005.
+
+    \bibitem{hatcher} A.~Hatcher. \emph{Algebraic Topology}, 
+      Cambridge University Press, 2002. 
+      Online verf\"ugbar unter
+      \textsf{http://www.math.cornell.edu/\~{}hatcher/}.
+
+%    \bibitem{borsuk} J.~Matou\v sek. \emph{Using the Borsuk-Ulam
+%        Theorem}, Lectures on topological methods in combinatorics and
+%      geometry. Written in cooperation with Anders Bj\"orner and G\"unter
+%      M.~Ziegler, \emph{Universitext}, Springer, 2003.
+%   
+%    \bibitem{massey} W.S.~Massey.
+%      \emph{Algebraic Topology: An Introduction}, 
+%      Graduate Texts in Mathematics, 56, Springer, 1989.
+%      
+%    \bibitem{companion} F.~Mittelbach, M.~Goossens, J.~Braams,
+%      D.~Carlisle, C.~Rowley. \emph{The \LaTeX\ Companion}, zweite
+%      Auf\-lage, Addison-Wesley, 2004.
+%
+%    \bibitem{mt} B.~Mohar, C.~Thomassen. 
+%      B.~Mohar,C.~Thomassen.
+%      \emph{Graphs on surfaces}, 
+%      Johns Hopkins Studies in the Mathematical Sciences, 
+%      Johns Hopkins University Press, 2001.
+%      
+    \bibitem{munkres}
+      J.R.~Munkres. \emph{Elements of algebraic topology},
+      Addison-Wesley, 1984.
+
+%    \bibitem{tantau} 
+%        T.~Tantau. \emph{The {\normalfont Ti\textit{k}Z} and
+%          {\normalfont PGF} Packages}, 
+%        \\
+%        \textsf{http://www.ctan.org/tex-archive/graphics/pgf/base/doc/generic/pgf/pgfmanual.pdf} 
+%
+%    \bibitem{rudin} W.~Rudin. \emph{Real and complex analysis}, dritte
+%      Auflage, McGraw-Hill Book Co., 1987.
+%
+%    \bibitem{tomdieck}
+%       T.~tom~Dieck. \emph{Topologie}, 
+%       zweite~Auf\-lage, de~Gruyter, 2000.
+\bibitem{ferrario}
+	D.L. Ferrario and R.A. Piccinini. \emph{Simlicial Structures in Topology}, CMS Books in Mathematics, Springer New York, 2010. \textsc{isbn:}9781441972361
+ 
+  \end{thebibliography}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Ende des Dokuments -- alles, was nach dieser Zeile steht, wird 
+% von LaTeX ignoriert!
+\end{document}
