@@ -1,4 +1,4 @@
-\documentclass[draft,toc=bib]{scrartcl}
+\documentclass[toc=bib]{scrartcl}
 \title{Simplicial Homology}
 \author{Jan Zwank}
 \usepackage{amsmath,amssymb,amsthm}
@@ -406,90 +406,108 @@ Let us remind ourselves of what we wanted to do in \autoref{motivation}. We want
 	and call it the \textbf{$\mathbf{p}$-th simplicial homology goup of $\mathbf{K}$}.
 \end{definition}
 %TODO Examples
-
 \begin{examples}\mbox{}
 	\begin{enumerate}
-		\item Lets start with a simple triangulation\footnote{A triangulation of a space $T$ is a simplicial complex $X$ whose geometric realization $|X|$ is homeomorphic to $T$.}
-		 of $\Sp^2$ like the hollow tetrahedron (depicted in \autoref{hollow-tetrahedron}) \[X=\langle v_0v_1v_2,v_0v_1v_3,v_0v_2v_3,v_1v_2v_3 \rangle. \]
-			 	
-		 	\begin{figure}\centering
-		 		\begin{tikzpicture}
-		 		\draw (4,0) node[below]{$v_0$}--(6,0)node[below]{$v_1$}--(4.75,2)node[above]{$v_3$}--cycle;
-		 		\draw (6,0)--(6,1)node[right]{$v_2$}--(4.75,2);
-		 		\draw[dashed] (4,0)--(6,1);
-		 			\draw[->,>=stealth](5.55,1.2)arc[start angle=0,end angle=270,radius=3pt];
-		 			\draw[->,>=stealth,dotted](4.9,1.2)arc[start angle=0,end angle=-270,radius=4pt];
-		 			\draw[->,>=stealth](5,.8)arc[start angle=0,end angle=270,radius=4pt];
-		 			\draw[->,>=stealth,dotted](5.5,.2)arc[start angle=0,end angle=-270,radius=4pt];
-		 		\end{tikzpicture}
-		 		\caption{geometric realization of the hollow tetrahedron.\label{hollow-tetrahedron}}
-		 	\end{figure}
-	 It consists of four faces ($f_1=v_0v_1v_2, f_2=v_0v_1v_3$, $f_3=v_0v_2v_3, f_4=v_1v_2v_3$), six edges ($e_1=v_0v_1, e_2=v_0v_2, e_3=v_0v_3,$ $ e_4=v_1v_2, $ $e_5=v_1v_3, $ $e_6=v_2v_3$) and four vertices ($v_0,v_1,v_2,v_3$). Therefore, we find the simplicial chain complex to be
-	 \begin{tikzcd}
-	 	\Z\langle f_1,f_2,f_3f_4\rangle\arrow[r,"\partial_2"]&\Z\langle e_1,e_2,e_3,e_4,e_5,e_6\rangle\arrow[r,"\partial_1"]&\Z\langle v_0,v_1,v_2,v_3\rangle\arrow[r,"\partial_0"]&0
-	 \end{tikzcd}
- 
- Computing the boundaries and writing the results in a more user friendly fashion gives
- 
- \parbox[c]{.6\linewidth}{
- \begin{align*}
- 	\partial f_1=v_1v_2-v_0v_2+v_0v_1=e_1-e_2+e_4\\
- 	\partial f_2=v_1v_3-v_0v_3+v_0v_1=e_1-e_3+e_5\\
- 	\partial f_3=v_2v_3-v_0v_3+v_0v_2=e_2-e_3+e_6\\
- 	\partial f_4=v_2v_3-v_1v_3+v_1v_2=e_4-e_5+e_6
- \end{align*}}%
-\parbox[c]{.4\linewidth}{
-	$\partial_2=\begin{matrix}
-		 	&\begin{matrix}f_1	&f_2	&f_3	&f_4\end{matrix}\\
-		\begin{matrix}
-		e_1	\\
-		e_2	\\
-		e_3	\\
-		e_4	\\
-		e_5	\\
-		e_6	
-		\end{matrix}&
-		\begin{bmatrix}
-		1		&1		&0		&0\\
-		-1		&0		&1		&0\\
-		0		&-1		&-1		&0\\
-		1		&0		&0		&1\\
-		0		&1		&0		&-1\\
-		0		&0		&1		&1
-		\end{bmatrix}
-	\end{matrix}$	
-}
+%Point
 
-\parbox[c]{.5\linewidth}{
-\begin{align*}
-	\partial e_1&=v_1-v_0,&&\partial e_2=v_2-v_0,&&\partial e_3=v_3-v_0,\\
-	\partial e_4&=v_2-v_1,&&\partial e_5=v_3-v_1,&&\partial e_6=v_3-v_1
-\end{align*}}%
-\parbox[c]{.5\linewidth}{$
-\quad\begin{matrix}
-	&\begin{matrix}e_1&e_2&e_3&e_4&e_5&e_6	\end{matrix}\\
-	\begin{matrix}v_0\\v_1\\v_2\\v_3\end{matrix}&
-	\begin{bmatrix}
-	-1	&-1	&-1	&0	&0	&0\\
-	1	&0	&0	&-1	&-1	&0\\
-	0	&1	&0	&1	&0	&-1\\
-	0	&0	&1	&0	&1	&1
-	\end{bmatrix}
-\end{matrix}$
-}
-We then find
-\begin{align*}
-\ker \partial_2&=\Z\langle f_1-f_2+f_3-f_4\rangle\\
-\ker \partial_1&=\Z\langle e_1-e_2+e_4,e_1-e_3+e_5, e_2-e_3+e_6 \rangle
-\end{align*}
-Then we have
-\begin{align*}
-	H_2(\Sp^2)&=\ker \partial_2/\im \partial_3=\ker \partial_2=\Z\langle f_1-f_2+f_3-f_4\rangle\simeq\Z\\
-	H_1(\Sp^2)&=\ker \partial_1/\im \partial_2\simeq\Z^3/\Z^3\simeq 0\\
-	H_0(\Sp^2)&=\ker\partial_0/\im \partial_1\simeq \Z^4/\Z^3\simeq \Z\\
-	H_n(\Sp^2)&=0\quad \text{for $n>2$}
-\end{align*}
+\item Let us begin with the easiest example one can think of. Let $K$ be the simplicial complex consisting of only one 0-simplex (i.e. one vertex $v$). Clearly the chain complex then obviously reads
 
+\begin{center}
+\begin{tikzcd}
+	C_1(K)\arrow[r,"\partial"]\arrow[d,equals]&C_0(K)\arrow[d,equals]\arrow[r,"\partial"]&\arrow[d,equals]0\\
+	0\arrow[r,"\partial"]&\Z\langle v\rangle\arrow[r,"\partial"]&0
+\end{tikzcd}
+\end{center}
+Then the homology groups are \[
+H_0(K)\isom\Z,\quad H_{n>1}(K)=0
+\]
+%Circle
+%%sphere as exercise at the end of handout
+%Torus
+%Klein bottle
+
+
+%		\item Lets start with a simple triangulation\footnote{A triangulation of a space $T$ is a simplicial complex $X$ whose geometric realization $|X|$ is homeomorphic to $T$.}
+%		 of $\Sp^2$ like the hollow tetrahedron (depicted in \autoref{hollow-tetrahedron}) \[X=\langle v_0v_1v_2,v_0v_1v_3,v_0v_2v_3,v_1v_2v_3 \rangle. \]
+%			 	
+%		 	\begin{figure}\centering
+%		 		\begin{tikzpicture}
+%		 		\draw (4,0) node[below]{$v_0$}--(6,0)node[below]{$v_1$}--(4.75,2)node[above]{$v_3$}--cycle;
+%		 		\draw (6,0)--(6,1)node[right]{$v_2$}--(4.75,2);
+%		 		\draw[dashed] (4,0)--(6,1);
+%		 			\draw[->,>=stealth](5.55,1.2)arc[start angle=0,end angle=270,radius=3pt];
+%		 			\draw[->,>=stealth,dotted](4.9,1.2)arc[start angle=0,end angle=-270,radius=4pt];
+%		 			\draw[->,>=stealth](5,.8)arc[start angle=0,end angle=270,radius=4pt];
+%		 			\draw[->,>=stealth,dotted](5.5,.2)arc[start angle=0,end angle=-270,radius=4pt];
+%		 		\end{tikzpicture}
+%		 		\caption{geometric realization of the hollow tetrahedron.\label{hollow-tetrahedron}}
+%		 	\end{figure}
+%	 It consists of four faces ($f_1=v_0v_1v_2, f_2=v_0v_1v_3$, $f_3=v_0v_2v_3, f_4=v_1v_2v_3$), six edges ($e_1=v_0v_1, e_2=v_0v_2, e_3=v_0v_3,$ $ e_4=v_1v_2, $ $e_5=v_1v_3, $ $e_6=v_2v_3$) and four vertices ($v_0,v_1,v_2,v_3$). Therefore, we find the simplicial chain complex to be
+%	 \begin{tikzcd}
+%	 	\Z\langle f_1,f_2,f_3f_4\rangle\arrow[r,"\partial_2"]&\Z\langle e_1,e_2,e_3,e_4,e_5,e_6\rangle\arrow[r,"\partial_1"]&\Z\langle v_0,v_1,v_2,v_3\rangle\arrow[r,"\partial_0"]&0
+%	 \end{tikzcd}
+% 
+% Computing the boundaries and writing the results in a more user friendly fashion gives
+% 
+% \parbox[c]{.6\linewidth}{
+% \begin{align*}
+% 	\partial f_1=v_1v_2-v_0v_2+v_0v_1=e_1-e_2+e_4\\
+% 	\partial f_2=v_1v_3-v_0v_3+v_0v_1=e_1-e_3+e_5\\
+% 	\partial f_3=v_2v_3-v_0v_3+v_0v_2=e_2-e_3+e_6\\
+% 	\partial f_4=v_2v_3-v_1v_3+v_1v_2=e_4-e_5+e_6
+% \end{align*}}%
+%\parbox[c]{.4\linewidth}{
+%	$\partial_2=\begin{matrix}
+%		 	&\begin{matrix}f_1	&f_2	&f_3	&f_4\end{matrix}\\
+%		\begin{matrix}
+%		e_1	\\
+%		e_2	\\
+%		e_3	\\
+%		e_4	\\
+%		e_5	\\
+%		e_6	
+%		\end{matrix}&
+%		\begin{bmatrix}
+%		1		&1		&0		&0\\
+%		-1		&0		&1		&0\\
+%		0		&-1		&-1		&0\\
+%		1		&0		&0		&1\\
+%		0		&1		&0		&-1\\
+%		0		&0		&1		&1
+%		\end{bmatrix}
+%	\end{matrix}$	
+%}
+%
+%\parbox[c]{.5\linewidth}{
+%\begin{align*}
+%	\partial e_1&=v_1-v_0,&&\partial e_2=v_2-v_0,&&\partial e_3=v_3-v_0,\\
+%	\partial e_4&=v_2-v_1,&&\partial e_5=v_3-v_1,&&\partial e_6=v_3-v_1
+%\end{align*}}%
+%\parbox[c]{.5\linewidth}{$
+%\quad\begin{matrix}
+%	&\begin{matrix}e_1&e_2&e_3&e_4&e_5&e_6	\end{matrix}\\
+%	\begin{matrix}v_0\\v_1\\v_2\\v_3\end{matrix}&
+%	\begin{bmatrix}
+%	-1	&-1	&-1	&0	&0	&0\\
+%	1	&0	&0	&-1	&-1	&0\\
+%	0	&1	&0	&1	&0	&-1\\
+%	0	&0	&1	&0	&1	&1
+%	\end{bmatrix}
+%\end{matrix}$
+%}
+%We then find
+%\begin{align*}
+%\ker \partial_2&=\Z\langle f_1-f_2+f_3-f_4\rangle\\
+%\ker \partial_1&=\Z\langle e_1-e_2+e_4,e_1-e_3+e_5, e_2-e_3+e_6 \rangle
+%\end{align*}
+%Then we have
+%\begin{align*}
+%	H_2(\Sp^2)&=\ker \partial_2/\im \partial_3=\ker \partial_2=\Z\langle f_1-f_2+f_3-f_4\rangle\simeq\Z\\
+%	H_1(\Sp^2)&=\ker \partial_1/\im \partial_2\simeq\Z^3/\Z^3\simeq 0\\
+%	H_0(\Sp^2)&=\ker\partial_0/\im \partial_1\simeq \Z^4/\Z^3\simeq \Z\\
+%	H_n(\Sp^2)&=0\quad \text{for $n>2$}
+%\end{align*}
+%
 
 %\item The Torus (see \autoref{torus}) is a little more difficult. Unfortunately, the simplest (simplicial) triangulation is depicted in \autoref{triangulation-torus}. This triangulation would lead to boundary operators in the form of  $27\times 18$  and  $8\times 27$ matrices respectively.  The resulting homology groups are:
 %\[
@@ -559,33 +577,36 @@ We easily find
 \end{bmatrix},\quad \partial_0\equiv 0
 \]
 Therefore,
-\[H_1(\Sp^1)\simeq\Z/0\simeq\Z,\quad H_0(\Sp)\simeq\Z^3/\Z^2\simeq\Z
+\[H_1(\Sp^1)\isom\Z/0\isom\Z,\quad H_0(\Sp)\isom\Z^3/\Z^2\isom\Z
 \]
-\item 
-Now that we have considered the circle, we might also be interested in the $2$-ball $B^2$. The triangulation is very easy this time. It is just one 2-dimensional simplex:
-\begin{center}
-\begin{tikzpicture}
-\draw[] (4,0) node[below]{$v_0$}--(6,0)node[below]{$v_1$};
-\draw[] (6,0) -- (5,2) node[above]{$v_2$};
-\draw[] (5,2)--(4,0);
-%\draw (5,-1) node{$(v_0,v_1,v_2)$};	
-\draw[->] (5.3,0.7)arc[start angle=0, end angle=300,radius=0.3cm];
-\end{tikzpicture}
-
-We find that $\partial_1$ and $\partial_0$ are the same as before and $\partial_2$ can be expressed as
-\[
-\partial_2=\begin{bmatrix}
-1\\1\\1
-\end{bmatrix}
-\]
-We then find
-\[
-H_2(B^2)=0,\quad H_1(B^2)=0,\quad H_0(B^2)=\Z
-\]
-
-\end{center}
+%\item 
+%Now that we have considered the circle, we might also be interested in the $2$-ball $B^2$. The triangulation is very easy this time. It is just one 2-dimensional simplex:
+%\begin{center}
+%\begin{tikzpicture}
+%\draw[] (4,0) node[below]{$v_0$}--(6,0)node[below]{$v_1$};
+%\draw[] (6,0) -- (5,2) node[above]{$v_2$};
+%\draw[] (5,2)--(4,0);
+%%\draw (5,-1) node{$(v_0,v_1,v_2)$};	
+%\draw[->] (5.3,0.7)arc[start angle=0, end angle=300,radius=0.3cm];
+%\end{tikzpicture}
+%
+%We find that $\partial_1$ and $\partial_0$ are the same as before and $\partial_2$ can be expressed as
+%\[
+%\partial_2=\begin{bmatrix}
+%1\\1\\1
+%\end{bmatrix}
+%\]
+%We then find
+%\[
+%H_2(B^2)=0,\quad H_1(B^2)=0,\quad H_0(B^2)=\Z
+%\]
+%
+%\end{center}
 	\end{enumerate}
 %\include{torus}
+
+We will consider the (more interesting) cases of the torus and the Klein Bottle shortly. But we need a preliminary result first because even though the same method as before can be applied in theory, this is not very practical since the matrices would uncomfortably large.
+
 \input{examples}
 \end{examples}
 
@@ -611,7 +632,7 @@ Since the group of chains with integer coefficients $C_n(K;\Z)=C_n(K)$ merely co
 \[
 C_n(K;G)\simeq C_n(K;\Z)\otimes_\Z G,
 \]
-which leads to many interesting phenomena. The same holds for homology groups if the coefficient ring is a field.
+which leads to many interesting phenomena. The same holds for homology groups if the coefficient ring is a field of characteristic zero.
 %TODO No it doesn't. Need Universal coefficient theorem, but over a field Ext is zero so it holds for fields.
 
 
@@ -750,97 +771,12 @@ With this in mind we can now state the functional properties of these homomorphi
 
 \begin{corollary}\label{baby-case}
 	Let $f: K\to L$ be a bijective simplicial map such that its inverse is also a simplicial map. Then \[
-	\forall p\geq 0:\quad H_p(K)=H_p(L)
-	\]
-\end{corollary}\qed
+	\forall p\geq 0:\quad H_p(K)\isom H_p(L)
+	\]\qed
+\end{corollary}
 
 This already gives the main Idea for the next section.
 %TODO old frontier
-Before we can get started with that we need some preliminary definitions and results:
-
-%TODO reference
-
-\begin{definition}
-	Let $f,g:K\to L$ be simplicial maps. Suppose that for each $p$, one has a homomorphism \[
-	D: C_p(K)\to C_{p+1}(L)
-	\] satisfying the equation
-	\[
-	\partial D+D\partial=g_\sharp-f_\sharp.
-	\]
-	Then $D$ is said to be a chain homotopy between $f_\sharp$ and $g_\sharp$. Note that the diagramm
-	\begin{center}
-		
-	\begin{tikzcd}
-		&C_{p+1}(L)\arrow[d,"\partial"]\\
-		C_p(K)\arrow[ur,"D_p"]\arrow[d,"\partial"]\arrow[r,shift right,"(f_\sharp)_p" below]\arrow[r,shift left,"(g_\sharp)_p"]&C_p(L)\\
-		C_{p-1}(K)\arrow[ur,"D_{p-1}"' near start]
-	\end{tikzcd}
-\end{center}
-is not commutative.
-\end{definition}
-
-\begin{theorem}\label{chain_hom->invariant}%Thm 12.4
-	If there is a chain homotopy between $f_\sharp$ and $g_\sharp$ then the induced homomorphisms $f_\ast$ and $g_\ast$ are equal.
-\end{theorem}
-
-\begin{proof}
-	Let $c$ be a p-cycle of $K$. Then
-	\[
-	g_\sharp(c)-f_\sharp(c)=\partial Dz+D\partial z=\partial Dz+0.
-	\]
-	That means that $f_\sharp$ and $g_\sharp$ differ only by a boundary. Therefore they are in the same homology class, i.e. $f_\ast(c)=g_\ast(c)$.
-\end{proof}
-\begin{definition}%p.57
-	Given two simplicial maps $f,g: K\to L$, these maps are said to be contiguos if for each simplex $v_0\dots v_p$ of $K$, the points \[
-	f(v_0),\dots,f(v_p),g(v_0),\dots,g(v_p)
-	\] span a simplex of $L$.
-\end{definition}
-
-\begin{theorem}\label{contiguous->chain_hom}%Thm 12.5
-	If $f,g: K\to L$ are contiguous simplicial maps, then there is a chain homotopy between $f_\sharp$ and $g_\sharp$.
-\end{theorem}%TODO change up proof (currently cited directly from source)
-
-\begin{proof}
-	Let $\sigma=(v_0,\dots, v_p)\subset K$ and $L(\sigma)=(f(v_0),\dots,f(v_p),g(v_0),\dots,g(v_p))\subset L$. Then
-	\begin{enumerate}
-		\item $L(\sigma)$ is a nonempty, and $\tilde{H}_n(L(\sigma))=0 $ for $n\geq 0$. %TODO define reduced homology
-		\item If $s$ is a face of $\sigma$, then $L(s)\subset L(\sigma)$.
-		\item For each oriented simplex $\sigma$, the chains $f_\sharp(\sigma)$ and $g_\sharp(\sigma)$ are zero on every simplex not in $L(\sigma)$.
-	\end{enumerate}
-
-We will now construct the chain homotopy $D: C_p(K)\to C_{p+1}(L)$ by induction on $p$. For each $\sigma$, the chain $D\sigma$ will vanish on any simplex not contained in $L(\sigma)$.
-
-Let $p=0$; let $v$ be a vertex of $K$. Because $f_\sharp$ and $g_\sharp$ preserve augmentation, \[
-\epsilon(g_\sharp(v)-f_\sharp(v))=1-1=0.
-\]
-Thus $g_\sharp(v)-f_\sharp(v)$ represents an element of the reduced homology group $\tilde{H}_0(L(v))$. %TODO WTF???
-Because this group vanishes, we can choose a 1-chain $Dv$ of $L$ carried by the subcomplex $L(v)$ such that
-\[
-\partial(Dv)=g_\sharp(v)-f_\sharp(v)
-\]
-Then $\partial Dv+D\partial v=\partial Dv+0=g_\sharp(v)-f_\sharp(v)$, as desired. Define $D$ in this way for each vertex of $K$.
-
-Now suppose $D$ is defined in dimensions less than $p$, such that for each oriented simplex $s$ of dimension less than $p$, the chain $Ds$ is carried by $L(s)$, and such that 
-\[
-\partial Ds+D\partial s=g_\sharp(s)-f_\sharp(s)
-\]
-Let $\sigma$ be an oriented simplex of dimension $p$. We wish to define $D\sigma$ so that $\partial (D\sigma)$ equals the chain
-\[
-c=g_\sharp(\sigma)-f_\sharp(\sigma)-D\partial\sigma
-\]
-Note that $c$ is a well-defined chain; $D\partial\sigma$ is defined because $\partial \sigma$ has dimension $p-1$. Furthermore, c is a cycle, for we compute
-\begin{align*}
-	\partial c&=\partial g_\sharp(\sigma)-\partial f_\sharp(\sigma)-\partial D(\partial \sigma)\\
-	&=\partial g_\sharp(\sigma)-\partial f_\sharp(\sigma)-[g_\sharp(\partial\sigma)-f_\sharp(\partial\sigma)-D\partial(\partial\sigma)]
-\end{align*}
-applying the induction hypothesis to the $p-1$ chain $\partial\sigma$. Using the fact that $\partial\circ \partial=0$, we see that $\partial c=0$.
-
-Finally, we note that $c$ is carried by $L(\sigma)$, and since $\tilde{H}_p(L(\sigma))=0$, we can choose a $p+1$ chain $D\sigma$ carried by $L(\sigma)$ such that 
-\[
-\partial D\sigma=c=g_\sharp(\sigma)-f_\sharp(\sigma)-D\partial\sigma
-\]
-We then define $D(-\sigma)=-D(\sigma)$. We repeat this process for each $p$-simplex $\sigma$ of $K$; then we have the required chain homotopy $D$ in dimension $p$. The theorem follows.
-\end{proof}
 
 Let us remind ourselves of the general simplicial approximation theorem, as it can be found in Munkres' book \cite[Thm. 16.5, p. 85]{mu}:
 
@@ -882,7 +818,7 @@ We will first explore the special case that $|K|$ has a simplicial approximation
 \end{tikzcd}
 \end{center}
 
-Let $h\ast^\prime$ be the induced homomorphism defined via $K^\pprime$. We can then write
+Let $h_\ast^\prime$ be the induced homomorphism defined via $K^\pprime$. We can then write
 \[
 h_\ast^\prime(f\circ k)_\ast\circ(g\circ k)_\ast^{-1}=(f_\ast\circ k_\ast)\circ(g_\ast\circ k_\ast)^{-1}=f\circ g_\ast^{-1}=g_\ast\circ\lambda_\ast=h_\ast
 \]
@@ -942,16 +878,17 @@ as desired.
 \end{proof}
 
 \section{Homotopy Invariance of \SH}
+
 %TODO change text; changed section ending
 We have arrived at what is probably the most important chapter of this paper. In \autoref{motivation} we already mentioned that we can use (simplicial) homology groups to show that two spaces are not homotopic (or homeomorphic). However, so far we never explained why non-isomorphic homology groups imply that. We need to show that homology groups are topological invariants, i.e. that homotopic spaces have isomorphic homology groups.
 
 We already saw a very special case in Corollary \ref{baby-case}. As we will see shortly, the main idea is essentially the same for a more general statement
 
 \begin{corollary}
-	Let $f: |K|\to |L| $ be a homeomorphism, then $f_\ast: H_n(K)\to H_n(L)$ is an isomorphism.
-\end{corollary}\qed
+	Let $f: |K|\to |L| $ be a homeomorphism, then $f_\ast: H_n(K)\to H_n(L)$ is an isomorphism.\qed
+\end{corollary}
 
-We have discovered the topological invariance of homology groups. However, there is an even stronger statement to be made here. As we will see in the following, homology groups are not only invariant under homeomorphisms, but only depend on the homotopy type. Note that we will only give a sketch of the necessary proof here. For the complete discussion the reader may refer to Munkers' book \parencite[\S 19]{mu}.
+We have discovered the topological invariance of homology groups. However, there is an even stronger statement to be made here. As we will see in the following, homology groups are not only invariant under homeomorphisms, but only depend on the homotopy type. 
 
 Recall the definition of homotopy, taken from Munkres \cite[p. 94]{mu}:
 
@@ -969,6 +906,7 @@ Recall the definition of homotopy, taken from Munkres \cite[p. 94]{mu}:
 \end{definition}
 
 The main task is to prove the following statement:
+
 \begin{theorem}\label{homotopy_invariance}
 	If $f,g:|K|\to |L|$ are homotopic maps then $f_\ast=g_\ast: H_q(K)\to H_q(L)$ for all $q$
 \end{theorem}
@@ -997,109 +935,109 @@ Once we have obtained this result, the homotopy invariance follows easily \paren
 
 With the results form the previous chapter we can conclude that for any compact triangulable space, we can choose a triangulation $t:|K|\to X$ without loss of generality (i.e. it doesn't matter which triangulation we choose up to isomorphism) and use it to define the homology groups  of $X$ as $H_q(X):=H_q(K)$.
 
-%The only thing that is left to do is to prove Theorem \ref{homotopy_invariance}. The general idea is the same as before: We already saw that the induced homomorphisms of two maps $f$ and $g$ are equal if there exists a chain homotopy $D$ such that $\partial D+D\partial=g_\sharp-f_\sharp$ (see Theorem \ref{chain_hom->invariant}). So we need to construct a chain homotopy for any two homotopic maps.
 
 
-We will state the next two results without proof:
-\begin{enumerate}
-	\item If $s,t: |K|\to |L|$ are \glqq close\grqq{} simplicial maps, in the sense that for each simplex $A$ of $K$ we can find a simiplex $B$ in $L$ such that both $s(A)$ and $t(A)$ are faces of $B$, then $s_\ast=t_\ast: H_q(K)\to H_q(L)$ for all $q$.
-	\item If $f,g:|K|\to |L|$ are homotopic maps we can find a barycentric subdivision $K^m$ and a sequence of simplicial maps $s_1,\dots,s_n:|K^m|\to|L|$ such that $s_1$ simplicially approximates $f$, $s,n$ simplicially approximates $g$, and each pair $s_i,s_{i+1}$ are close in the sense above.
-\end{enumerate}
+Before we can get started with that we need some preliminary definitions and results:
 
-\begin{proof}[Proof of Theorem \ref{homotopy_invariance}]
-	Let $\lambda_\ast$ be the homomorphism induced by the subdivision operator. With the results above, we find
+%TODO reference
+
+\begin{definition}
+	Let $f,g:K\to L$ be simplicial maps. Suppose that for each $p$, one has a homomorphism \[
+	D: C_p(K)\to C_{p+1}(L)
+	\] satisfying the equation
 	\[
-	f_\ast=s_{1\ast}\lambda_\ast=s_{2\ast}\lambda_\ast=\dots=s_{n\ast}\lambda_\ast=g_\ast
+	\partial D+D\partial=g_\sharp-f_\sharp.
 	\]
+	Then $D$ is said to be a chain homotopy between $f_\sharp$ and $g_\sharp$. Note that the diagramm
+	\begin{center}
+		
+		\begin{tikzcd}
+			&C_{p+1}(L)\arrow[d,"\partial"]\\
+			C_p(K)\arrow[ur,"D_p"]\arrow[d,"\partial"]\arrow[r,shift right,"(f_\sharp)_p" below]\arrow[r,shift left,"(g_\sharp)_p"]&C_p(L)\\
+			C_{p-1}(K)\arrow[ur,"D_{p-1}"' near start]
+		\end{tikzcd}
+	\end{center}
+	is not commutative.
+\end{definition}
+
+\begin{theorem}\label{chain_hom->invariant}%Thm 12.4
+	If there is a chain homotopy between $f_\sharp$ and $g_\sharp$ then the induced homomorphisms $f_\ast$ and $g_\ast$ are equal.
+\end{theorem}
+
+\begin{proof}
+	Let $c$ be a p-cycle of $K$. Then
+	\[
+	g_\sharp(c)-f_\sharp(c)=\partial Dz+D\partial z=\partial Dz+0.
+	\]
+	That means that $f_\sharp$ and $g_\sharp$ differ only by a boundary. Therefore they are in the same homology class, i.e. $f_\ast(c)=g_\ast(c)$.
+\end{proof}
+\begin{definition}%p.57
+	Given two simplicial maps $f,g: K\to L$, these maps are said to be contiguous if for each simplex $v_0\dots v_p$ of $K$, the points \[
+	f(v_0),\dots,f(v_p),g(v_0),\dots,g(v_p)
+	\] span a simplex of $L$.
+\end{definition}
+
+\begin{theorem}\label{contiguous->chain_hom}%Thm 12.5
+	If $f,g: K\to L$ are contiguous simplicial maps, then there is a chain homotopy between $f_\sharp$ and $g_\sharp$.
+\end{theorem}%TODO change up proof (currently cited directly from source)
+
+\begin{proof}
+	Let $\sigma=(v_0,\dots, v_p)\subset K$ and $L(\sigma)=(f(v_0),\dots,f(v_p),g(v_0),\dots,g(v_p))\subset L$. Then
+	\begin{enumerate}
+		\item $L(\sigma)$ is a nonempty, and $\tilde{H}_n(L(\sigma))=0 $ for $n\geq 0$. %TODO define reduced homology
+		\item If $s$ is a face of $\sigma$, then $L(s)\subset L(\sigma)$.
+		\item For each oriented simplex $\sigma$, the chains $f_\sharp(\sigma)$ and $g_\sharp(\sigma)$ are zero on every simplex not in $L(\sigma)$.
+	\end{enumerate}
+	
+	We will now construct the chain homotopy $D: C_p(K)\to C_{p+1}(L)$ by induction on $p$. For each $\sigma$, the chain $D\sigma$ will vanish on any simplex not contained in $L(\sigma)$.
+	
+	Let $p=0$ and $v$ be a vertex of $K$. Because $f_\sharp$ and $g_\sharp$ preserve augmentation, \[
+	\epsilon(g_\sharp(v)-f_\sharp(v))=1-1=0.
+	\]
+	Thus $g_\sharp(v)-f_\sharp(v)$ represents an element of the reduced homology group $\tilde{H}_0(L(v))$. %TODO WTF???
+	Because this group vanishes, we can choose a 1-chain $Dv$ of $L$ carried by the subcomplex $L(v)$ such that
+	\[
+	\partial(Dv)=g_\sharp(v)-f_\sharp(v)
+	\]
+	Then $\partial Dv+D\partial v=\partial Dv+0=g_\sharp(v)-f_\sharp(v)$, as desired. Define $D$ in this way for each vertex of $K$.
+	
+	Now suppose $D$ is defined in dimensions less than $p$, such that for each oriented simplex $s$ of dimension less than $p$, the chain $Ds$ is carried by $L(s)$, and such that 
+	\[
+	\partial Ds+D\partial s=g_\sharp(s)-f_\sharp(s)
+	\]
+	Let $\sigma$ be an oriented simplex of dimension $p$. We wish to define $D\sigma$ so that $\partial (D\sigma)$ equals the chain
+	\[
+	c=g_\sharp(\sigma)-f_\sharp(\sigma)-D\partial\sigma
+	\]
+	Note that $c$ is a well-defined chain; $D\partial\sigma$ is defined because $\partial \sigma$ has dimension $p-1$. Furthermore, c is a cycle, for we compute
+	\begin{align*}
+	\partial c&=\partial g_\sharp(\sigma)-\partial f_\sharp(\sigma)-\partial D(\partial \sigma)\\
+	&=\partial g_\sharp(\sigma)-\partial f_\sharp(\sigma)-[g_\sharp(\partial\sigma)-f_\sharp(\partial\sigma)-D\partial(\partial\sigma)]
+	\end{align*}
+	applying the induction hypothesis to the $p-1$ chain $\partial\sigma$. Using the fact that $\partial\circ \partial=0$, we see that $\partial c=0$.
+	
+	Finally, we note that $c$ is carried by $L(\sigma)$, and since $\tilde{H}_p(L(\sigma))=0$, we can choose a $p+1$ chain $D\sigma$ carried by $L(\sigma)$ such that 
+	\[
+	\partial D\sigma=c=g_\sharp(\sigma)-f_\sharp(\sigma)-D\partial\sigma
+	\]
+	We then define $D(-\sigma)=-D(\sigma)$. We repeat this process for each $p$-simplex $\sigma$ of $K$; then we have the required chain homotopy $D$ in dimension $p$. The theorem follows.
+	
+	
+	
+	\begin{proof}[Proof of Theorem \ref{homotopy_invariance}]
+		We will state the the following results without proof:
+		\begin{description}
+			\item[Fact:] If $f,g:|K|\to |L|$ are homotopic maps we can find a barycentric subdivision $K^m$ and a sequence of simplicial maps $s_1,\dots,s_n:|K^m|\to|L|$ such that $s_1$ simplicially approximates $f$, $s,n$ simplicially approximates $g$, and each pair $s_i,s_{i+1}$ is contiguous.
+		\end{description}
+		Let $\lambda_\ast$ be the homomorphism induced by the subdivision operator. With the results above, we find
+		\[
+		f_\ast=s_{1\ast}\lambda_\ast=s_{2\ast}\lambda_\ast=\dots=s_{n\ast}\lambda_\ast=g_\ast
+		\]
+	\end{proof}
+	
 \end{proof}
 
-%\begin{lemma}\label{coherent}%Thm 20.4
-%	the topology of the product space $|K|\times I$ is coherent with the subspaces $\sigma\times I$, for $\sigma\in K$.
-%\end{lemma}
-%%TODO proof maybe as appendix?
-%
-%\begin{lemma}%thm 19.1
-%	If $K$ is a comoplex, then $|K|\times I$ is the polytope of a complex $M$, such that each set $\sigma\times I$ is the polytope of a subcomplex of $M$, and the sets $\sigma\times 0$ and $\sigma\times 1$ are simplices of $M$, for each simplex $\sigma$ of $K$.
-%\end{lemma}
-%
-%\begin{proof}
-%	There exists a $J$ such that $|K|\subset \mathbb{E}^J$, so $|K|\times I\subset \mathbb{E}^J\times \mathbb{R}$. We will use a inductive method to subdivide $|K|\times I$ into simplices.
-%	
-%	For $p\geq 0$ let
-%	\[
-%	X_p:=(|K|\times 0)\cup (|K|\times 1)\cup(|K^{(p)}|\times I)
-%	\]
-%	For $p=0$ this space consists of all simplices of the form $\sigma\times 0$, $\sigma \times 1$ ($\sigma\in K$) and all $1$-simplices of the form $v\times I$ ($v$ a vertex of $K$) and the corresponding vertices. We denote the complex that arises as the union of those simplices as $M_0$. The polytope of $M_0$ is $X_0$.
-%	
-%	Suppose $M_{p-1}$ is a complex whose plytope is $X_{p-1}$, such that for every simplex $s$ in $K$ of dimension less than $p$ the set $s\times I$ is the polytope of a subcomplex of $M_{p-1}$. Consider a set $\sigma\times I$ with $\dim\sigma=p$ and let
-%	\begin{align*}
-%	\Bd(\sigma\times I)&=(\sigma\times I)\setminus(\Int \sigma\times \Int I)\\
-%	&=((\Bd \sigma)\times I)\cup (\sigma\times 0)\cup (\sigma\times 1).
-%	\end{align*}
-%	We know that $\Bd \sigma$ is the union fo simplices $s$ of $K$ of dimension $p-1$, therefore there exists a subcomplex $M_\sigma\subset M_{p-1}$ such that $\Bd (\sigma\times I)$ is the polytope of $M_\sigma$. Since $\Bd (\sigma\times I)$ is compact, $M_\sigma$ is finite.
-%	
-%	Define $w_\sigma$ to be the point $(\hat{\sigma},\frac{1}{2})\in \sigma\times I$. Then the cone\footnote{Suppose that $K$ is a complex in $\mathbb{E}^J$, and $w$ is a point of $\mathbb{E}^J$ such that each ray emanating from $w$ intersects $|K|$ in at most one point. We define the cone on $K$ with vertex $w$ to be the collection of all simplices of the form $wa_0\dots a_p$, where $a_0\dots a_p$ is a simplex of $K$, along with all faces of such simplices. We denote this collection $w\ast K$.\cite[p. 44]{mu}} $w\ast M_\sigma$ is a complex whose polytope is $\sigma\times I$. The intersection of $|w_\sigma\ast M_\sigma|$ and $|M_{p-1}|$ is the polytope of a subcomplex of each of them.
-%	
-%	Now, let $M_p$ be the union of $M_{p-1}$ and the cones $w_\sigma\ast M_\sigma$ for all $p$-simplices of $K$ and define $M$ to be the union of the $M_p$ for all $p$.
-%	
-%	We already know that the polytope of $M$ is the same as $|K|\times I$ as \emph{sets}, however, we still need to show that they are the same as \emph{topological spaces}.
-%	
-%	Lemma \ref{coherent} already stated that the topology of $|K|\times I$ is coherent with that of $\sigma\times I$ for $\sigma\in K$. Similarly, the topology of $|M|$ is coherent with the subspaces $s$, for $s\in M$. Let $C$ be closed in $|K|\times I$, then $C\cap(\sigma\times I)$ is closed in $\sigma\times I$. If $s$ is a simplex of $M$ lying in $\sigma\times I$, then $s$ is a subpace of $\sigma\times I$. Hence $C\cap s$ is closed in $s$. It follows that $C$ is closed in $|M|$.
-%	
-%	Conversely, if $C$ is closed in $|M|$, then $C\cap s$ is closed in $s$ for each $s\in M$. Because $\sigma\times I$ is a finite union of simplices $s$ of $M$, the set $C\cap(\sigma\times I)$ is closed in $\sigma\times I$. Thus $\sigma$ is closed in $|K|\times I$.
-%\end{proof}
-%
-%
-%
-%\begin{theorem}%thm 19.2
-%	IF $h,k:|K|\to |L|$ are homotopic, then $h_\ast,k_\ast: H_p(K)\to H_p(L)$ are equal.
-%\end{theorem}
-%%TODO proof
-%Before we can tend to the proof, we need more framework.
-%\begin{definition}
-%	Let $K$ and $L$ be simplicial complexes. An acyclic carrier from $K$ to $L$ is a function $\Phi$ that assigns to each simplex $\sigma$ of $K$, a subcomplex $\Phi(\sigma)$ fo $L$ such that:
-%	\begin{enumerate}
-%		\item $\Phi(\sigma)$ is nonempty and acyclic.
-%		\item If $s$ is a face of $\sigma$, then $\Phi(s)\subset \Phi(\sigma)$
-%	\end{enumerate}
-%If $f: C_p(K)\to C_p(L)$ is a homomorphism, we say that $f$ is carried by $\phi$ if for each oriented $p$-simplex $\sigma$ of $K$, the chain $f(\sigma)$ is carried by the subcomplex $\Phi(\sigma)$ of $L$.
-%\end{definition}
-%
-%\begin{theorem}[Acyclic carrier theorem, geometric version]\label{acyclic-carrier-thm}%thm 13.3
-%	Let $\Phi$ be an acyclic carrier from $K$ to $L$.
-%	\begin{enumerate}
-%		\item If $\phi$ and $\psi$ are two augmentation-preserving chain maps from $C_\bullet(K)$ to $C_\bullet(L)$ that are carried by $\Phi$, there exists a chain homotopy $D$ of $\phi$ to $\psi$ that is also carried by $\Phi$.
-%		\item There exists an augmentation-preserving chain map from $C_\bullet(K)$ to $C_\bullet(L)$ is carried by $\Phi$.
-%	\end{enumerate}
-%\end{theorem}
-%We only need the first part of this theorem. The second part is only stated for the sake of completeness. Therefore we will only refer the reader to Munkres' book for a proof of the second part. The proof of the first part is essentially the same as for \autoref{contiguous->chain_hom}
-%
-%\begin{proof}
-%	Let $K$ be a complex. Let $M$ be a complex whose underlying space is $|K|\times I$, such that for each $\sigma\in K$, both $\sigma\times 0$ and $\sigma\times 1$ are simplices of $M$, and $\sigma \times I$ is the polytope of a subcomplex of $M$.
-%	
-%	Let $F:|K|\times I\to |L|$ be the homotopy of $h$ to $k$. Let $i,j: |K|\to |K|\times I$ be the maps $i(x)=(x,0)$ and $j(x)=(x,1)$. Then $i$ and $j$ are simplicial maps of $K$ into the complex $M$; furthermore,
-%	\[
-%	F\circ i=h\qandq F\circ j=k.
-%	\]
-%	We assert that the chain maps $i_\sharp$ and $j_\sharp$ are chain homotopic. Consider the function $\Phi$ assigning, to each simpley $\sigma$ of $K$, the subcomplex of $M$ whose polytope is $\sigma \times I$. Now the space $\sigma\times I$ is acyclic because it is homoeomorphic to a closed ball. And if $s<\sigma$,then $s\times I\subset\sigma\times I$, so $\Phi(s)$ is a subcomplex of $\Phi(\sigma)$. Therefore, $\Phi$ is an acyclic carrier from $K$ to $M$. Furthermore, it carries both $i_\sharp$ and $j_\sharp$, for both $i(\sigma)=\sigma\times 0$ and $j(\sigma)=\sigma\times 1$ belong to $\Phi(\sigma)$. It follows form \autoref{acyclic-carrier-thm} that $i_\sharp$ adn $j_\sharp$ are chain homotopic. By virtue of \autoref{chain_hom->invariant} it follow that $i_\ast=j_\ast$, so 
-%	\[
-%	h_\ast=F_\ast\circ i_\ast=F_\ast\circ j_\ast=k_\ast
-%	\]
-%	\end{proof}
-%
-%
-%\begin{definition}\label{def:hom-eq}
-%	Two spaces $X$ and $Y$ are said to be homotopy equivalent, or to have the same homotopy type, if there are maps\[
-%	f: X\to Y\qandq g:Y\to X
-%	\]
-%	such that $g\circ f\simeq i_X$ and $f\circ g\simeq i_Y$. The maps $f$ and $g$ are often called homotopy equivalences, and $g$ is said to be the homotopy inverse to $f$.
-%\end{definition}
-%
-%\begin{corollary}
-%	If two spaces $X$ and $Y$ are homotopy equivalent, then their homology groups are isomorphic $H_n(X)\isom H_n(Y)$ in all dimensions.
-%\end{corollary}\qed
-%
-%
+
 
 \printbibliography
 \end{document}
