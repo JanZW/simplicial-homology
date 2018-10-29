@@ -14,7 +14,7 @@
 % Jedes LaTeX-Dokument muss eine \documentclass-Deklaration enthalten
 %   Diese sorgt fuer das allgemeine Seiten-Layout, das Aussehen der 
 %   Ueberschriften etc.
-\documentclass[a4paper,DIV8,10pt]{scrartcl}
+\documentclass[a4paper,DIV10,10pt]{scrartcl}
   
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   % Einbinden weiterer Pakete
@@ -45,7 +45,7 @@
   \theoremstyle{definition}
   \newtheorem{definition}[satz]{Definition}
   \newtheorem{bemerkung}[satz]{Bemerkung}
-  \newtheorem{aufgabe}[satz]{Aufgabe}
+  \newtheorem{exercise}[satz]{Exercise}
   \newtheorem{examples}[satz]{Examples}
   \newenvironment{beweis}%
     {\begin{proof}[Beweis]}
@@ -160,12 +160,12 @@ We add $p$-chains by adding their values; the resulting group (which is free abe
 \begin{theorem}
 	If two polyhedra $K$ and $L$ are homotopy equivalent, then their homology groups are isomorphic $H_n(X)\cong H_n(Y)$ in all dimensions.
 \end{theorem}
-  \begin{aufgabe}
-    Compute the Homology groups of $\R \mathrm{P}^2$ with coefficients in $\Z$ and $\Z_2$.
-  \end{aufgabe}
-\begin{aufgabe}
-	Prove that the only non-trivial simplicial homology groups of $\mathbb{S}^n$ are $H_0(\mathbb{S})\cong H_n(\mathbb{S})\cong \Z$.
-\end{aufgabe}
+  \begin{exercise}
+    Compute the simplicial Homology groups of $\R \mathrm{P}^2$ with coefficients in $\Z$ and $\Z_2$.
+  \end{exercise}
+\begin{exercise}
+	Compute the simplicial homology groups of $\mathbb{S}^2$ and $\mathbb{S}^3$. Formulate a conjecture for $\mathbb{S}^n$.
+\end{exercise}
 %  \begin{beispiel}
 %    \hfil
 %    \begin{enumerate}
