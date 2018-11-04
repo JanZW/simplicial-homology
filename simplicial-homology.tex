@@ -66,14 +66,14 @@
 	\thispagestyle{empty}
 	\begin{center}
 	\vspace{2cm}
-	{\LARGE\bfseries\sffamily Simplicial Homology}
+	{\Huge\bfseries\sffamily Simplicial Homology}
 	
 	\vspace{1cm}
 	
 	{\Large Jan Philipp Zwank}
 	
 	\vspace{0.5cm}
-	{Seminar: Topology vs. Combinatorics WS 2018/19}
+	{Seminar: Topology vs. Combinatorics, WS 2018/19}
 	
 	\vspace{.25cm}
 	\begin{tabular}{ll}
@@ -85,7 +85,7 @@
 	
 	\begin{abstract}
 		\textsc{Abstract.}\textit{
-		Simplicial homology is a valuable tool for distinguishing polyhedra. We achieve that by assigning an abelian groups $H_n(X;G)$ to the underlying simplicial complex of the polyhedron $|X|$. We call these groups the Homology groups of $X$ with coefficients in $G$, where $G$ is an abelian Group. As we will see, simplicial homology is in fact a functor from the category of simplicial complexes to the category of abelian groups. In addition, we will see that Homology groups only depend on the homotopy type, i.e. two spaces that are homotopy equivalent have isomorphic Homology groups.
+		Simplicial homology is a valuable tool for distinguishing polyhedra. We achieve that by assigning abelian groups $H_n(X;G)$ to the underlying simplicial complex of the polyhedron $|X|$. We call these groups the Homology groups of $X$ with coefficients in $G$, where $G$ is an abelian Group. As we will see, simplicial homology is in fact a functor from the category of simplicial complexes to the category of abelian groups. In addition, we will see that Homology groups only depend on the homotopy type, i.e. two spaces that are homotopy equivalent have isomorphic Homology groups.
 		}
 	\end{abstract}
 
@@ -96,26 +96,26 @@
 \clearpage
 
 \section{Motivation}\label{motivation}
-One of the main goals when studying (topological) spaces (or in this case \scs) is to determine whether two spaces are homeomorphic or at least homotopy equivalent (see Definition \ref{def:hom-eq}) 
-or not. The first approach would be to check if both spaces are simply connected. A more advanced method checks if the fundamental groups $\pi_1$ coincide\footnote{The fundamental group $\pi_1(X)$ is the group of all closed paths with the group action being concatenation. If $X$ is a simply connected space then $\pi_1(X)=0$. Furthermore, the fundamental group is homotopy invariant (up to isomorphism), so homotopic spaces have isomorphic fundamental groups. A more precise formulation of this statement can be found in Hatchers book \parencite[Prop. 1.18, p. 37]{ha}:
+One of the main goals when studying (topological) spaces (or in this case \scs) is to determine whether two spaces are homeomorphic or at least homotopy equivalent 
+or not. The first approach would be to check if both spaces are simply connected. A more advanced method checks if the fundamental groups $\pi_1$ coincide\footnote{The fundamental group $\pi_1(X)$ is the group of all closed paths modulo homotopy with the group action being concatenation. If $X$ is a simply connected space then $\pi_1(X)=0$. Furthermore, the fundamental group is homotopy invariant (up to isomorphism), so homotopic spaces have isomorphic fundamental groups. A more precise formulation of this statement can be found in Hatchers book \parencite[Prop. 1.18, p. 37]{ha}:
 \begin{quotation}
 	\begin{quote}
 		If $\phi: X\to Y$ is a homotopy equivalence, then the induces homomorphism $\phi_*:\pi_1(X,x_0)\to\pi_1(Y,\phi(x_0))$ is an isomorphism for all $x_0\in X$.
 	\end{quote}
 \end{quotation} }.
 
-It turns out that this is a valuable tool for one and two dimensional \scs. But this method fails for complexes with higher dimensional simplices. For example $\pi_1(\mathbb{S}^n)=0$ for all $n\geq 2$. It is therefore impossible to show that two spheres of dimension greater or equal 2 are only then homeomorphic if they are of the same dimension. It can be shown that the fundamental group actually only depends on the 2-skeleton of the complex \cite[vgl.][p. 173]{ar}. 
+It turns out that this is a valuable tool for one and two dimensional \scs. However, this method fails for complexes with higher dimensional simplices. For example $\pi_1(\mathbb{S}^n)=0$ for all $n\geq 2$. It is therefore impossible to show that two spheres of dimension greater or equal 2 are only then homeomorphic if they are of the same dimension just by computing $\pi_1$. It can be shown that the fundamental group actually only depends on the 2-skeleton of the complex \cite[vgl.][p. 173]{ar}. 
 
 Even though this method can be generalized to the study of higher homotopy groups $\pi_n$, this is often more difficult than necessary since the computation of those groups is far from trivial.
 
-In the following we will explore the concept of \sh{} groups and how it can be used to classify spaces. We will see that they allow us to tackle the problem of deciding whether two \textbf{polyhedra}\footnote{A polyhedron is the polytope of a simplicial complex.} are homeomorphic. Note that isomorphic Homology classes do not automatically mean that the spaces are homeomorphic. In fact the torus $T$ and $\mathbb{S}^1\wedge\mathbb{S}^1$ have the same homology groups in every dimension but they are not homeomorphic ($\pi_1(T)=\Z\oplus\Z$ whereas $\pi_1(\mathbb{S}^1\wedge\mathbb{S}^1)=\Z\ast\Z$) .
+In the following we will explore the concept of \sh{} groups and how it can be used to classify spaces. We will see that they allow us to tackle the problem of deciding whether two \textit{polyhedra}\footnote{A polyhedron is the polytope of a simplicial complex.} are homotopy equivalent. Note that isomorphic Homology groups do not automatically mean that the spaces are homotopy equivalent. In fact the torus $T$ and $\mathbb{S}^1\wedge\mathbb{S}^1$ have the same homology groups in every dimension but they are not homeomorphic ($\pi_1(T)=\Z\oplus\Z$ whereas $\pi_1(\mathbb{S}^1\wedge\mathbb{S}^1)=\Z\ast\Z$) .
 
-It is possible to extend the concept of Homology to more general spaces than polyhedra using singular homology, however those will not be covered here. The interested reader might refer to the book of Munkres \cite{mu} or Hatcher \cite{ha} to learn more about singular homology groups.
+It is possible to extend the concept of Homology to more general spaces than polyhedra using cellular or singular homology, however those will not be covered here. The interested reader might refer to the book of Munkres \cite{mu} or Hatcher \cite{ha} to learn more about either one.
 
 While we considered all possible paths when we were talking about the fundamental group we will now only consider those that aren't the boundary of a portion of the surface. A great motivation for this approach is given by Armstrong \cite[p. 173f]{ar}:
 
-When we concern ourselves with the question how closed paths on the torus are different from those on the sphere, we can notice the following:
-Any Jordan curve (i.e. nonselfintersecting, closed path) on a sphere divides the surface into two \glqq regions\grqq{} as depicted in \autoref{divided-sphere}\footnote{For a more precise statement see \url{https://en.wikipedia.org/wiki/Jordan_curve_theorem}}. The same is not true for the torus. In \autoref{path-on-torus} we see that even tough there are Jordan curves on a torus that bound a \glqq region\grqq of the surface, not all Jordan curves have that property \cite[see][p. 173f]{ar}.
+When we concern ourselves with the question how closed paths on the torus are different from those on the sphere, we notice the following:
+Any Jordan curve (i.e. nonselfintersecting, closed path) on a sphere divides the surface into two \glqq regions\grqq{} as depicted in \autoref{divided-sphere}\footnote{For a more precise statement see \url{https://en.wikipedia.org/wiki/Jordan_curve_theorem}}. The same is not true for the torus. In \autoref{path-on-torus} we see that even tough there are Jordan curves on a torus that bound a \glqq region\grqq{} of the surface, not all Jordan curves have that property \cite[see][p. 173f]{ar}.
 
 
 
@@ -149,7 +149,7 @@ Any Jordan curve (i.e. nonselfintersecting, closed path) on a sphere divides the
 \parbox[t]{.5\linewidth}{\captionsetup{width=.9\linewidth}
 \caption{Any closed path on the sphere divides the surface into two regions.\label{divided-sphere} }}%
 \parbox[t]{.5\linewidth}{\captionsetup{width=.9\linewidth}
-\caption{There are closed paths on the torus that do not divide the surface into two regions.\label{path-on-torus}}}
+\caption{There are closed paths on the torus that divide the surface into two regions ($B$) and those that don't ($A$).\label{path-on-torus}}}
 
 \end{figure}
 
@@ -157,7 +157,7 @@ Any Jordan curve (i.e. nonselfintersecting, closed path) on a sphere divides the
 
 Before we get started, let us remind ourselves of some definitions and notations as can be found in Munkres' book \cite[p. 26f.]{mu}
 \begin{definition}
-	For a simplex $\sigma$ we say that two orderings of its vertex set are equivalent if they differ by an even permutation. For a simplex with nonzero dimension, the orderings of the vertices fall into two equivalence classes, called the \textbf{orientations} of $\sigma$. An \textbf{oriented simplex} is a simplex together with an orientation.
+	For a simplex $\sigma$ we say that two orderings of its vertex set are equivalent if they differ by an even permutation. For a simplex with nonzero dimension, the orderings of the vertices fall into two equivalence classes, called the \textit{orientations} of $\sigma$. An \textit{oriented simplex} is a simplex together with an orientation.
 \end{definition}
 Further we will use the same notation as Munkres \cite[p. 26]{mu}
 \begin{notation}
@@ -170,15 +170,13 @@ Further we will use the same notation as Munkres \cite[p. 26]{mu}
 	(v_0,\dots,v_p).
 	\]
 	where the orientation is given by this particular ordering.
-\end{notation}
-
-A choice of orientation is usually depicted with arrows as can be seen in \autoref{orientation-arrows}
+A choice of orientation is usually depicted with arrows as can be seen in \autoref{orientation-arrows}.\end{notation}
 
 \begin{figure}
 	\centering
 
 \begin{tikzpicture}
-	\draw[] (0,0) node[below]{$v_0$}->(1,0.5);
+	\draw[->] (0,0) node[below]{$v_0$}->(1,0.5);
 	\draw (1,0.5)-- (2,1) node[right]{$v_1$};
 	\draw (1,-1) node{$(v_0,v_1)$};
 	%
@@ -197,18 +195,18 @@ A choice of orientation is usually depicted with arrows as can be seen in \autor
 \caption{Indicating orientation with arrows \cite[see][p.27]{mu}\label{orientation-arrows}}
 \end{figure}
 
-To define simplicial homology groups in any meaningful way, we need a few definitions that allow us to formulate our ideas form \autoref{motivation} more precise. There are several ways to go about this. We will follow the path of Munkres \cite[p. 27]{mu} here.
+To define simplicial homology groups in any meaningful way, we need a few definitions that allow us to formulate our ideas form \autoref{motivation} more precisely. There are several ways to go about this. We will follow the path of Munkres \cite[p. 27]{mu} here.
 
 %TODO This is a direct citation. Do I need to state that any further?
 \begin{definition}\label{def-chain}
-	Let $K$ be a simlicial complex. A \textbf{$p$-chain} on $K$ is a function $c$ from the set of oriented $p$-simplices of $K$ to the integers such that:
+	Let $K$ be a simlicial complex. A \textit{$p$-chain} on $K$ is a function $c$ from the set of oriented $p$-simplices of $K$ to the integers such that:
 	\begin{enumerate}
 		\item $c(\sigma)=-c(\sigma^\prime)$ if $\sigma$ and $\sigma^\prime$ are opposite orientations of the same simplex.
 		\item $c(\sigma)=0$ for all but finitely many oriented $p$-simplices $\sigma$.
 	\end{enumerate}
-We add $p$-chains by adding their values; the resulting group is denoted $C_p(K)$ and is called the group of (oriented) $p$-chains of $K$. If $p<0$ or $p>\dim K$, we let $C_p(K)$ denote the trivial group.
+We add $p$-chains by adding their values; the resulting group is denoted $C_p(K)$ and is called the \textit{group of (oriented) $p$-chains of $K$}. If $p<0$ or $p>\dim K$, we let $C_p(K)$ denote the trivial group.
 
-If $\sigma$ is an oriented simplex, the elementary chain $c_\sigma$ corresponding to $\sigma$ is the function defined as follows:
+If $\sigma$ is an oriented simplex, the \textit{elementary chain} $c_\sigma$ corresponding to $\sigma$ is the function defined as follows:
 \begin{align*}c_\sigma(\sigma)=&1,\\
  c_\sigma(\sigma^\prime)=&-1&&\text{ if $\sigma^\prime$ is the opposite orientation of $\sigma$}\\
  c_\sigma(\tau)=&0 &&\text{ for all other oriented simplices $\tau$.} 
@@ -223,12 +221,13 @@ We are now able to formulate the our first result as can be found in Munkres boo
 \end{lemma}
 
 \begin{proof}
-	A basis for $C_p(K)$ can be obtained by orienting each $p$-simplex and using the corresponding elementary chains as a basis.
+%	A basis for $C_p(K)$ can be obtained by orienting each $p$-simplex and using the corresponding elementary chains as a basis.
+	Orient each $p$-simplex arbitrarily, then the corresponding elementary chains form a basis for $C_p(K)$.
 	It is easy to see that each chain $c$ in $C_p(K)$ can be expressed uniquely as a linear combination of the elementary chains $c_{\sigma_i}$ of the simplices of $K$, i.e.
 	\[
 	c=\sum_{i}n_i c_{\sigma_i}.
 	\]
-	Here, the the chain $c$ assigns the value $n_i$ to each simplex $\sigma_i$, $-n_i$ for the simplex $\sigma_i$ with reversed orientation and $0$ to every simplex that does not appear in the summation.\footnote{Recall that by definition of the elementary chains we have \[c_{\sigma_i}(\tau)=\begin{cases}
+	Here, the the chain $c$ assigns the value $n_i$ to each simplex $\sigma_i$. The simplex with reversed orientation is assigned the value $-n_i$. and $0$ gets assigned to every simplex that does not appear in the summation.\footnote{Recall that by definition of the elementary chains we have \[c_{\sigma_i}(\tau)=\begin{cases}
 		1 &\text{if }\sigma_i=\tau\\
 		-1&\text{if }\tau \text{ is the opposite orientation of }\sigma_i\\
 		0&\text{else}
@@ -239,18 +238,18 @@ We are now able to formulate the our first result as can be found in Munkres boo
 Some authors such as Armstrong \parencite[p.176f]{ar} or Ferrario \parencite[p.60]{fe} prefer to introduce chains as formal linear combinations of simplices. By virtue of the lemma above, it is clear that the definitions are analog.
 
 \begin{definition}
-	We define the boundary operator 
+	We say the \textit{boundary operator} 
 	\[
 	\partial_p:\quad C_p(K)\to C_{p-1}(K)
 	\]
-	to be the homomorphism via its action on an elementary chain corresponding to an oriented simplex $\sigma=(v_0,\dots,v_p)$:
+	is the homomorphism defined via its action on an elementary chain corresponding to an oriented simplex $\sigma=(v_0,\dots,v_p)$:
 	\[
 	\partial_p\sigma=\partial_p(v_0,\dots,v_p)=\sum_{i=0}^{p}(-1)^i(v_0,\dots,\hat{v}_i,\dots,v_p)
 	\]
 	where the symbol $\hat{v}_i$ means that the vertex $v_i$ is to be deleted from the array.
 \end{definition}
 
-As the name suggests, the result of this homomorphism indeed refers to the (topological) boundary of the simplex once we interpret the sum of two elementary chains as the union of the corresponding simplices as we will see in several examples \ref{ex:boundary}. But first we have to check well-definedness. For that, it is necessary to show that
+As the name suggests, the result of this homomorphism indeed refers to the (topological) boundary of the simplex once we interpret the sum of two elementary chains as the union of the corresponding simplices as we will see in examples \ref{ex:boundary}. But first we have to check well-definedness. For that, it is necessary to show that
 \[\partial_p(-\sigma)=-\partial_p(\sigma) 
 \]
 Since the orientation fo a simplex only depends on the \emph{sign} of the permutation, it is sufficient to check for the simple case of exchanging $v_0$ and $v_1$:
@@ -320,12 +319,12 @@ Since the orientation fo a simplex only depends on the \emph{sign} of the permut
 
 Recall the following definition of a chain complex as can be found in Munkres' book\footnote{One can find an alternative definition in Ferrario's book\parencite[p. 65]{fe}
 	\begin{quotation}
-		A chain complex $(\mathcal{C}_\bullet,\partial^\prime)$ is a graded abelian group $\{\mathcal{C}_n\}$ together with an endomorphism $\partial^\prime=\{\partial^\prime_n\}$ of degree  $-1$ such that $(\partial^\prime)^2=0$. Where we say that an endomorphism $d$ has degree $k$ if $d(C_k)\subset C_{k+d}$.
+		A \textit{chain complex} $(\mathcal{C}_\bullet,\partial^\prime)$ is a graded abelian group $\{\mathcal{C}_n\}$ together with an endomorphism $\partial^\prime=\{\partial^\prime_n\}$ of degree  $-1$ such that $(\partial^\prime)^2=0$. Where we say that an endomorphism $d$ has degree $k$ if $d(C_k)\subset C_{k+d}$.
 \end{quotation}
 It is easy to see that these definitions are essentially the same even tough they look quite different.
 }\parencite[p. 71]{mu}:
 \begin{definition}
-	A chain complex $\mathcal{C}$ is a family $\{C_p,\partial_p\}$ ob abelian groups $C_p$ and homomorphisms\[
+	A \textit{chain complex} $\mathcal{C}$ is a family $\{C_p,\partial_p\}$ ob abelian groups $C_p$ and homomorphisms\[
 	\partial_p: C_p\to C_{p-1}
 	\]
 	indexed with integers, such that $\partial_p\circ \partial_{p-1}=0$ for all $p$.
@@ -340,7 +339,7 @@ It is easy to see that these definitions are essentially the same even tough the
 \begin{proof}
 	We need to show that $\partial_{p-1}\circ\partial_p\equiv 0$. It is not hard to prove this, it just requires some bookkeeping:
 	
-	Let $\sigma=(v_0,\dots,v_p)$ be an arbitrary $p$-chain, then
+	Let $\sigma=(v_0,\dots,v_p)$ be an arbitrary elementary $p$-chain, then
 	\begin{align*}
 		\partial_{p-1}\circ\partial_p(\sigma)&=\partial_{p-1}\left(\sum_{i=0}^{p}(-1)^i(v_0,\dots,\hat{v}_i,\dots,v_p)\right)=\sum_{i=0}^{p}(-1)^i\partial_{p-1}(v_0,\dots,\hat{v}_i,\dots,v_p)\\
 		&=\sum_{i=0}^{p}(-1)^i\sum_{\parbox{.8cm}{\centering\scriptsize
@@ -351,9 +350,10 @@ It is easy to see that these definitions are essentially the same even tough the
 \end{proof}
 
 A common question for chain complexes is exactness. As we will see later in this chapter, $\{C_\bullet,\partial\}$ will only be exact for very special cases. 
+
 The following definition is taken from Munkres' book \parencite[p. 72]{mu} and will be needed later on.
 \begin{definition}
-	Let $\mathcal{C}$ and $\mathcal{C}^\prime$ be chain complexes. A chain map $\Phi:\mathcal{C}\to\mathcal{C}^\prime$ is a family of homomorphisms
+	Let $\mathcal{C}$ and $\mathcal{C}^\prime$ be chain complexes. A \textit{chain map} $\Phi:\mathcal{C}\to\mathcal{C}^\prime$ is a family of homomorphisms
 	\[
 	\Phi_p:C_p\to C_p^\prime
 	\]
@@ -364,22 +364,22 @@ Before we define the simplicial homology groups, we will introduce one more defi
 
 \begin{definition}\mbox{}
 	\begin{enumerate}
-		\item The kernel of $\partial_p: C_p(K)\to C_{p-1}(K)$ is called the group of $p$-cycles and denoted by $Z_p(K)$.
-		\item The immage of $\partial_{p+1}: C_{p+1}(K)\to C_{p}(K)$ is called the group of $p$-boundaries and is denoted $B_p(K)$.
+		\item The kernel of $\partial_p: C_p(K)\to C_{p-1}(K)$ is called the group of \textit{$p$-cycles} and denoted by $Z_p(K)$.
+		\item The image of $\partial_{p+1}: C_{p+1}(K)\to C_{p}(K)$ is called the group of \textit{$p$-boundaries} and is denoted $B_p(K)$.
 	\end{enumerate}
 	
 \end{definition}
 The previous lemma states that $B_p(K)\subset Z_p(K)$.
-
 Let us remind ourselves of what we wanted to do in \autoref{motivation}. We wanted to consider those closed curves (\emph{cycles}) that were not the \emph{boundary} of some part of the surface. With this in mind, we can now state the definition of simplical homology groups
 
 \begin{definition}
 	We define \[
-	H_p(K):=Z_p(K)/B_p(K)=\ker \partial_p/\im \partial_{p+1}
+	H_p(K):=Z_p(K)/B_p(K)=\ker \partial_p/\mathrm{im} \partial_{p+1}
 	\]
-	and call it the \textbf{$\mathbf{p}$-th simplicial homology goup of $\mathbf{K}$}.
+	and call it the \textit{${p}$-th simplicial homology goup of ${K}$}.
 \end{definition}
 %TODO Examples
+\clearpage
 \begin{examples}\mbox{}
 	\begin{enumerate}
 %Point
@@ -388,8 +388,8 @@ Let us remind ourselves of what we wanted to do in \autoref{motivation}. We want
 
 \begin{center}
 \begin{tikzcd}
-	C_1(K)\arrow[r,"\partial"]\arrow[d,equals]&C_0(K)\arrow[d,equals]\arrow[r,"\partial"]&\arrow[d,equals]0\\
-	0\arrow[r,"\partial"]&\Z\langle v\rangle\arrow[r,"\partial"]&0
+	\cdots\arrow[r,"\partial"]&C_1(K)\arrow[r,"\partial"]\arrow[d,equals]&C_0(K)\arrow[d,equals]\arrow[r,"\partial"]&\arrow[d,equals]0\\
+	\cdots\arrow[r,"\partial"]&0\arrow[r,"\partial"]&\Z\langle v\rangle\arrow[r,"\partial"]&0
 \end{tikzcd}
 \end{center}
 Then the homology groups are \[
@@ -420,7 +420,7 @@ Therefore,
 
 	\end{enumerate}
 
-We will consider the (more interesting) cases of the torus and the Klein Bottle shortly. But we need a preliminary result first because even though the same method as before can be applied in theory, this is not very practical since the matrices would uncomfortably large.
+We will consider the (more interesting) cases of the torus and the Klein Bottle shortly. But we need a preliminary result first because even though the same method as before can be applied in theory, this is not very practical since the matrices would be uncomfortably large (Recall that a simplicial structure of the torus has at least 14 2-simplices, 21 1-simplices and 7 0-simplices \parencite[p. 107]{ha}).
 
 \input{examples}
 \end{examples}
@@ -428,23 +428,23 @@ We will consider the (more interesting) cases of the torus and the Klein Bottle 
 %TODO reduced homology
 Sometimes it is more convenient to use a slightly different kind of homology, the so called \emph{reduced} homology. The following definition is taken from Munkres' book \parencite[p. 43]{mu}.
 \begin{definition}
-	Let $\epsilon$ be the surjective homomorphism defined by $\epsilon(v)=1$ for each vertex $v$ of $K$. hten if $c$ is a 0-chain, $\epsilon(c)$ equals the sum of the values of $c$ on the vertices of $K$. The map $\epsilon$ is called an augmentation map for $C_0(K)$. Since $\epsilon(\partial d)=0$ for all 1-chains $d$, we may consider the augmented chain complex
+	Let $\epsilon$ be the surjective homomorphism defined by $\epsilon(v)=1$ for each vertex $v$ of $K$. Then if $c$ is a 0-chain, $\epsilon(c)$ equals the sum of the values of $c$ on the vertices of $K$. The map $\epsilon$ is called an \textit{augmentation map} for $C_0(K)$. Since $\epsilon(\partial d)=0$ for all 1-chains $d$, we may consider the \textit{augmented chain complex}
 	\begin{center}
 	\begin{tikzcd}
 		\cdots\arrow[r,"\partial_2"]&C_1(K)\arrow[r,"\partial_1"]&C_0(K)\arrow[r,"\epsilon"]&\Z
 	\end{tikzcd}
 \end{center}
-This gives rise to the reduced homology groups
+This gives rise to the \textit{reduced homology groups}
 \[
 \tilde{H}_{n>0}=\mathrm{ker}\partial_n/\mathrm{im}\partial_{n+1}\qandq \tilde{H}_0(K)=\mathrm{ker}\epsilon/\mathrm{im}\partial_1
 \]
-We note that reduced and unreduced homology coincide for all groups except $H_0(K)$. We further note\footnote{For a proof of this statement see \parencite[p. 43]{mu}} that 
+We note that reduced and unreduced homology coincide for all groups except $H_0(K)$. We further note\footnote{For a proof of this statement the reader shall be referred to the book by Munkres  \parencite[p. 43]{mu}} that 
 \[
 H_0(K)\isom \tilde{H}_0(K)\oplus \Z
 \]
 \end{definition}
 \begin{definition}
-	A chain map $\Phi: \mathcal{C}_\bullet\to \mathcal{C}^\prime_\bullet$ between augmented chain complexes is said to be augmentation-preserving if \[
+	A chain map $\Phi: \mathcal{C}_\bullet\to \mathcal{C}^\prime_\bullet$ between augmented chain complexes is said to be \textit{augmentation-preserving} if \[
 	\epsilon^\prime\circ \Phi_0=\epsilon.
 	\]
 \end{definition}
@@ -453,14 +453,14 @@ H_0(K)\isom \tilde{H}_0(K)\oplus \Z
 
 Let us remind ourselves of the definition for $p$-chains (Definition \ref{def-chain}):
 \begin{quotation}
-	Let $K$ be a simlicial complex. A \textbf{$p$-chain} on $K$ is a function $c$ from the set of oriented $p$-simplices of $K$ to the integers such that:
+	Let $K$ be a simlicial complex. A \textit{$p$-chain} on $K$ is a function $c$ from the set of oriented $p$-simplices of $K$ to the integers such that:
 	\begin{enumerate}
 		\item $c(\sigma)=-c(\sigma^\prime)$ if $\sigma$ and $\sigma^\prime$ are opposite orientations of the same simplex.
 		\item $c(\sigma)=0$ for all but finitely many oriented $p$-simplices $\sigma$.
 	\end{enumerate}
 \end{quotation}
 
-There is actually no reason (other than our familiarity with it) to restrict ourselves to the integers here. In fact, the same statements hold true for any abelian group $G$ and it can be helpful to consider other groups than the integers. To denote the change of our underlying group, we use the notation
+There is actually no (mathematical) reason to restrict ourselves to the integers here. In fact, the same statements hold true for any abelian group $G$ and it can be helpful to consider other groups than the integers. To denote the change of our underlying group, we use the notation
 \[
 C_n(K;G)\qandq H_n(K;G)
 \]
@@ -470,21 +470,31 @@ Since the group of chains with integer coefficients $C_n(K;\Z)=C_n(K)$ merely co
 \[
 C_n(K;G)\simeq C_n(K;\Z)\otimes_\Z G,
 \]
-which leads to many interesting phenomena. The same holds for homology groups if the coefficient ring is a field of characteristic zero.
+which leads to many interesting phenomena. The same holds for homology groups if the coefficient ring is a field of characteristic zero\footnote{This follows form the Universal Coefficient Theorem, which can be found in Hatcher's book \parencite[Theorem 3A.3]{ha}:
+\begin{quotation}
+	If $C$ is a chain complex of free abelian groups, then there are natural short sequences
+	\[
+	0\rightarrow H_n(C)\otimes G\rightarrow H_n(C;G)\rightarrow\mathrm{Tor}(H_{n-1}(C),G)\rightarrow 0
+	\]
+	for all $n$ and all $G$, and these sequences split, though not naturally.
+\end{quotation}
+Further, homology groups over fields of characteristic 0 can't have torsion and $\mathrm{Tor}(\Z^\beta,G)=0$ if $G$ is a field of characteristic 0.
+}.
 %TODO No it doesn't. Need Universal coefficient theorem, but over a field Ext is zero so it holds for fields.
 
 
 
 
 
-A special case is the coefficient ring $\Z/2\Z$, since here $-1=1$. Hence, we no longer have to worry about orientation. Therefore, this ring is often used if the considered manifolds might or might not be orientable.
+A special case is the coefficient ring $\Z/2\Z$, since here $-1$ and $1$ are identified. Hence, we no longer have to worry about orientation (at least for chains). Therefore, this ring is often used if the considered manifolds might or might not be orientable.
 
 %TODO Examples: RP^2, klein bottle
 
+The following examples are taken from Munkres \parencite[Example 1, p. 52]{mu}.
 \begin{examples}
 	We shall review the examples from the previous chapter, namely the Torus and the Klein bottle. With the same argument we see that
 	\begin{align*}
-		H_1(T;\Z_2)\isom& \Z_2\otimes\Z_2\\
+		H_1(T;\Z_2)\isom& \Z_2\oplus\Z_2\\
 		H_2(T;\Z_2)\isom& \Z_2.
 	\end{align*}
 	
@@ -498,19 +508,19 @@ A special case is the coefficient ring $\Z/2\Z$, since here $-1=1$. Hence, we no
 \end{examples}
 
 
-\section{Functoriality Property}
+\section{Functoriality}
 We will now explore how homotopy behaves under continuous functions. We will begin with the following definition and lemma from Munkres' book \cite[lemma 12.1, p. 62]{mu}:
 
 \begin{definition}
-	Let $f: K\to L$ be a simplicial map. If $v_0\dots v_p$ is a simplex of $K$, then the points $f(v_0)\dots f(v_p)$ span a simplex of $L$. we define a homomorphism $f_\sharp: C_p(K)\to C_p(L)$ by defining it on oriented simplices as follows:
+	Let $f: K\to L$ be a simplicial map. If $[v_0\dots v_p]$ is a simplex of $K$, then the points $f(v_0)\dots f(v_p)$ span a simplex of $L$. We construct a homomorphism $f_\sharp: C_p(K)\to C_p(L)$ by defining it on oriented simplices as follows:
 	\[
 	f_\sharp([v_0,\dots,v_p])=\begin{cases}
 	[f(v_0),\dots, f(v_p)],& \text{if } f(v_0),\dots, f(v_p) \text{ are distinct}\\
-	0,&\text{otherwise}
+	0,&\text{otherwise}.
 	\end{cases}
 	\]
 	
-	The family $\{f_\sharp\}$ is called the chain map induced by the simplicial map $f$.
+	The family $\{f_\sharp\}$ is called the \textit{chain map induced by the simplicial map $f$}.
 \end{definition}
 
 This gives rise to the following diagram:
@@ -524,9 +534,9 @@ This gives rise to the following diagram:
 \end{tikzcd}
 \end{center}
 
-This of course raises the question whether this diagram commutes or not. 
+This raises the question whether this diagram commutes or not. 
 \begin{lemma}
-	The homomorphism $f_\sharp$ commutes with $\partial$; therefore $f_\sharp$ induces a homomorphism $f_\ast:H_p(K)\to H_p(L)$
+	The homomorphism $f_\sharp$ commutes with $\partial$; therefore $f_\sharp$ induces a homomorphism $f_\ast:H_p(K)\to H_p(L)$.
 \end{lemma}
 
 \begin{proof}
@@ -536,9 +546,10 @@ This of course raises the question whether this diagram commutes or not.
 		\partial f_\sharp([v_0,\dots,v_p])=f_\sharp(\partial[v_0,\dots,v_p])
 	\end{equation}
 	\begin{description}
-		\item[Case 1 $\dim\tau=p$:] Clearly, this requires $f(v_0),\dots,f(v_p)$ to be distinct. Therefore the statement follows directly from the definitions. %TODO check closely
-		\item[Case 2 $\dim\tau\leq p-2$:] Here, the left side of \eqref{comm} vanishes because $f(v_0),\dots,f(v_p)$ are not distinct. The right side also vanishes, since for every $i$, at least two of the points $f(v_0),\dots,\hat{f}(v_i),\dots,f(v_p)$ are the same.%TODO this is too close to the source-> reformulate
-		\item[Case 3 $\dim\tau=p-1$:] We will assume the following ordering of vertices:
+		\item[Case 1 ${\dim\tau=p}$:] Clearly, this requires $f(v_0),\dots,f(v_p)$ to be distinct. Therefore the statement follows directly from the definitions. %TODO check closely
+		\item[Case 2 ${\dim\tau\leq p-2}$:] %Here, the left side of \eqref{comm} vanishes because $f(v_0),\dots,f(v_p)$ are not distinct. The right side also vanishes, since for every $i$, at least two of the points $f(v_0),\dots,\hat{f}(v_i),\dots,f(v_p)$ are the same.%TODO this is too close to the source-> reformulate
+	Since $f(v_0),\dots,f(v_p)$ are not distinct, the left side of \eqref{comm} equals 0. Moreover, at least two of the vertices $f(v_0),\dots,\hat{f}(v_i),\dots,f(v_p)$ are the same, thus the right side also vanishes.
+		\item[Case 3 ${\dim\tau=p-1}$:] We will assume the following ordering of vertices without loss of generality:
 		\begin{equation}\label{cond}
 		f(v_0)=f(v_1), \qqandqq f(v_1),\dots,f(v_p) \text{ are distinct.}
 		\end{equation}
@@ -553,10 +564,10 @@ To show the second part of the lemma, we need to understand how $f_\sharp$ acts 
 
 Now, let $b$ be an arbitrary boundary, i.e. there exists some $d$ with $b=\partial d$. Then, $f_\sharp(b)=f_\sharp(\partial d)=\partial f_\sharp(d)$. 
 
-We have thereby shown that $f_\sharp$ maps boundaries (cycles) of $K$ to boundaries (cycles) of $L$. 
+Thus, we have shown that $f_\sharp$ maps boundaries (cycles) of $K$ to boundaries (cycles) of $L$. 
 \end{proof}
 
-With this in mind we can now state the functional properties of these homomorphisms. We do this by following Munkres' book \cite[Theorem 12.2, p. 53]{mu} once more.
+With this in mind we can now state the functional properties of these homomorphisms. We do this following Munkres' book \cite[Theorem 12.2, p. 63]{mu} once more.
 
 \begin{theorem}[functorial properties I]\label{func-prop1}\mbox{}
 	\begin{enumerate}
@@ -608,17 +619,24 @@ With this in mind we can now state the functional properties of these homomorphi
 	\]\qed
 \end{corollary}
 
-This already gives the main Idea for the next section.
-
-Let us remind ourselves of the general simplicial approximation theorem, as it can be found in Munkres' book \cite[Thm. 16.5, p. 85]{mu}:
+This already hints at the main Idea for the next section. Before we get started with that,
+let us remind ourselves of the general simplicial approximation theorem, as it can be found in Munkres' book \cite[Thm. 16.5, p. 95]{mu}:
 
 \begin{theorem}[The general simplicial approximation theorem]
 	Let $K$ and $L$ be complexes; let $h: |K|\to |L|$ be a continuous map. There exists a subdivision $K^\prime$ of $K$ such that $h$ has a simplicial approximation $f:K^\prime \to L$.
 \end{theorem}
+We will further need the following definitions from Munkres' book \cite[p. 67/p. 100]{mu}:
+\begin{definition}%p.57
+	Given two simplicial maps $f,g: K\to L$, these maps are said to be \textit{contiguous} if for each simplex $v_0\dots v_p$ of $K$, the points \[
+	f(v_0),\dots,f(v_p),g(v_0),\dots,g(v_p)
+	\] span a simplex of $L$.
+\end{definition}
 
-We will further need the following definition again for Munkres' book \cite[p. 100]{mu}:
+
 \begin{definition}
-	Let $K$ and $L$ be simplicial complexes; let $h:|K|\to |L|$ be a continuous map. Choose a subdivision $K^\prime$ of $K$ such that $h$ has a simplicial approximation $f:K^\prime\to L$ (such exists by virtue of the previous theorem). Let $\lambda:C_\bullet(K)\to C_\bullet(K^\prime)$ be the subdivision operator. We define the homomorphism induced by $h$ 
+	Let $K$ and $L$ be simplicial complexes; let $h:|K|\to |L|$ be a continuous map. Choose a subdivision $K^\prime$ of $K$ such that $h$ has a simplicial approximation $f:K^\prime\to L$ (such exists by virtue of the previous theorem). Let $\lambda:C_\bullet(K)\to C_\bullet(K^\prime)$ be the subdivision operator.
+	
+	 We define the \textit{homomorphism induced by $h$} 
 	\[
 	h_\ast: H_p(K)\to H_p(L)
 	\]
@@ -630,7 +648,7 @@ We will further need the following definition again for Munkres' book \cite[p. 1
 
 %TODO well definedness
 
-Since this definition involves several choices, we need to make sure, that the resulting homomorphism isn't dependent on these choices. We do this in two steps. Firstly, notice that for some choice of a subdivision $K^\prime$ two simplicial approximations, then these are contiguous and therefore induce the same homomorphism $f_\ast\equiv g_\ast$ (see Theorems \ref{chain_hom->invariant} and \ref{contiguous->chain_hom}).
+Since this definition involves several choices, we need to make sure, that the resulting homomorphism isn't dependent on these choices. We do this in two steps. Firstly, notice that for some choice of a subdivision $K^\prime$ two simplicial approximations, then these are contiguous and therefore induce the same homomorphism $f_\ast\equiv g_\ast$ (we will prove that statement in the next section; see Theorems \ref{chain_hom->invariant} and \ref{contiguous->chain_hom}).
 
 Let $\iota: K^\prime\to K $ be a simplicial approximation to the identity map of $K$, then $\lambda_\ast=(g_\ast)^{-1}$, hence
 \[
@@ -652,10 +670,10 @@ We will first explore the special case that $|K|$ has a simplicial approximation
 
 Let $h_\ast^\prime$ be the induced homomorphism defined via $K^\pprime$. We can then write
 \[
-h_\ast^\prime(f\circ k)_\ast\circ(g\circ k)_\ast^{-1}=(f_\ast\circ k_\ast)\circ(g_\ast\circ k_\ast)^{-1}=f\circ g_\ast^{-1}=g_\ast\circ\lambda_\ast=h_\ast
+h_\ast^\prime=(f\circ k)_\ast\circ(g\circ k)_\ast^{-1}=(f_\ast\circ k_\ast)\circ(g_\ast\circ k_\ast)^{-1}=f\circ g_\ast^{-1}=g_\ast\circ\lambda_\ast=h_\ast
 \]
 
-We generalize this method by considering a subdivision $K\ppprime$ of $K$ such that the identity map has simplicial approximations
+We generalize this method by considering a subdivision $K^\ppprime$ of $K$ such that the identity map has simplicial approximations
 \[
 k_1: K^\ppprime\to K^\prime\qandq k_2: K^\ppprime\to K^\pprime.
 \]
@@ -666,7 +684,7 @@ h_\ast^\prime=h_\ast^\pprime=h_\ast
 \]
 
 %TODO functorial properties
-We are now able to generalize \autoref{func-prop1}
+We are now able to generalize \autoref{func-prop1} with the following theorem from Munkres \parencite[p. 101]{mu}
 \begin{theorem}[functorial properties II]\label{func-prop2}
 	The identity map $id: |K|\to |K|$ induces the identity homomorphism $i_\ast: H_p(K)\to H_p(K)$. If $h:|K|\to|L|$ and $k:|L|\to |M|$ are continuous maps, then $(k\circ h)_\ast=k_\ast\circ h_\ast$.
 \end{theorem}
@@ -693,12 +711,10 @@ With these choices, $f_0\circ f_1$ is a simplicial approximation to $k\circ h$, 
 \[
 (k\circ h)_\ast=(f_0\circ f_1)_\ast\circ(g_1)_\ast^{-1}
 \]
-
 Since $g_0\circ f_1$ is a simplicial approximation to $h$, have
 \[
 h_\ast=(g_0\circ f_1)_\ast\circ(g_1)_\ast^{-1}\qandq k_\ast=(f_0)_\ast\circ(g_0)_\ast^{-1}
 \]
-
 Combining these results and applying \autoref{func-prop1}
 we obtain 
 \[
@@ -709,7 +725,7 @@ as desired.
 
 \end{proof}
 
-\section{Homotopy Invariance of \SH}
+\section{Homotopy Invariance}
 
 %TODO change text; changed section ending
 We have arrived at what is probably the most important chapter of this paper. In \autoref{motivation} we already mentioned that we can use (simplicial) homology groups to show that two spaces are not homotopic (or homeomorphic). However, so far we never explained why non-isomorphic homology groups imply that. We need to show that homology groups are topological invariants, i.e. that homotopic spaces have isomorphic homology groups.
@@ -725,16 +741,16 @@ We have discovered the topological invariance of homology groups. However, there
 Recall the definition of homotopy, taken from Munkres \cite[p. 94]{mu}:
 
 \begin{definition}
-	If $X$ and $Y$ are topological spaces, two continuous maps $h, k: X\to Y$ are said to be homotopic if there is a continuous map \[
+	If $X$ and $Y$ are topological spaces, two continuous maps $h, k: X\to Y$ are said to be \textit{homotopic} if there is a continuous map \[
 	F: X\times I\to Y
 	\]
-	such that $F(x,0)=h(x)$ and $F(x,1)=k(x)$ for all $x\in X$. If $h$ and $k$ are homotopic, we write $h\simeq k$. The map $F$ is called a homotopy of $h$ to $k$. 
+	such that $F(x,0)=h(x)$ and $F(x,1)=k(x)$ for all $x\in X$. If $h$ and $k$ are homotopic, we write $h\simeq k$. The map $F$ is called a \textit{homotopy from $h$ to $k$}. 
 \end{definition}
 \begin{definition}\label{def:hom-eq}
-	Two spaces $X$ and $Y$ are said to be homotopy equivalent, or to have the same homotopy type, if there are maps\[
+	Two spaces $X$ and $Y$ are said to be \textit{homotopy equivalent}, or to have the same \textit{homotopy type}, if there are maps\[
 	f: X\to Y\qandq g:Y\to X
 	\]
-	such that $g\circ f\simeq i_X$ and $f\circ g\simeq i_Y$. The maps $f$ and $g$ are often called homotopy equivalences, and $g$ is said to be the homotopy inverse to $f$.
+	such that $g\circ f\simeq i_X$ and $f\circ g\simeq i_Y$. The maps $f$ and $g$ are often called \textit{homotopy equivalences}, and $g$ is said to be the \textit{homotopy inverse} to $f$.
 \end{definition}
 
 The main task is to prove the following statement:
@@ -749,7 +765,7 @@ Once we have obtained this result, the homotopy invariance follows easily \paren
 \end{corollary}
 \begin{proof}
 	Let $f,g$ denote the maps as described in the definition of homotopy equivalence, i.e. let $g$ be the homotopy inverse of $f$. 
-	Consider the following Diagram:
+	Consider the following diagram:
 	\begin{center}
 	
 	\begin{tikzcd}
@@ -780,7 +796,7 @@ Before we can get started with that we need some preliminary definitions and res
 	\[
 	\partial D+D\partial=g_\sharp-f_\sharp.
 	\]
-	Then $D$ is said to be a chain homotopy between $f_\sharp$ and $g_\sharp$. Note that the diagramm
+	Then $D$ is said to be a \textit{chain homotopy} between $f_\sharp$ and $g_\sharp$. Note that in general the diagram
 	\begin{center}
 		
 		\begin{tikzcd}
@@ -792,6 +808,7 @@ Before we can get started with that we need some preliminary definitions and res
 	is not commutative.
 \end{definition}
 
+The next two theorems were taken form Munkres' book \parencite[Theorem 12.4/12.5, p. 66f]{mu}
 \begin{theorem}\label{chain_hom->invariant}%Thm 12.4
 	If there is a chain homotopy between $f_\sharp$ and $g_\sharp$ then the induced homomorphisms $f_\ast$ and $g_\ast$ are equal.
 \end{theorem}
@@ -803,22 +820,18 @@ Before we can get started with that we need some preliminary definitions and res
 	\]
 	That means that $f_\sharp$ and $g_\sharp$ differ only by a boundary. Therefore they are in the same homology class, i.e. $f_\ast(c)=g_\ast(c)$.
 \end{proof}
-\begin{definition}%p.57
-	Given two simplicial maps $f,g: K\to L$, these maps are said to be contiguous if for each simplex $v_0\dots v_p$ of $K$, the points \[
-	f(v_0),\dots,f(v_p),g(v_0),\dots,g(v_p)
-	\] span a simplex of $L$.
-\end{definition}
+
 
 \begin{theorem}\label{contiguous->chain_hom}%Thm 12.5
 	If $f,g: K\to L$ are contiguous simplicial maps, then there is a chain homotopy between $f_\sharp$ and $g_\sharp$.
 \end{theorem}%TODO change up proof (currently cited directly from source)
 
 \begin{proof}
-	Let $\sigma=(v_0,\dots, v_p)\subset K$ and $L(\sigma)=(f(v_0),\dots,f(v_p),g(v_0),\dots,g(v_p))\subset L$. Then
+	Let $\sigma=(v_0,\dots, v_p)\subset K$ and let  $L(\sigma)$ be the subcomplex whose vertex set is $\{f(v_0),\dots,f(v_p),g(v_0),\dots,g(v_p)\}\subset L$. Then
 	\begin{enumerate}
 		\item $L(\sigma)$ is a nonempty, and $\tilde{H}_n(L(\sigma))=0 $ for $n\geq 0$. 
 		\item If $s$ is a face of $\sigma$, then $L(s)\subset L(\sigma)$.
-		\item For each oriented simplex $\sigma$, the chains $f_\sharp(\sigma)$ and $g_\sharp(\sigma)$ are zero on every simplex not in $L(\sigma)$.
+		\item For each oriented simplex $\sigma$, the chains $f_\sharp(\sigma)$ and $g_\sharp(\sigma)$ are carried by $L(\sigma)$.
 	\end{enumerate}
 	
 	We will now construct the chain homotopy $D: C_p(K)\to C_{p+1}(L)$ by induction on $p$. For each $\sigma$, the chain $D\sigma$ will vanish on any simplex not contained in $L(\sigma)$.
@@ -827,7 +840,7 @@ Before we can get started with that we need some preliminary definitions and res
 	\epsilon(g_\sharp(v)-f_\sharp(v))=1-1=0.
 	\]
 	Thus $g_\sharp(v)-f_\sharp(v)$ represents an element of the reduced homology group $\tilde{H}_0(L(v))$. %TODO WTF???
-	Because this group vanishes, we can choose a 1-chain $Dv$ of $L$ carried by the subcomplex $L(v)$ such that
+	Since this group vanishes, there exists a 1-chain $Dv$ of $L$ carried by the subcomplex $L(v)$ such that
 	\[
 	\partial(Dv)=g_\sharp(v)-f_\sharp(v)
 	\]
@@ -837,25 +850,27 @@ Before we can get started with that we need some preliminary definitions and res
 	\[
 	\partial Ds+D\partial s=g_\sharp(s)-f_\sharp(s)
 	\]
-	Let $\sigma$ be an oriented simplex of dimension $p$. We wish to define $D\sigma$ so that $\partial (D\sigma)$ equals the chain
+	Let $\sigma$ be an oriented simplex of dimension $p$. We wish to define $D\sigma$ so that 
 	\[
-	c=g_\sharp(\sigma)-f_\sharp(\sigma)-D\partial\sigma
+	\partial (D\sigma)=:c=g_\sharp(\sigma)-f_\sharp(\sigma)-D\partial\sigma
 	\]
 	Note that $c$ is a well-defined chain; $D\partial\sigma$ is defined because $\partial \sigma$ has dimension $p-1$. Furthermore, c is a cycle, for we compute
 	\begin{align*}
 	\partial c&=\partial g_\sharp(\sigma)-\partial f_\sharp(\sigma)-\partial D(\partial \sigma)\\
 	&=\partial g_\sharp(\sigma)-\partial f_\sharp(\sigma)-[g_\sharp(\partial\sigma)-f_\sharp(\partial\sigma)-D\partial(\partial\sigma)]
+	&=0
 	\end{align*}
-	applying the induction hypothesis to the $p-1$ chain $\partial\sigma$. Using the fact that $\partial\circ \partial=0$, we see that $\partial c=0$.
+	by virtue of $\partial^2=0$ and induction hypothesis.
+%	applying the induction hypothesis to the $p-1$ chain $\partial\sigma$. Using the fact that $\partial\circ \partial=0$, we see that $\partial c=0$.
 	
 	Finally, we note that $c$ is carried by $L(\sigma)$, and since $\tilde{H}_p(L(\sigma))=0$, we can choose a $p+1$ chain $D\sigma$ carried by $L(\sigma)$ such that 
 	\[
 	\partial D\sigma=c=g_\sharp(\sigma)-f_\sharp(\sigma)-D\partial\sigma
 	\]
-	We then define $D(-\sigma)=-D(\sigma)$. We repeat this process for each $p$-simplex $\sigma$ of $K$; then we have the required chain homotopy $D$ in dimension $p$. The theorem follows.
+	We then define $D(-\sigma)=-D(\sigma)$. We repeat this process for each $p$-simplex $\sigma$ of $K$; then we have the required chain homotopy $D$ in dimension $p$. The statement follows.
 \end{proof}	
 	
-	
+	We are now in a position where we can prove \autoref{homotopy_invariance} following the idea of Armstrong \parencite[p. 189f]{ar}.
 	\begin{proof}[Proof of Theorem \ref{homotopy_invariance}]
 		We will state the the following results without proof:
 		\begin{description}
