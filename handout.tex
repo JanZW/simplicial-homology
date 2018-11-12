@@ -14,7 +14,7 @@
 % Jedes LaTeX-Dokument muss eine \documentclass-Deklaration enthalten
 %   Diese sorgt fuer das allgemeine Seiten-Layout, das Aussehen der 
 %   Ueberschriften etc.
-\documentclass[a4paper,DIV10,10pt]{scrartcl}
+\documentclass[a4paper,DIV12,10pt]{scrartcl}
   
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   % Einbinden weiterer Pakete
@@ -45,7 +45,7 @@
   \theoremstyle{definition}
   \newtheorem{definition}[satz]{Definition}
   \newtheorem{bemerkung}[satz]{Bemerkung}
-  \newtheorem{exercise}[satz]{Exercise}
+  \newtheorem{exercise}{Exercise}
   \newtheorem{examples}[satz]{Examples}
   \newenvironment{beweis}%
     {\begin{proof}[Beweis]}
@@ -89,6 +89,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Anfang des eigentlichen Dokuments
+
 \begin{document}
 
   % Titel fuer das Handout -- Sie koennen natuerlich auch selbst etwas entwerfen!
@@ -114,52 +115,97 @@ The main idea of simplicial homology can be summarized as follows:
 	\end{enumerate}
 We add $p$-chains by adding their values; the resulting group (which is free abelian) is denoted $C_p(K;G)$ and is called the group of (oriented) $p$-chains of $K$ with coefficients in $G$.
 \end{definition}
-\begin{definition}
-	We defnie the boundary operator\[
+\begin{definition} Let K be a simplicial complex and $G$ an abelian group.
+	We define the boundary operator\[
 	\partial_p: C_p(K;G)\to C_{p-1}(K;G)
 	\]
-	to be the homomorphism via its action on an elementary chain corresponding to an oriented simplex $\sigma=(v_0,\dots,v_p)$:
+	to be the linear map uniquely defined by its action on an elementary chain corresponding to an oriented simplex $\sigma=(v_0,\dots,v_p)$:
 	\[
 	\partial_p\sigma=\partial_p(v_0,\dots,v_p)=\sum_{i=0}^{p}(-1)^i(v_0,\dots,\hat{v}_i,\dots,v_p)
 	\]
-	where the symbol $\hat{v}_i$ means that the vertex $v_i$ is to be deleted from the array.
+	where the symbol $\hat{v}_i$ means that the vertex $v_i$ is to be deleted from the vertex set.
 \end{definition}
 \begin{lemma}
-	$(C_\bullet,\partial)$ is a chain complex, i.e. $\partial^2=0$
+	Let $K$ be a simplicial complex and $G$ an abelian group then $(C_p(K;G),\partial_p)_{p\in\Z}$ is a chain complex, i.e. $\partial^2=0$
 \end{lemma}
 \begin{definition}
 	We define
 	\begin{center}
 	\framebox[.6\linewidth]{$H_p(K;G):=\mathrm{ker} \partial_p/\mathrm{Im}\partial_{p+1}$}\end{center}
-	to be the \textbf{$p$-th simplicia homology group of $K$}
+	to be the \textbf{$p$-th simplicial homology group of $K$}
 \end{definition}
 
 \begin{examples}
-	For the 2-sphere, triangulate the space, compute the boundary of all elementary chains and evaluate the resulting matrices to find:
-	\[H_0(\mathbb{S}^2)\cong\Z\quad H_1(\mathbb{S}^2)=0,\quad H_2(\mathbb{S}^2)\cong \Z, \quad H_{n>2}(\mathbb{S}^2)=0\]
+	For the 1-sphere, triangulate the space, compute the boundary of all elementary chains and evaluate the resulting matrices to find:
+	\[H_0(\mathbb{S}^1)\cong\Z\quad H_1(\mathbb{S}^1)=\Z, \quad H_{n>1}(\mathbb{S}^1)=0\]
 	
 	For the Torus $T$ and the Klein Bottle $S$ it is more convenient to reduce the problem to chains that are carried by the boundary of the rectangle associated with the fundamental polygon. This yields
 	\begin{align*}
 	H_0(S)&\cong\Z&H_1(S)&\cong\Z\oplus\Z_2&H_{n>1}(S)&=0\\
-	H_0(S;\Z_2)&\cong\Z_2&H_1(S;\Z_2)&\cong\Z_2\oplus\Z_2&H_{n>1}(S;\Z_2)&=0\\
-	H_0(T)&\cong\Z&H_1(T)&\cong\Z\oplus\Z&H_{n>1}(T)&=\Z\\
-	H_0(T;\Z_2)&\cong\Z_2&H_1(S;\Z_2)&\cong\Z_2\oplus\Z_2&H_{n>1}(S;\Z_2)&=0\\
-	\end{align*}
+	H_0(S;\Z_2)&\cong\Z_2&H_1(S;\Z_2)&\cong\Z_2\oplus\Z_2&H_{2}(S;\Z_2)&=\Z_2&H_{n>2}(S;\Z_2)&=0\\
+	H_0(T)&\cong\Z&H_1(T)&\cong\Z\oplus\Z&H_{2}(T)&=\Z&H_{n>2}(T)&=0\\
+	H_0(T;\Z_2)&\cong\Z_2&H_1(T;\Z_2)&\cong\Z_2\oplus\Z_2&H_{2}(T;\Z_2)&=\Z_2&H_{n>2}(T;\Z_2)&=\Z_2\\
+ 	\end{align*}
 \end{examples}
+\setcounter{section}{3}
 \section{Functoriality Property}
-\begin{theorem}[functorility I]\footnote{The statement might not be verbatim from the lecture, but the statement is essentially the same.}
-	Simplicial Homology is a functor from the Category of simplicial complexes to abelian groups.
-\end{theorem}
-
+%\begin{theorem}[functorility I]
+%	%\footnote{The statement might not be verbatim from the lecture, but the statement is essentially the same.}
+%	%Simplicial Homology is a functor from the Category of simplicial complexes to abelian groups.
+%\end{theorem}
+\begin{definition}
+	Let $f: K\to L$ be a simplicial map. If $[v_0\dots v_p]$ is a simplex of $K$, then the points $f(v_0)\dots f(v_p)$ span a simplex of $L$. We construct a homomorphism $f_\sharp: C_p(K)\to C_p(L)$ by defining it on oriented simplices as follows:
+	\[
+	f_\sharp([v_0,\dots,v_p])=\begin{cases}
+	[f(v_0),\dots, f(v_p)],& \text{if } f(v_0),\dots, f(v_p) \text{ are distinct}\\
+	0,&\text{otherwise}.
+	\end{cases}
+	\]
+	
+	The family $(f_\sharp)_{p\in\Z}$ is called the \textit{chain map induced by the simplicial map $f$}.
+	
+\end{definition}
+\begin{definition}
+	Let $K$ and $L$ be simplicial complexes; let $h:|K|\to |L|$ be a continuous map. Choose a subdivision $K^\prime$ of $K$ such that $h$ has a simplicial approximation $f:K^\prime\to L$. Let $\lambda:\mathcal{C}(K)\to \mathcal{C}(K^\prime)$ be the subdivision operator.
+	
+	We define the \textit{homomorphism induced by $h$} 
+	\[
+	h_\ast: H_p(K)\to H_p(L) \quad \text{ via }\quad 
+	h_\ast=f_\ast\circ \lambda_\ast.
+	\]
+\end{definition}
 \begin{theorem}[functioriality II]
-	Simplicial Homology is a functor from the Category of polyhedra to abelian groups.
+The identity map $id: |K|\to |K|$ induces the identity homomorphism $i_\ast: H_p(K)\to H_p(K)$. If $h:|K|\to|L|$ and $k:|L|\to |M|$ are continuous maps, then $(k\circ h)_\ast=k_\ast\circ h_\ast$.
 \end{theorem}
 
 \section{Homotopy Invariance of Simplical Homology}
 
 \begin{theorem}
+	Let $f: |K|\to |L| $ be a homeomorphism, then $f_\ast: H_n(K)\to H_n(L)$ is an isomorphism.
+\end{theorem}
+
+\begin{theorem}\label{homotopy_invariance} Let $K, L$ be simplicial complexes.
+	If $f,g:|K|\to |L|$ are homotopic maps then $f_\ast=g_\ast: H_q(K)\to H_q(L)$ for all $q$
+\end{theorem}
+
+\begin{theorem}
 	If two polyhedra $K$ and $L$ are homotopy equivalent, then their homology groups are isomorphic $H_n(X)\cong H_n(Y)$ in all dimensions.
 \end{theorem}
+\begin{definition}%p.57
+	Given two simplicial maps $f,g: K\to L$, these maps are said to be \textit{contiguous} if for each simplex $v_0\dots v_p$ of $K$, the points \[
+	f(v_0),\dots,f(v_p),g(v_0),\dots,g(v_p)
+	\] span a simplex of $L$.
+\end{definition}
+
+
+\begin{theorem}\label{contiguous->chain_hom}%Thm 12.5
+	If $f,g: K\to L$ are contiguous simplicial maps, then they induce the same chain maps $f_\sharp$ and $g_\sharp$.
+\end{theorem}
+
+\begin{theorem} If $f,g:|K|\to |L|$ are homotopic maps we can find a barycentric subdivision $K^m$ and a sequence of simplicial maps $s_1,\dots,s_n:|K^m|\to|L|$ such that $s_1$ simplicially approximates $f$ while $s_n$ simplicially approximates $g$, and each pair $s_i,s_{i+1}$ is contiguous.
+\end{theorem}
+\vspace{0.05cm}
+
   \begin{exercise}
     Compute the simplicial Homology groups of $\R \mathrm{P}^2$ with coefficients in $\Z$ and $\Z_2$.
   \end{exercise}
